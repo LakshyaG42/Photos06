@@ -1,12 +1,15 @@
 package photosfx.controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListCell;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
@@ -266,8 +269,26 @@ public void movePhotoView(final ActionEvent e) {
 
 }
 
-public void loadSlideShow(final ActionEvent e) { 
 
+public void loadSlideShow(final ActionEvent e) throws IOException {
+    // Make sure we have photos in the album to show
+    if (album.getPhotos().isEmpty()) {
+        Admin.showAlert(Alert.AlertType.ERROR, "Album empty", "Please add a photo to this album, then try again.");
+        return;
+    }
+
+    // Load the slideshow view
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/photosfx/view/slideshow.fxml")); // Adjust the path as needed
+    Parent root = loader.load();
+
+    // Get the SlideshowController and set the user and album
+    slideshowControl slideshowControl = loader.getController();
+    slideshowControl.setLoadState(username, album.getName());
+
+    // Show the slideshow stage
+    Stage stage = new Stage();
+    stage.setScene(new Scene(root));
+    stage.show();
 }
 
 

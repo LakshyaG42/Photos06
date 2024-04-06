@@ -54,7 +54,7 @@
             <Font size="20.0" />
          </font>
       </Button>
-      <Button layoutX="325.0" layoutY="529.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="150.0" text="SLIDESHOW">
+      <Button layoutX="325.0" layoutY="529.0" mnemonicParsing="false" prefHeight="44.0" onAction = "#loadSlideShow" prefWidth="150.0" text="SLIDESHOW">
          <font>
             <Font size="20.0" />
          </font>
