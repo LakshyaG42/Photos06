@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 
 import java.io.IOException;
@@ -45,7 +46,7 @@ private Photo subsetPhoto;
 
 //list of tags for EACH img
 
-@FXML ListView<List<String>> tags; 
+@FXML ListView<String> tags; 
 
 //image selection
 
@@ -56,14 +57,111 @@ private SelectionModel<Photo> selectedImage;
 @FXML ImageView dispImg; 
 
 // tag selection
-private SelectionModel<List<String>> selectedTag; 
+private SelectionModel<String> selectedTag; 
 
 
-public void albumContents(String username, String albumName, Photo p) {
+public void albumContents(String username, String albumInp, Photo p) {
 
  user = User.loadUser(username); 
+ album = user.getAlbum(albumInp); 
+ subsetPhoto = p; 
 
+albumName.setText("album: " + albumName); 
+
+refresh(); 
 
 }
+
+
+//pop images into specific album
+
+private void refresh() {
+
+    imgs.setItems(FXCollections.observableArrayList(album.getPhotos()));
+    imgs.setCellFactory(param -> new ListCell<Photo>() {
+
+        private ImageView imgPrev = new ImageView();
+
+
+        @Override
+        public void updateItem(Photo photo, boolean empty) {
+            super.updateItem(photo, empty);
+
+            if (empty || photo == null) {
+                setText(null);
+                setGraphic(null);
+
+            } else {
+
+                try {
+                    String photoPath = photo.getFilePath(); 
+                    imgPrev.setImage(new Image(new FileInputStream(photoPath)));
+                } catch (Exception e) {
+                    e.printStackTrace(); // Consider more robust error handling
+                }
+
+                imgPrev.setFitWidth(100);
+
+                //imgPrev.setPreserveRatio(true);
+
+                setText("caption: " + photo.getCaption());
+
+                setGraphic(imgPrev);
+
+            }
+        }
+    });
+    selectedImage = imgs.getSelectionModel();
+
+
+    selectedImage.selectedIndexProperty().addListener((obs, oldVal, newVal) -> imgDISP());
+
+    if(subsetPhoto == null) selectedImage.selectFirst();
+
+
+    else selectedImage.select(subsetPhoto);
+
+}
+
+
+
+private void imageDetail() {
+    //current photo
+    final Photo selectedPhoto = selectedImage.getSelectedItem();
+
+    // return cleared disp if no photo is selected
+    if (selectedPhoto == null) {
+        dispImg.setImage(null); 
+        caption.setText("caption: ");
+        date.setText("date: "); 
+        tags.setItems(null); //clear tags
+        return;
+    }
+
+    //display selected photo img
+    try {
+        dispImg.setImage(new Image(new FileInputStream(selectedPhoto.getFilePath())));
+    } catch (IOException e) {
+        e.printStackTrace(); 
+    }
+
+
+    dispImg.setFitWidth(350);
+    dispImg.setPreserveRatio(true);
+
+    // Display photo's caption and date
+    caption.setText("caption: " + selectedPhoto.getCaption());
+    // Ensure you format the date appropriately if Photo class contains a Date object or similar for the date
+    date.setText("date: " + selectedPhoto.getDateTime()); // Assuming your Photo class has a getDate() method returning a String or Date object
+
+    // Populate the list of tags for the selected photo
+    // Assuming getTags() returns an ObservableList<String> or can be converted to one
+    tags.setItems(selectedPhoto.getTagsAsList());
+
+    // Set up tag selection handling, assuming modelTag is similar to selectedImage but for the tag ListView
+    selectedTag = tags.getSelectionModel();
+    selectedTag.selectFirst(); // Auto-select the first tag if desired
+}
+
     
 }

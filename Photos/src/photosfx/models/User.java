@@ -86,4 +86,15 @@ public class User implements Serializable{
             return null;
         }
     }
+
+    public Album getAlbum(String albumName) {
+        for (Album album : albums) {
+            if (album.getName().equals(albumName)) {
+                return album;
+            }
+        }
+        return null; 
+    }    
+
+
 }
