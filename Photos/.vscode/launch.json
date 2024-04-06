@@ -6,7 +6,7 @@
             "name": "Launch App",
             "request": "launch",
             "mainClass": "photosfx.Main",
-            "vmArgs": "--module-path \"/Program Files/Java/javafx_jdk22/javafx-sdk-22/lib\" --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path /Program Files/Java/javafx_jdk22/javafx-sdk-22/lib --add-modules javafx.controls javafx.fxml"
         }
     ]
 }
