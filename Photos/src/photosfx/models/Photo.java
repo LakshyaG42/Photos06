@@ -28,11 +28,11 @@ public class Photo implements Serializable {
         this.filePath = filePath;
     }
 
-    public LocalDateTime getDateTaken() {
+    public LocalDateTime getDateTime() {
         return dateTaken;
     }
 
-    public void setDateTaken(LocalDateTime dateTaken) {
+    public void setDateTime(LocalDateTime dateTaken) {
         this.dateTaken = dateTaken;
     }
 
