@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photos.view.UserController">
+   <children>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Label fx:id="userText" layoutX="305.0" layoutY="26.0" prefHeight="71.0" prefWidth="243.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <ListView fx:id="albumList" layoutX="20.0" layoutY="41.0" prefHeight="214.0" prefWidth="550.0" />
+            <Label layoutX="236.0" layoutY="12.0" prefHeight="29.0" prefWidth="138.0" text="Your Albums">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Button layoutX="344.0" layoutY="258.0" mnemonicParsing="false" onAction="#delete" prefHeight="49.0" prefWidth="94.0" text="Delete">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="31.0" layoutY="258.0" mnemonicParsing="false" onAction="#switchToCreateAlbum" prefHeight="49.0" prefWidth="84.0" text="Create">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="454.0" layoutY="258.0" mnemonicParsing="false" onAction="#switchToRenameAlbum" prefHeight="49.0" prefWidth="94.0" text="Rename">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button layoutX="236.0" layoutY="258.0" mnemonicParsing="false" onAction="#switchToAlbum" prefHeight="49.0" prefWidth="94.0" text="Open">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="23.0" layoutY="337.0" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="49.0" prefWidth="101.0" text="Logout">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="124.0" layoutY="258.0" mnemonicParsing="false" onAction="#switchToSearch" prefHeight="49.0" prefWidth="94.0" text="Search">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>
