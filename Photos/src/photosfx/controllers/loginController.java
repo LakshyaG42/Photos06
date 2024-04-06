@@ -42,7 +42,7 @@ public class loginController {
                         userfound = true;
                         closeLoginWindow();
                         loadUserView(username);
-                        showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome, " + username + "!");
+                        //showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome, " + username + "!");
                     }
                 }
             }

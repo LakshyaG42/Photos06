@@ -3,6 +3,7 @@ package photosfx.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.*;
+import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,7 +21,9 @@ public class slideshowControl {
     @FXML Button prevButton; 
 
     @FXML ImageView imageDisplay; 
-
+    
+    @FXML private Stage stage;
+    
     private ObservableList<Photo> album;
 
     private int index;
@@ -130,8 +133,12 @@ public void nextImage(final ActionEvent e) {
 	}
 */
     //finish below
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
 	public void back2album(final ActionEvent e) throws IOException {
-		back2album(e); 
+		stage.close();
 	}
 
 }

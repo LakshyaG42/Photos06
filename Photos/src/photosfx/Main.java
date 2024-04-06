@@ -60,9 +60,13 @@ public class Main extends Application {
                     happy.addTag("Location", "Software Methodology");
                     happy.addTag("Mood", "Happy");
                     happy.addTag("Person", "Doggo");
+                    Tags sad = new Tags();
+                    sad.addTag("Location", "English Class");
+                    sad.addTag("Mood", "Sad");
+                    sad.addTag("Person", "Catto");
                     stockalbum.addPhoto(new photosfx.models.Photo("Photos/data/stockPhotos/definitelyNewJersey.jpg", photosfx.models.Photo.getLastModifiedDateTime(new File("Photos/data/stockPhotos/definitelyNewJersey.jpg")), "New Jersey", nj));
                     stockalbum.addPhoto(new photosfx.models.Photo("Photos/data/stockPhotos/happydog.jpg", photosfx.models.Photo.getLastModifiedDateTime(new File("Photos/data/stockPhotos/happydog.jpg")), "Happy Dog", happy));
-                    stockalbum.addPhoto(new photosfx.models.Photo("Photos/data/stockPhotos/sadcat.jpg", photosfx.models.Photo.getLastModifiedDateTime(new File("Photos/data/stockPhotos/sadcat.jpg")), "Sad Cat"));
+                    stockalbum.addPhoto(new photosfx.models.Photo("Photos/data/stockPhotos/sadcat.jpg", photosfx.models.Photo.getLastModifiedDateTime(new File("Photos/data/stockPhotos/sadcat.jpg")), "Sad Cat", sad));
                     stockalbum.addPhoto(new photosfx.models.Photo("Photos/data/stockPhotos/standingcat.jpg", photosfx.models.Photo.getLastModifiedDateTime(new File("Photos/data/stockPhotos/standingcat.jpg")), "Standing Cat"));
                     stockalbum.addPhoto(new photosfx.models.Photo("Photos/data/stockPhotos/thisIsUs.png", photosfx.models.Photo.getLastModifiedDateTime(new File("Photos/data/stockPhotos/thisIsUs.png")), "This Is Us"));
                     Admin.saveUsers("Photos/data/users.ser");

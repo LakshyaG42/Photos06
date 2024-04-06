@@ -286,6 +286,7 @@ public void loadSlideShow(final ActionEvent e) throws IOException {
 
     // Show the slideshow stage
     Stage stage = new Stage();
+    slideshowControl.setStage(stage);
     stage.setScene(new Scene(root));
     stage.show();
 }
