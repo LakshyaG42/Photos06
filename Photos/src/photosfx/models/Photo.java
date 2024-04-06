@@ -1,5 +1,8 @@
 package photosfx.models;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -64,6 +67,18 @@ public class Photo implements Serializable {
         return tagMap;
     }
 
+
+    public ObservableList<String> getTagsAsList() {
+        ObservableList<String> tagsList = FXCollections.observableArrayList();
+        HashMap<String, String> tagsMap = getTags();
+        for (Map.Entry<String, String> entry : tagsMap.entrySet()) {
+            //combine into single string for printing in controller
+            String tagString = entry.getKey() + ": " + entry.getValue();
+            tagsList.add(tagString);
+        }
+        return tagsList;
+    }
+    
 
     public void addTag(Tags tag) {
         tags.add(tag);
