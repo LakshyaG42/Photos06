@@ -175,12 +175,7 @@ private void imgDISP(String selectedPhotoName ) {
             break;
         }
     }
-
-    //tagsList stuff
-    if (tagsList != null) {
-        tagObservableList = FXCollections.observableArrayList(selectedPhoto.getTagsAsList());
-        tagsList.setItems(tagObservableList);
-    }
+    
     // return cleared disp if no photo is selected
     if (selectedPhoto == null) {
         dispImg.setImage(null); 
@@ -189,7 +184,11 @@ private void imgDISP(String selectedPhotoName ) {
         tagsList.setItems(null); //clear tags
         return;
     }
-
+    //tagsList stuff
+    if (tagsList != null) {
+        tagObservableList = FXCollections.observableArrayList(selectedPhoto.getTagsAsList());
+        tagsList.setItems(tagObservableList);
+    }
     //display selected photo img
     try {
         dispImg.setImage(new Image(new FileInputStream(selectedPhoto.getFilePath())));
