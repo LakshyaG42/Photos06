@@ -5,10 +5,11 @@ import java.util.List;
 public class Admin {
     private static List<User> users;
 
-    public static void listUsers() {
+    public static List<User> listUsers() {
         for(User user : users) {
             System.out.println(user.getUsername());
         }
+        return users;
     }
 
     public static void createUser(String username) {

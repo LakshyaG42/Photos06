@@ -15,6 +15,12 @@ public class loginController {
         String username = usernameField.getText();
         if (isValidUsername(username)) {
             showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome, " + username + "!");
+            //AdminController Call
+            
+
+
+
+
         } else {
             showAlert(Alert.AlertType.ERROR, "Error", "Invalid Username, please enter a valid username");
         }

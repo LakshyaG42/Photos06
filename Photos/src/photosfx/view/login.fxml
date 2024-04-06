@@ -6,19 +6,22 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="393.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photosfx.controllers.loginController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="158.0" prefWidth="367.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photosfx.controllers.loginController">
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Login:" textAlignment="CENTER" wrappingWidth="204.13671875">
          <font>
-            <Font size="32.0" />
+            <Font name="Segoe UI Semibold" size="32.0" />
          </font>
       </Text>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" wrappingWidth="584.13671875">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" wrappingWidth="348.13671875">
          <font>
-            <Font size="18.0" />
+            <Font name="Segoe UI" size="20.0" />
          </font>
       </Text>
-      <TextField fx:id="usernameField" promptText="Enter username here:" />
+      <TextField fx:id="usernameField" prefHeight="21.0" prefWidth="367.0" promptText="Enter username here:">
+         <font>
+            <Font name="Segoe UI" size="12.0" />
+         </font></TextField>
       <Button mnemonicParsing="false" onAction="#login" text="Login" />
    </children>
 </VBox>
