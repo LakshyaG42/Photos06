@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -28,6 +29,7 @@ public class userController {
     @FXML
     private ListView<String> albumListView;
 
+    @FXML private Button logoutButton;
 
     private static String username;
     private User loggedInUser;
@@ -91,20 +93,27 @@ public class userController {
     private void renameAlbum() {
         String selectedAlbum = albumListView.getSelectionModel().getSelectedItem();
         if (selectedAlbum != null) {
-            String newAlbumName = albumNameField.getText().trim();
-            if (!newAlbumName.isEmpty()) {
-                for (Album album : loggedInUser.getAlbums()) {
-                    if (album.getName().equals(selectedAlbum)) {
-                        loggedInUser.renameAlbum(album, newAlbumName);
-                        break;
+            TextInputDialog dialog = new TextInputDialog(selectedAlbum);
+            dialog.setTitle("Renaming Album: " + selectedAlbum);
+            dialog.setHeaderText(null);
+            dialog.setContentText("Enter the new name for the album:");
+    
+            // Show the text input dialog and wait for user input
+            dialog.showAndWait().ifPresent(newAlbumName -> {
+                newAlbumName = newAlbumName.trim();
+                if (!newAlbumName.isEmpty()) {
+                    for (Album album : loggedInUser.getAlbums()) {
+                        if (album.getName().equals(selectedAlbum)) {
+                            loggedInUser.renameAlbum(album, newAlbumName);
+                            break;
+                        }
                     }
+                    Admin.saveUsers("Photos/data/users.ser");
+                    refreshAlbumList();
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid new album name.");
                 }
-                Admin.saveUsers("Photos/data/users.ser");
-                refreshAlbumList();
-                albumNameField.clear();
-            } else {
-                showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid new album name.");
-            }
+            });
         } else {
             showAlert(Alert.AlertType.ERROR, "Error", "Please select an album to rename.");
         }
@@ -142,7 +151,34 @@ public class userController {
             e.printStackTrace();
         }
     }
-
+    @FXML
+    private void logout() {
+        // Display confirmation dialog
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to logout?");
+        alert.showAndWait().ifPresent(response -> {
+            if (response == javafx.scene.control.ButtonType.OK) {
+                // Close the current stage
+                Stage stage = (Stage) logoutButton.getScene().getWindow();
+                stage.close();
+                // Load and display the login screen
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/photosfx/view/login.fxml"));
+                    Parent root = loader.load();
+                    Stage loginStage = new Stage();
+                    loginStage.setTitle("Login");
+                    loginStage.setScene(new Scene(root, 400, 300));
+                    loginController controller = loader.getController();
+                    controller.setStage(loginStage);
+                    loginStage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

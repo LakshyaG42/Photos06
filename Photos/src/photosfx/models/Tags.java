@@ -24,7 +24,7 @@ public class Tags implements Serializable {
         tagMap.computeIfAbsent(tagName, k -> new HashSet<>()).add(tagValue);
     }
 
-    public void addMultipleValuesTag(String tagName, Set<String> tagValues) {
+    public void addTag(String tagName, Set<String> tagValues) {
         tagMap.put(tagName, new HashSet<>(tagValues));
     }
     public void removeTag(String tagName, Set<String> tagValues) {
