@@ -27,7 +27,7 @@ public class loginController {
 
     @FXML
     void login(ActionEvent event) {
-        String username = usernameField.getText();
+        String username = usernameField.getText().trim();
         boolean userfound = false;
         if (isValidUsername(username)) {
             //AdminController Call
