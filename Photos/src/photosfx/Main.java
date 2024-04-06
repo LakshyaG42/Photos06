@@ -9,6 +9,14 @@ import javafx.stage.Stage;
 import photosfx.models.Admin;
 import photosfx.models.User;
 import photosfx.controllers.loginController;
+
+/**
+ * Main
+ * @author Dhruv Shidhaye
+ * @author Lakshya Gour
+ */
+
+
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{

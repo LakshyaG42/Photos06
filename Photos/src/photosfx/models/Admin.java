@@ -11,6 +11,12 @@ import java.util.List;
 
 import javafx.scene.control.Alert;
 
+/**
+ * Admin Model
+ * @author Dhruv Shidhaye
+ * @author Lakshya Gour
+ */
+
 public class Admin {
     private static List<User> users;
     static {

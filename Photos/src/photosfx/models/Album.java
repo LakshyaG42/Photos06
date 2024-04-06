@@ -4,6 +4,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Album Model
+ * @author Dhruv Shidhaye
+ * @author Lakshya Gour
+ */
+
 public class Album implements Serializable {
     
     private static final long serialVersionUID = 1L;

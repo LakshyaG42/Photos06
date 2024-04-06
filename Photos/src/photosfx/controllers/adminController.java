@@ -23,6 +23,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Admin Controls
+ * @author Dhruv Shidhaye
+ * @author Lakshya Gour
+ */
 
 public class adminController {
     @FXML

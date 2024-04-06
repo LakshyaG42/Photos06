@@ -3,6 +3,12 @@ package photosfx.models;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Tags Model
+ * @author Dhruv Shidhaye
+ * @author Lakshya Gour
+ */
+
 public class Tags {
     private String tagName;
 

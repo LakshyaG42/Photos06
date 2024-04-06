@@ -11,6 +11,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * Login Controls
+ * @author Dhruv Shidhaye
+ * @author Lakshya Gour
+ */
+
 public class loginController {
     @FXML
     private TextField usernameField;

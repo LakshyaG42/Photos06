@@ -21,6 +21,12 @@ import photosfx.models.User;
 import photosfx.models.Album;
 import photosfx.models.Photo;
 
+/**
+ * Album Controls
+ * @author Dhruv Shidhaye
+ * @author Lakshya Gour
+ */
+
 public class albumController {
     
 }

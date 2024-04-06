@@ -5,6 +5,12 @@ import java.util.List;
 import java.util.ArrayList;
 
 
+/**
+ * User Model
+ * @author Dhruv Shidhaye
+ * @author Lakshya Gour
+ */
+
 public class User implements Serializable{
     private static final long serialVersionUID = 1L;
 
