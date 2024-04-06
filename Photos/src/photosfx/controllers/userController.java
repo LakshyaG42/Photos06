@@ -109,14 +109,30 @@ public class userController {
         }
     }
 
+    @FXML
+    private void openAlbum() {
+        String selectedAlbum = albumListView.getSelectionModel().getSelectedItem();
+        if (selectedAlbum != null) {
+            for (Album album : loggedInUser.getAlbums()) {
+                if (album.getName().equals(selectedAlbum)) {
+                    loadAlbumView(album);
+                    break;
+                }
+            }
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Error", "Please select an album to open.");
+        }
+    }
+
+
+
     private void loadAlbumView(Album album) {
         try {
-            albumController.initData(album, username);
+            albumController.initData(album, username); // Pass the data to the album controller
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/photosfx/view/album.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
             stage.setTitle("User Dashboard");
-            // Pass the username to the user controller
             stage.show();
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to load User Dashboard");

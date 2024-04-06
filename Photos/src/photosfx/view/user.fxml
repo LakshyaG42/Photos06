@@ -37,7 +37,7 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button layoutX="225.0" layoutY="107.0" mnemonicParsing="false"  prefHeight="49.0" prefWidth="94.0" text="Open"> <!-- Not implemented yet-->
+            <Button layoutX="225.0" layoutY="107.0" mnemonicParsing="false" onAction="#openAlbum" prefHeight="49.0" prefWidth="94.0" text="Open"> 
                <font>
                   <Font size="20.0" />
                </font>
