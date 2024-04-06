@@ -7,12 +7,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import photosfx.models.Admin;
 import photosfx.models.Album;
 import photosfx.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class userController {
     @FXML
@@ -45,14 +47,21 @@ public class userController {
 
     @FXML
     private void createAlbum() {
-        String albumName = albumNameField.getText().trim();
-        if (!albumName.isEmpty()) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Create Album");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Enter Album:");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            String albumName = result.get().trim();
+            if (!albumName.isEmpty()) {
             loggedInUser.addAlbum(new Album(albumName));
             Admin.saveUsers("Photos/data/users.ser");
             refreshAlbumList();
-            albumNameField.clear();
-        } else {
+            } else {
             showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid album name.");
+            }
         }
     }
 

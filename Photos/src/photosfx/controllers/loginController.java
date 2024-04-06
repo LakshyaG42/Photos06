@@ -34,6 +34,7 @@ public class loginController {
                 loadAdminView();
             } else {
                 //User Controller Call
+                closeLoginWindow();
                 loadUserView(username);
                 showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome, " + username + "!");
 
