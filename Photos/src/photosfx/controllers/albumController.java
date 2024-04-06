@@ -71,6 +71,10 @@ private ObservableList<String> tagObservableList;
 // tag selection
 private SelectionModel<String> selectedTag; 
 
+//private lastSelectedImage;
+private static String lastSelectedPhotoName;
+
+
 
 @FXML
 private void initialize() {
@@ -82,10 +86,12 @@ private void initialize() {
     refreshPhotosList();
     imgNamesListView.setOnMouseClicked(event -> {
         String selectedPhotoName = imgNamesListView.getSelectionModel().getSelectedItem();
+        lastSelectedPhotoName = selectedPhotoName;
         imgDISP(selectedPhotoName);
     });
     imgNamesListView.setOnKeyPressed(event -> {
         String selectedPhotoName = imgNamesListView.getSelectionModel().getSelectedItem();
+        lastSelectedPhotoName = selectedPhotoName;
         if (selectedPhotoName != null) {
             imgDISP(selectedPhotoName);
         }
@@ -227,6 +233,7 @@ public void AddPhotos() {
             album.addPhoto(photo);
             Admin.saveUsers("Photos/data/users.ser");
             refreshPhotosList();
+            imgDISP(photo.getFilePath());
             System.out.println("Photo added to album: " + selectedFile.getName());
         }
         
@@ -237,12 +244,14 @@ public void AddPhotos() {
 
 public void delPhoto() { 
     String photoFilename = imgNamesListView.getSelectionModel().getSelectedItem();
+    lastSelectedPhotoName = photoFilename;
     if (photoFilename != null) {
         for (Photo photo : album.getPhotos()) {
             if (photo.getFilePath().equals(photoFilename)) {
                 album.removePhoto(photo);
             Admin.saveUsers("Photos/data/users.ser");
             refreshPhotosList();
+            imgDISP(null); //resets display
             System.out.println("Photo deleted from album: " + photoFilename);
             break;
             }
@@ -263,11 +272,43 @@ public void delTag(final ActionEvent e) {
 
 
 public void renameCaption() { 
-
+    String photoFilename = imgNamesListView.getSelectionModel().getSelectedItem();
+    lastSelectedPhotoName = photoFilename;
+    if (photoFilename != null) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Rename Caption");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Enter new caption");
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(rename -> {
+            if(rename == null || rename.isEmpty()) {
+                Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid username.");
+                System.out.println("Please enter a valid username.");
+            } else {
+                for (Photo photo : album.getPhotos()) {
+                    if (photo.getFilePath().equals(photoFilename)) {
+                        photo.setCaption(rename);
+                        break;
+                    }
+                }
+                Admin.saveUsers("Photos/data/users.ser");
+                refreshPhotosList();
+                //refresh the display for the caption
+                
+                imgDISP(lastSelectedPhotoName);
+                System.out.println(photoFilename + " caption renamed to " + rename);
+            }
+        });
+    } else {
+        Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please select a photo to edit the caption of.");
+        System.out.println("Please select a photo to edit the caption of.");
+    }
+    
 }
 
 public void copyPhoto() { 
     String photoFilename = imgNamesListView.getSelectionModel().getSelectedItem();
+    lastSelectedPhotoName = photoFilename;
     if (photoFilename != null) {
         List<Album> userAlbums = loggedInUser.getAlbums();
         List<String> albumNames = new ArrayList<>();
@@ -302,8 +343,11 @@ public void copyPhoto() {
         System.out.println("Please select a photo to copy.");
     }
 }
+
+
 public void movePhoto() { 
     String photoFilename = imgNamesListView.getSelectionModel().getSelectedItem();
+    lastSelectedPhotoName = photoFilename;
     if (photoFilename != null) {
         List<Album> userAlbums = loggedInUser.getAlbums();
         List<String> albumNames = new ArrayList<>();
@@ -336,12 +380,6 @@ public void movePhoto() {
         Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please select a photo to copy.");
         System.out.println("Please select a photo to copy.");
     }
-}
-
-
-
-public void movePhotoView(final ActionEvent e) { 
-
 }
 
 

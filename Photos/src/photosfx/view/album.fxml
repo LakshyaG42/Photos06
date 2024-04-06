@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -9,50 +11,56 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photosfx.controllers.albumController">
    <children>
-      <Text fx:id="albumText" layoutX="314.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Album Viewer" wrappingWidth="213.11474609375" AnchorPane.leftAnchor="314.0" AnchorPane.rightAnchor="272.88525390625" AnchorPane.topAnchor="26.0">
+      <Text fx:id="albumText" layoutX="111.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Album Viewer" wrappingWidth="213.11474609375" AnchorPane.leftAnchor="111.0" AnchorPane.rightAnchor="475.88525390625" AnchorPane.topAnchor="15.0">
          <font>
-            <Font size="25.0" />
+            <Font name="Segoe UI Semibold" size="32.0" />
          </font>
       </Text>
-      <Text layoutX="77.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Images" AnchorPane.leftAnchor="77.0" AnchorPane.topAnchor="31.0">
+      <Text layoutX="14.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Images" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="31.41796875">
          <font>
-            <Font size="20.0" />
+            <Font name="Segoe UI Semibold" size="20.0" />
          </font>
       </Text>
-      <Button layoutX="12.0" layoutY="488.0" mnemonicParsing="false" onAction="#AddPhotos" prefHeight="29.0" prefWidth="122.0" text="ADD" AnchorPane.rightAnchor="666.0" AnchorPane.topAnchor="488.0">
+      <Button layoutX="12.0" layoutY="488.0" mnemonicParsing="false" onAction="#AddPhotos" prefHeight="29.0" prefWidth="122.0" text="Add" AnchorPane.rightAnchor="666.0" AnchorPane.topAnchor="488.0">
          <font>
             <Font name="Segoe UI" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="12.0" layoutY="528.0" mnemonicParsing="false" onAction="#delPhoto" prefHeight="29.0" prefWidth="122.0" text="DELETE" AnchorPane.rightAnchor="666.0" AnchorPane.topAnchor="528.0">
+      <Button layoutX="12.0" layoutY="528.0" mnemonicParsing="false" onAction="#delPhoto" prefHeight="29.0" prefWidth="122.0" text="Delete" AnchorPane.rightAnchor="666.0" AnchorPane.topAnchor="528.0">
          <font>
             <Font name="Segoe UI" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="269.0" layoutY="531.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="122.0" text="EDIT Caption">
+      <Button layoutX="269.0" layoutY="531.0" mnemonicParsing="false" onAction= "#renameCaption" prefHeight="29.0" prefWidth="122.0" text="Edit Caption">
          <font>
             <Font name="Segoe UI" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="140.0" layoutY="488.0" mnemonicParsing="false" onAction="#copyPhoto" prefHeight="29.0" prefWidth="122.0" text="COPY">
+      <Button layoutX="140.0" layoutY="488.0" mnemonicParsing="false" onAction="#copyPhoto" prefHeight="29.0" prefWidth="122.0" text="Copy">
          <font>
             <Font name="Segoe UI" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="140.0" layoutY="531.0" mnemonicParsing="false" onAction="#movePhoto" prefHeight="29.0" prefWidth="122.0" text="MOVE">
+      <Button layoutX="140.0" layoutY="531.0" mnemonicParsing="false" onAction="#movePhoto" prefHeight="29.0" prefWidth="122.0" text="Move">
          <font>
             <Font name="Segoe UI" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="269.0" layoutY="489.0" mnemonicParsing="false" onAction="#loadSlideShow" prefHeight="29.0" prefWidth="122.0" text="SLIDESHOW">
+      <Button layoutX="269.0" layoutY="489.0" mnemonicParsing="false" onAction="#loadSlideShow" prefHeight="29.0" prefWidth="122.0" text="Slideshow">
          <font>
             <Font name="Segoe UI" size="16.0" />
          </font>
       </Button>
-      <ImageView fx:id="dispImg" fitHeight="341.0" fitWidth="500.0" layoutX="229.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="71.0" />
+      <ImageView fx:id="dispImg" fitHeight="352.0" fitWidth="507.0" layoutX="229.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="64.0" />
       <ListView fx:id="tagsList" layoutX="527.0" layoutY="468.0" prefHeight="120.0" prefWidth="260.0" />
-      <Text fx:id="captionText" layoutX="229.0" layoutY="435.0" strokeType="OUTSIDE" strokeWidth="0.0" text="caption:" wrappingWidth="343.0" AnchorPane.rightAnchor="228.0" />
-      <Text fx:id="dateText" layoutX="229.0" layoutY="452.0" strokeType="OUTSIDE" strokeWidth="0.0" text="date:" wrappingWidth="343.0" AnchorPane.rightAnchor="228.0" />
+      <Text fx:id="captionText" layoutX="229.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Caption:" wrappingWidth="343.0" AnchorPane.rightAnchor="228.0">
+         <font>
+            <Font name="Segoe UI" size="18.0" />
+         </font></Text>
+      <Text fx:id="dateText" layoutX="229.0" layoutY="452.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" wrappingWidth="343.0" AnchorPane.rightAnchor="228.0">
+         <font>
+            <Font name="Segoe UI" size="18.0" />
+         </font></Text>
       <Button layoutX="400.0" layoutY="489.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="122.0" text="Add Tag">
          <font>
             <Font name="Segoe UI" size="16.0" />
@@ -67,5 +75,24 @@
             <Font name="Segoe UI Semibold" size="17.0" />
          </font>
       </Text>
+      <DatePicker layoutX="452.0" layoutY="35.0" prefHeight="25.0" prefWidth="113.0" />
+      <DatePicker layoutX="335.0" layoutY="35.0" prefHeight="25.0" prefWidth="113.0" />
+      <Text layoutX="341.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="After:">
+         <font>
+            <Font name="Segoe UI Semibold" size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="452.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Before:">
+         <font>
+            <Font name="Segoe UI Semibold" size="14.0" />
+         </font>
+      </Text>
+      <TextField layoutX="571.0" layoutY="35.0" prefHeight="25.0" prefWidth="141.0" />
+      <Text layoutX="571.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Query" wrappingWidth="141.0">
+         <font>
+            <Font name="Segoe UI Semibold" size="14.0" />
+         </font>
+      </Text>
+      <Button layoutX="721.0" layoutY="35.0" mnemonicParsing="false" text="Search" />
    </children>
 </AnchorPane>
