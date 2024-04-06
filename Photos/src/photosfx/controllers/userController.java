@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import photosfx.models.Admin;
 import photosfx.models.Album;
@@ -133,6 +134,8 @@ public class userController {
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
             stage.setTitle("User Dashboard");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(albumListView.getScene().getWindow());
             stage.show();
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to load User Dashboard");
