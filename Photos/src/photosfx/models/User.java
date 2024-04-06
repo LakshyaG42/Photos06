@@ -8,8 +8,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import photosfx.models.Admin;
 import photosfx.models.Album;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
 import java.util.ArrayList;
@@ -101,5 +105,16 @@ public class User implements Serializable{
         return null; 
     }    
 
+    public ObservableList<Album> getAlbumsExcept(Album excludedAlbum) {
+        //filter excluded album
+        List<Album> filteredAlbums = albums.stream()
+                                           .filter(album -> !album.equals(excludedAlbum))
+                                           .collect(Collectors.toList());
+        
+        //convert
+        return FXCollections.observableArrayList(filteredAlbums);
+    }
+
+    public boolean movePhoto(String sourceAlbumName, String destinationAlbumName, Photo photo) {
 
 }
