@@ -178,10 +178,6 @@ public void addTagView(final ActionEvent e) {
 
 }
 
-public void delPhoto(final ActionEvent e) { 
-
-}
-
 public void delTag(final ActionEvent e) { 
 
 }
