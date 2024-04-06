@@ -11,11 +11,13 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
 import java.io.IOException;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import photosfx.models.User;
@@ -34,15 +36,12 @@ public class albumController {
 private static String inputAlbumName;
 private static String username;
 private User loggedInUser;
-private Album album;
-
-//photo for selection
-private Photo subsetPhoto; 
+private Album album; 
 
 //image list in EACH alb
 
 @FXML ListView<Photo> imgs; 
-
+@FXML ListView<String> imgNamesListView;
 //list of tags for EACH img
 
 @FXML ListView<String> tags; 
@@ -62,7 +61,17 @@ private SelectionModel<String> selectedTag;
 private void initialize() {
     loggedInUser = User.loadUser(username);
     album = loggedInUser.getAlbum(inputAlbumName);
-    //refreshPhotosList();
+    refreshPhotosList();
+}
+
+private void refreshPhotosList(){
+    imgNamesListView = new ListView<>();
+    ArrayList<String> photoNames = new ArrayList<>();
+    for (Photo photo : album.getPhotos()) {
+        photoNames.add(photo.getFilePath());
+    }
+    this.imgNamesListView.getItems().clear();
+    this.imgNamesListView.getItems().addAll(photoNames);
 }
 
 public static void initData(Album album, String name) {
@@ -120,10 +129,10 @@ private void refresh() {
 
     selectedImage.selectedIndexProperty().addListener((obs, oldVal, newVal) -> imgDISP());
 
-    if(subsetPhoto == null) selectedImage.selectFirst();
+    //if(subsetPhoto == null) selectedImage.selectFirst();
 
 
-    else selectedImage.select(subsetPhoto);
+    //else selectedImage.select(subsetPhoto);
 
 }
 
@@ -131,7 +140,7 @@ private void refresh() {
 
 private void imgDISP() {
     //current photo
-    final Photo selectedPhoto = selectedImage.getSelectedItem();
+    final Photo selectedPhoto =  imgs.getSelectionModel().getSelectedItem();
 
     // return cleared disp if no photo is selected
     if (selectedPhoto == null) {
