@@ -12,6 +12,7 @@ import photosfx.models.User;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
@@ -52,11 +53,8 @@ public class adminController {
 
     public void deleteUser(String username) {
         Admin.deleteUser(username);
-        // try (FileWriter writer = new FileWriter("/data/users.ser")) { //clears the data
-        //     writer.write("");
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
+        //add functionality to delete the user's ser file here
+        
         updateList();
     }
 
@@ -69,8 +67,10 @@ public class adminController {
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(username -> {
             if(username == null || username.isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid username.");
                 System.out.println("Please enter a valid username.");
             } else {
+                showAlert(Alert.AlertType.INFORMATION, "User Created", "user: " + username + " created.");
                 System.out.println("user: " + username + " created.");
                 createUser(username);
             }
@@ -89,14 +89,23 @@ public class adminController {
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(username -> {
             if(username == null || username.isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid username.");
                 System.out.println("Please enter a valid username.");
             } else {
+                showAlert(Alert.AlertType.INFORMATION, "User Created", "user: " + username + " deleted");
                 System.out.println("user: " + username + " deleted.");
                 deleteUser(username);
             }
         });
     }
 
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
     /* 
     @FXML

@@ -29,11 +29,8 @@ public class loginController {
             } else {
                 //User Controller Call
                 showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome, " + username + "!");
+
             }
-
-
-
-
         } else {
             showAlert(Alert.AlertType.ERROR, "Error", "Invalid Username, please enter a valid username");
         }
@@ -51,6 +48,7 @@ public class loginController {
             stage.setTitle("Admin Dashboard");
             stage.show();
         } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load Admin Dashboard");
             e.printStackTrace();
         }
     }

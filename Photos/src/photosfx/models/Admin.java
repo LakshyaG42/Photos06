@@ -8,6 +8,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.control.Alert;
+
 public class Admin {
     private static List<User> users;
     static {
@@ -35,19 +37,29 @@ public class Admin {
 
     public static void createUser(String username) {
         if(username == null || username.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid username.");
             throw new IllegalArgumentException("Username cannot be null or empty");
         }
         for(User user : users) {
             if(user.getUsername().equals(username)) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Username already exists");
                 throw new IllegalArgumentException("Username already exists");
             }
         }
         User newUser = new User(username);
+        //create ser file for users' photos here
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(username + ".ser"))) {
+            outputStream.writeObject("");
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Error creating user's data:", e.getMessage());
+            System.err.println("Error creating user's data: " + e.getMessage());
+        }
         users.add(newUser);
     }
 
     public static void deleteUser(String username) {
         if(username == null || username.isEmpty() || username.equals("stock")) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Username cannot be null or empty or stock");
             throw new IllegalArgumentException("Username cannot be null or empty or stock");
         }
         User userToDelete = null;
@@ -58,9 +70,25 @@ public class Admin {
             }
         }
         if(userToDelete == null) {
+            showAlert(Alert.AlertType.ERROR, "Error", "User does not exist");
             throw new IllegalArgumentException("User does not exist");
         }
         users.remove(userToDelete);
+        
+        //delete username.ser file for users here
+        try {
+            if(!userToDelete.getUsername().equals("stock")) {
+                java.io.File file = new java.io.File(userToDelete.getUsername() + ".ser");
+                if(file.delete()) {
+                    System.out.println(file.getName() + " is deleted!");
+                } else {
+                    System.out.println("Delete operation is failed.");
+                }
+            }
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error deleting user's data:", e.getMessage());
+            System.err.println("Error deleting user's data: " + e.getMessage());
+        }
     }
 
 
@@ -69,6 +97,7 @@ public class Admin {
             outputStream.writeObject(users);
             System.out.println("Users saved successfully.");
         } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Error saving users:", e.getMessage());
             System.err.println("Error saving users: " + e.getMessage());
         }
     }
@@ -77,11 +106,18 @@ public class Admin {
             users = (List<User>) inputStream.readObject();
             System.out.println("Users loaded successfully.");
         } catch (IOException | ClassNotFoundException e) {
+            showAlert(Alert.AlertType.ERROR, "Error loading users:", e.getMessage());
             System.err.println("Error loading users: " + e.getMessage());
         }
     }
 
-    
+    private static void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
     @Override
     public String toString() {
