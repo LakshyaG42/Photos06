@@ -23,7 +23,7 @@
                   <Font name="Segoe UI" size="21.0" />
                </font>
             </Text>
-            <Button layoutX="147.0" layoutY="398.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Delete User" onAction="#" />
+            <Button layoutX="147.0" layoutY="398.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Delete User" onAction="#showDeleteUserDialog" />
             <Button layoutX="28.0" layoutY="398.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Create User"  onAction="#showCreateUserDialog" />
          </children>
       </AnchorPane>

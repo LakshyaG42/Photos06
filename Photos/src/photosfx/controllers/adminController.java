@@ -1,5 +1,6 @@
 package photosfx.controllers;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -13,12 +14,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 
 public class adminController {
     @FXML
@@ -39,7 +42,7 @@ public class adminController {
         userList.addAll(Admin.getUsernameList());
         userListView.setItems(userList);
         Admin.saveUsers("users.ser");
-        
+
     }
 
     public void createUser(String username) {
@@ -49,6 +52,11 @@ public class adminController {
 
     public void deleteUser(String username) {
         Admin.deleteUser(username);
+        // try (FileWriter writer = new FileWriter("/data/users.ser")) { //clears the data
+        //     writer.write("");
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
         updateList();
     }
 
@@ -68,7 +76,25 @@ public class adminController {
             }
             
         });
+    }
 
+    @FXML
+    private void showDeleteUserDialog() {
+        ObservableList<String> newUserList = FXCollections.observableArrayList(Admin.getUsernameList());
+        newUserList.remove("stock");
+        ChoiceDialog<String> dialog = new ChoiceDialog<>(null, newUserList);
+        dialog.setTitle("Delete User");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Enter Username:");
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(username -> {
+            if(username == null || username.isEmpty()) {
+                System.out.println("Please enter a valid username.");
+            } else {
+                System.out.println("user: " + username + " deleted.");
+                deleteUser(username);
+            }
+        });
     }
 
 
