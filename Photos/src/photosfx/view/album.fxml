@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photos.view.AlbumController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photosfx.controllers.albumController">
    <children>
       <Text fx:id="albumText" layoutX="314.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Album Viewer" wrappingWidth="213.11474609375" AnchorPane.leftAnchor="314.0" AnchorPane.rightAnchor="272.88525390625" AnchorPane.topAnchor="26.0">
          <font>

@@ -28,5 +28,42 @@ import photosfx.models.Photo;
  */
 
 public class albumController {
+
+
+//user
+private User user; 
+
+//album
+private Album album; 
+
+//photo for selection
+private Photo subsetPhoto; 
+
+//image list in EACH alb
+
+@FXML ListView<Photo> imgs; 
+
+//list of tags for EACH img
+
+@FXML ListView<List<String>> tags; 
+
+//image selection
+
+private SelectionModel<Photo> selectedImage; 
+
+@FXML Text caption, date, albumName; 
+
+@FXML ImageView dispImg; 
+
+// tag selection
+private SelectionModel<List<String>> selectedTag; 
+
+
+public void albumContents(String username, String albumName, Photo p) {
+
+ user = User.loadUser(username); 
+
+
+}
     
 }
