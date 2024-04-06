@@ -3,6 +3,7 @@ package photosfx.models;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,13 +18,12 @@ public class Photo implements Serializable {
     private String filePath;
     private LocalDateTime dateTaken; 
     private String caption;
-    private Map<String, String> tags; 
+    private List<Tags> tags; 
 
     public Photo(String filePath, LocalDateTime dateTaken, String caption) {
         this.filePath = filePath;
         this.dateTaken = dateTaken;
         this.caption = caption;
-        this.tags = new HashMap<>();
     }
 
     public String getFilePath() {
@@ -50,20 +50,27 @@ public class Photo implements Serializable {
         this.caption = caption;
     }
 
-    public Map<String, String> getTags() {
-        return tags;
+    public HashMap<String, String> getTags() {
+        HashMap<String, String> tagMap = new HashMap<>();
+        for (Tags tag : tags) {
+            if (tag.getValues() instanceof List) {
+                List<String> values = (List<String>) tag.getValues();
+                String joinedValues = String.join(", ", values);
+                tagMap.put(tag.getName(), joinedValues);
+            } else {
+                tagMap.put(tag.getName(), tag.getValues().toString());
+            }
+        }
+        return tagMap;
     }
 
-    public void setTags(Map<String, String> tags) {
-        this.tags = tags;
+
+    public void addTag(Tags tag) {
+        tags.add(tag);
     }
 
-    public void addTag(String tagName, String tagValue) {
-        tags.put(tagName, tagValue);
-    }
-
-    public void removeTag(String tagName) {
-        tags.remove(tagName);
+    public void removeTag(Tags tag) {
+        tags.remove(tag);
     }
 
     @Override

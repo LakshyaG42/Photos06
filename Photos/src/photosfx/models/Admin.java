@@ -49,7 +49,7 @@ public class Admin {
             throw new IllegalArgumentException("Username cannot be null or empty");
         }
         for(User user : users) {
-            if(user.getUsername().equals(username)) {
+            if(user.getUsername().equals(username) || username.equals("admin")) {
                 showAlert(Alert.AlertType.ERROR, "Error", "Username already exists");
                 throw new IllegalArgumentException("Username already exists");
             }
