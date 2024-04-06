@@ -1,5 +1,6 @@
 package photosfx.models;
 
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -75,15 +76,22 @@ public class User implements Serializable{
         }
     }
 
-
     public static User loadUser(String username) {
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("Photos/data/userPhotos/" + username + ".ser"))) {
-            User user = (User) inputStream.readObject();
-            return user;
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("Photos/data/users.ser"))) {
+            User user;
+            while ((user = (User) inputStream.readObject()) != null) {
+                if (user.getUsername().equals(username)) {
+                    return user;
+                }
+            }
+        } catch (EOFException e) {
+            // End of file reached, user not found
+            Admin.showAlert(Alert.AlertType.ERROR, "Error loading users:", "User not found");
+            System.err.println("User not found");
         } catch (IOException | ClassNotFoundException e) {
             Admin.showAlert(Alert.AlertType.ERROR, "Error loading users:", e.getMessage());
             System.err.println("Error loading users: " + e.getMessage());
-            return null;
         }
+        return null;
     }
 }
