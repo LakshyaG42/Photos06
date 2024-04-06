@@ -29,6 +29,9 @@ public class Admin {
         }
     }
     
+    public static List<User> getUsers() {
+        return users;
+    }
     public static List<User> listUsers() {
         for(User user : users) {
             System.out.println(user.getUsername());
@@ -57,17 +60,17 @@ public class Admin {
         User newUser = new User(username);
         users.add(newUser);
         //create ser file for users' photos here
-        File userFile = new File("Photos/data/userPhotos/" + username + ".ser");
-        try {
-            if(userFile.createNewFile()) {
-                System.out.println("File created: " + userFile.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
-        } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Error creating user's data:", e.getMessage());
-            System.err.println("Error creating user's data: " + e.getMessage());
-        }
+        // File userFile = new File("Photos/data/userPhotos/" + username + ".ser");
+        // try {
+        //     if(userFile.createNewFile()) {
+        //         System.out.println("File created: " + userFile.getName());
+        //     } else {
+        //         System.out.println("File already exists.");
+        //     }
+        // } catch (IOException e) {
+        //     showAlert(Alert.AlertType.ERROR, "Error creating user's data:", e.getMessage());
+        //     System.err.println("Error creating user's data: " + e.getMessage());
+        // }
         
     }
 
@@ -90,19 +93,19 @@ public class Admin {
         users.remove(userToDelete);
 
         //delete username.ser file for users here
-        try {
-            if(!userToDelete.getUsername().equals("stock")) {
-                File file = new File("Photos/data/userPhotos/" + userToDelete.getUsername() + ".ser");
-                if(file.delete()) {
-                    System.out.println(file.getName() + " is deleted!");
-                } else {
-                    System.out.println("Delete operation is failed.");
-                }
-            }
-        } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR, "Error deleting user's data:", e.getMessage());
-            System.err.println("Error deleting user's data: " + e.getMessage());
-        }
+        // try {
+        //     if(!userToDelete.getUsername().equals("stock")) {
+        //         File file = new File("Photos/data/userPhotos/" + userToDelete.getUsername() + ".ser");
+        //         if(file.delete()) {
+        //             System.out.println(file.getName() + " is deleted!");
+        //         } else {
+        //             System.out.println("Delete operation is failed.");
+        //         }
+        //     }
+        // } catch (Exception e) {
+        //     showAlert(Alert.AlertType.ERROR, "Error deleting user's data:", e.getMessage());
+        //     System.err.println("Error deleting user's data: " + e.getMessage());
+        // }
     }
 
 

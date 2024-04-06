@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photos.view.UserController">
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photosfx.controllers.userController">
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="262.0" prefWidth="449.0">
          <children>
@@ -16,33 +16,33 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <ListView fx:id="albumList" layoutX="20.0" layoutY="41.0" prefHeight="200.0" prefWidth="188.0" />
+            <ListView fx:id="albumListView" layoutX="20.0" layoutY="41.0" prefHeight="200.0" prefWidth="188.0" />
             <Label layoutX="20.0" layoutY="3.0" prefHeight="47.0" prefWidth="210.0" text="Your Albums">
                <font>
                   <Font name="Segoe UI Semibold" size="32.0" />
                </font>
             </Label>
-            <Button layoutX="327.0" layoutY="41.0" mnemonicParsing="false" onAction="#delete" prefHeight="49.0" prefWidth="94.0" text="Delete">
+            <Button layoutX="327.0" layoutY="41.0" mnemonicParsing="false" onAction="#deleteAlbum" prefHeight="49.0" prefWidth="94.0" text="Delete">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button layoutX="225.0" layoutY="41.0" mnemonicParsing="false" onAction="#switchToCreateAlbum" prefHeight="49.0" prefWidth="94.0" text="Add">
+            <Button layoutX="225.0" layoutY="41.0" mnemonicParsing="false" onAction="#createAlbum" prefHeight="49.0" prefWidth="94.0" text="Add">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button layoutX="327.0" layoutY="107.0" mnemonicParsing="false" onAction="#switchToRenameAlbum" prefHeight="49.0" prefWidth="94.0" text="Rename">
+            <Button layoutX="327.0" layoutY="107.0" mnemonicParsing="false" onAction="#renameAlbum" prefHeight="49.0" prefWidth="94.0" text="Rename">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button layoutX="225.0" layoutY="107.0" mnemonicParsing="false" onAction="#switchToAlbum" prefHeight="49.0" prefWidth="94.0" text="Open">
+            <Button layoutX="225.0" layoutY="107.0" mnemonicParsing="false"  prefHeight="49.0" prefWidth="94.0" text="Open"> <!-- Not implemented yet-->
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button layoutX="269.0" layoutY="172.0" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="49.0" prefWidth="101.0" text="Logout">
+            <Button layoutX="269.0" layoutY="172.0" mnemonicParsing="false"  prefHeight="49.0" prefWidth="101.0" text="Logout"> <!-- Not implemented yet-->
                <font>
                   <Font size="20.0" />
                </font>
