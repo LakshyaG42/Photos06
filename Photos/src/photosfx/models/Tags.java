@@ -1,7 +1,11 @@
 package photosfx.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Tags Model
@@ -10,48 +14,44 @@ import java.util.List;
  */
 
 public class Tags {
-    private String tagName;
-
-    private List<String> values;
-
-    private boolean allowMultipleValues;
-
-    public Tags(String tagName, boolean allowMultipleValues) {
-        this.tagName = tagName;
-        this.allowMultipleValues = allowMultipleValues;
-        this.values = new ArrayList<>();
+    private Map<String, Set<String>> tagMap; 
+    public Tags() {
+        this.tagMap = new HashMap<>();
     }
-    public String getName() {
-        return tagName;
+    public void addTag(String tagName, String tagValue) {
+        tagMap.computeIfAbsent(tagName, k -> new HashSet<>()).add(tagValue);
     }
 
-    public boolean isAllowMultipleValues() {
-        return allowMultipleValues;
+    public void addMultipleValuesTag(String tagName, Set<String> tagValues) {
+        tagMap.put(tagName, new HashSet<>(tagValues));
     }
-
-    public List<String> getValues() {
-        return values;
-    }
-
-    public void addValue(String value) {
-        if (allowMultipleValues) {
-            values.add(value);
-        } else {
-            values.clear();
-            values.add(value);
+    public void removeTag(String tagName, Set<String> tagValues) {
+        if(tagMap.containsKey(tagName)) {
+            Set<String> values = tagMap.get(tagName);
+            values.removeAll(tagValues);
+            if(values.isEmpty()) {
+                tagMap.remove(tagName);
+            }
         }
     }
-
-    public void removeValue(String value) {
-        values.remove(value);
+    public Map<String, Set<String>> getTagMap() {
+        return tagMap;
     }
-
-    @Override
-    public String toString() {
-        return "Tag{" +
-                "name='" + tagName + '\'' +
-                ", values=" + values +
-                ", allowMultipleValues=" + allowMultipleValues +
-                '}';
+    public Set<String> getTagNames() {
+        return tagMap.keySet();
     }
+    public Set<String> getTagValues(String tagName) {
+        return tagMap.getOrDefault(tagName, new HashSet<>());
+    }
+    public boolean hasTag(String tagName) {
+        return tagMap.containsKey(tagName);
+    }
+    public boolean hasTagValue(String tagName, String tagValue) {
+        Set<String> values = tagMap.get(tagName);
+        return values != null && values.contains(tagValue);
+    }
+    public void clearTags() {
+        tagMap.clear();
+    }
+    
 }

@@ -23,10 +23,10 @@ public class Admin {
         users = new ArrayList<>();
         String filePath = "Photos/data/users.ser";
         loadUsers(filePath);
-        User stockUser = new User("stock");
-        if(users.isEmpty()) {
-            users.add(stockUser);
-        }
+        // User stockUser = new User("stock");
+        // if(users.isEmpty()) {
+        //     users.add(stockUser);
+        // }
     }
     
     public static List<User> getUsers() {

@@ -12,6 +12,7 @@ import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Photo Model
@@ -25,7 +26,7 @@ public class Photo implements Serializable {
     private String filePath;
     private LocalDateTime dateTaken; 
     private String caption;
-    private List<Tags> tags; 
+    private Tags tags; 
 
     public Photo(String filePath, LocalDateTime dateTaken, String caption) {
         this.filePath = filePath;
@@ -57,39 +58,38 @@ public class Photo implements Serializable {
         this.caption = caption;
     }
 
-    public HashMap<String, String> getTags() {
-        HashMap<String, String> tagMap = new HashMap<>();
-        for (Tags tag : tags) {
-            if (tag.getValues() instanceof List) {
-                List<String> values = (List<String>) tag.getValues();
-                String joinedValues = String.join(", ", values);
-                tagMap.put(tag.getName(), joinedValues);
-            } else {
-                tagMap.put(tag.getName(), tag.getValues().toString());
-            }
-        }
-        return tagMap;
+    public Map<String, Set<String>> getTags() {
+      return tags.getTagMap();
     }
 
 
     public ObservableList<String> getTagsAsList() {
         ObservableList<String> tagsList = FXCollections.observableArrayList();
-        HashMap<String, String> tagsMap = getTags();
-        for (Map.Entry<String, String> entry : tagsMap.entrySet()) {
-            //combine into single string for printing in controller
-            String tagString = entry.getKey() + ": " + entry.getValue();
-            tagsList.add(tagString);
+        for (Map.Entry<String, Set<String>> entry : getTags().entrySet()) {
+            String tagName = entry.getKey();
+            Set<String> tagValues = entry.getValue();
+            StringBuilder tagString = new StringBuilder(tagName + ": ");
+            if (tagValues != null && !tagValues.isEmpty()) {
+                for (String tagValue : tagValues) {
+                    tagString.append(tagValue).append(", ");
+                }
+                tagString.setLength(tagString.length() - 2); // Remove the last comma and space
+            }
+            tagsList.add(tagString.toString());
         }
         return tagsList;
     }
     
 
-    public void addTag(Tags tag) {
-        tags.add(tag);
+    public void addTag(String tagName, String tagValue) {
+        tags.addTag(tagName, tagValue);
+    }
+    public void addTag(String tagName, Set<String> tagValue) {
+        tags.addMultipleValuesTag(tagName, tagValue);
     }
 
-    public void removeTag(Tags tag) {
-        tags.remove(tag);
+    public void removeTag(String tagName, Set<String> tagValue) {
+        tags.removeTag(tagName, tagValue);
     }
 
     public static LocalDateTime getLastModifiedDateTime(File file) {
@@ -98,8 +98,9 @@ public class Photo implements Serializable {
             Instant lastModifiedInstant = attributes.lastModifiedTime().toInstant();
             return LocalDateTime.ofInstant(lastModifiedInstant, ZoneId.systemDefault());
         } catch (Exception e) {
-            e.printStackTrace(); // Handle the exception as needed
+            e.printStackTrace(); 
         }
+        System.out.println("Error getting last modified date time for file: " + file.getAbsolutePath());
         return null;
     }
 
