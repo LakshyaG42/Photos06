@@ -3,6 +3,8 @@ package photosfx.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionModel;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListCell;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
@@ -15,14 +17,18 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import photosfx.models.User;
+import photosfx.models.Admin;
 import photosfx.models.Album;
 import photosfx.models.Photo;
+import photosfx.models.Tags;
 
 /**
  * Album Controls
@@ -41,7 +47,11 @@ private Album album;
 //image list in EACH alb
 
 @FXML ListView<Photo> imgs; 
-@FXML ListView<String> imgNamesListView;
+
+@FXML 
+ListView<String> imgNamesListView;
+
+private ObservableList<String> photoNames;
 //list of tags for EACH img
 
 @FXML ListView<String> tags; 
@@ -57,21 +67,24 @@ private SelectionModel<Photo> selectedImage;
 // tag selection
 private SelectionModel<String> selectedTag; 
 
+
 @FXML
 private void initialize() {
     loggedInUser = User.loadUser(username);
+    photoNames = FXCollections.observableArrayList();
     album = loggedInUser.getAlbum(inputAlbumName);
     refreshPhotosList();
 }
 
 private void refreshPhotosList(){
-    imgNamesListView = new ListView<>();
-    ArrayList<String> photoNames = new ArrayList<>();
+    ArrayList<String> photoArraylist = new ArrayList<>();
     for (Photo photo : album.getPhotos()) {
-        photoNames.add(photo.getFilePath());
+        photoArraylist.add(photo.getFilePath());
     }
-    this.imgNamesListView.getItems().clear();
-    this.imgNamesListView.getItems().addAll(photoNames);
+    photoNames.clear();
+    photoNames.addAll(photoArraylist);
+    imgNamesListView.setItems(photoNames);
+    Admin.saveUsers("Photos/data/users.ser");
 }
 
 public static void initData(Album album, String name) {
@@ -172,15 +185,50 @@ private void imgDISP() {
     selectedTag.selectFirst(); //defualt to first tag
 }
 
-public void loadAddPhotos(final ActionEvent e) { 
-
-    FileChooser pickImgFile = new FileChooser(); 
+public void AddPhotos() { 
+    FileChooser pickIMG = new FileChooser();
+    pickIMG.setTitle("Choose Photo");
+        File selectedFile = pickIMG.showOpenDialog(new Stage());
+        if (selectedFile != null) {
+            String captionstr = "Default Caption";
+            // ask for caption
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Caption Image");
+            dialog.setHeaderText(null);
+            dialog.setContentText("Enter Caption:");
+            Optional<String> result = dialog.showAndWait();
+            if (result.isPresent()) {
+                captionstr = result.get();
+            }
+            // Create a Photo object and add it to the album
+            Photo photo = new Photo(selectedFile.getPath(), Photo.getLastModifiedDateTime(selectedFile), captionstr);
+            album.addPhoto(photo);
+            Admin.saveUsers("Photos/data/users.ser");
+            refreshPhotosList();
+            System.out.println("Photo added to album: " + selectedFile.getName());
+        }
+        
+       
 
 }
 
 
-public void delPhoto(final ActionEvent e) { 
-
+public void delPhoto() { 
+    String photoFilename = imgNamesListView.getSelectionModel().getSelectedItem();
+    if (photoFilename != null) {
+        for (Photo photo : album.getPhotos()) {
+            if (photo.getFilePath().equals(photoFilename)) {
+                album.removePhoto(photo);
+            Admin.saveUsers("Photos/data/users.ser");
+            refreshPhotosList();
+            System.out.println("Photo deleted from album: " + photoFilename);
+            break;
+            }
+        }
+    } else {
+        Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please select a photo to delete.");
+        System.out.println("Please select a photo to delete.");
+    }
 }
 
 public void addTagView(final ActionEvent e) { 

@@ -3,8 +3,12 @@ package photosfx.models;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.File;
 import java.io.Serializable;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,6 +90,17 @@ public class Photo implements Serializable {
 
     public void removeTag(Tags tag) {
         tags.remove(tag);
+    }
+
+    public static LocalDateTime getLastModifiedDateTime(File file) {
+        try {
+            BasicFileAttributes attributes = java.nio.file.Files.readAttributes(file.toPath(), BasicFileAttributes.class);
+            Instant lastModifiedInstant = attributes.lastModifiedTime().toInstant();
+            return LocalDateTime.ofInstant(lastModifiedInstant, ZoneId.systemDefault());
+        } catch (Exception e) {
+            e.printStackTrace(); // Handle the exception as needed
+        }
+        return null;
     }
 
     @Override
