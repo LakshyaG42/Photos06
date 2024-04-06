@@ -42,7 +42,7 @@ public class adminController {
         userList.clear();
         userList.addAll(Admin.getUsernameList());
         userListView.setItems(userList);
-        Admin.saveUsers("C:/Users/laksh/OneDrive/Documents/GitHub/Photos06/Photos/data/users.ser");
+        Admin.saveUsers("Photos/data/userPhotos/users.ser");
 
     }
 
