@@ -34,6 +34,12 @@ public class Photo implements Serializable {
         this.caption = caption;
         this.tags = new Tags();
     }
+    public Photo(String filePath, LocalDateTime dateTaken, String caption, Tags tags) {
+        this.filePath = filePath;
+        this.dateTaken = dateTaken;
+        this.caption = caption;
+        this.tags = tags;
+    }
 
     public String getFilePath() {
         return filePath;

@@ -53,7 +53,7 @@ public class Admin {
         }
         for(User user : users) {
             if(user.getUsername().equals(username) || username.equals("admin")) {
-                showAlert(Alert.AlertType.ERROR, "Error", "Username already exists");
+                //showAlert(Alert.AlertType.ERROR, "Error", "Username already exists");
                 throw new IllegalArgumentException("Username already exists");
             }
         }
@@ -123,7 +123,7 @@ public class Admin {
             users = (List<User>) inputStream.readObject();
             System.out.println("Users loaded successfully.");
         } catch (IOException | ClassNotFoundException e) {
-            showAlert(Alert.AlertType.ERROR, "Error loading users:", e.getMessage());
+            //showAlert(Alert.AlertType.ERROR, "Error loading users:", e.getMessage());
             System.err.println("Error loading users: " + e.getMessage());
         }
     }

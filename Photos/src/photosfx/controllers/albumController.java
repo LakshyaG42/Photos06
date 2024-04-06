@@ -54,11 +54,9 @@ ListView<String> imgNamesListView;
 private ObservableList<String> photoNames;
 //list of tags for EACH img
 
-@FXML ListView<String> tags; 
+@FXML ListView<String> tagsList;
 
-//image selection
-
-private SelectionModel<Photo> selectedImage; 
+private ObservableList<String> tagObservableList;
 
 @FXML Text captionText, dateText, albumText; 
 
@@ -72,8 +70,9 @@ private SelectionModel<String> selectedTag;
 private void initialize() {
     loggedInUser = User.loadUser(username);
     photoNames = FXCollections.observableArrayList();
+    tagObservableList = FXCollections.observableArrayList();
     album = loggedInUser.getAlbum(inputAlbumName);
-   albumText.setText(album.getName());
+    albumText.setText(album.getName());
     refreshPhotosList();
     imgNamesListView.setOnMouseClicked(event -> {
         String selectedPhotoName = imgNamesListView.getSelectionModel().getSelectedItem();
@@ -97,62 +96,57 @@ public static void initData(Album album, String name) {
     username = name;
 }
 
-public void setAlbum(Album album) {
-    this.album = album;
-    albumText.setText(album.getName());
-    refresh();
-}
 
 
 //pop images into specific album
 
-private void refresh() {
+// private void refresh() {
 
-    imgs.setItems(FXCollections.observableArrayList(album.getPhotos()));
-    imgs.setCellFactory(param -> new ListCell<Photo>() {
+//     imgs.setItems(FXCollections.observableArrayList(album.getPhotos()));
+//     imgs.setCellFactory(param -> new ListCell<Photo>() {
 
-        private ImageView imgPrev = new ImageView();
-
-
-        @Override
-        public void updateItem(Photo photo, boolean empty) {
-            super.updateItem(photo, empty);
-
-            if (empty || photo == null) {
-                setText(null);
-                setGraphic(null);
-
-            } else {
-
-                try {
-                    String photoPath = photo.getFilePath(); 
-                    imgPrev.setImage(new Image(new FileInputStream(photoPath)));
-                } catch (Exception e) {
-                    e.printStackTrace(); // Consider more robust error handling
-                }
-
-                imgPrev.setFitWidth(100);
-
-                //imgPrev.setPreserveRatio(true);
-
-                setText("caption: " + photo.getCaption());
-
-                setGraphic(imgPrev);
-
-            }
-        }
-    });
-    //selectedImage = imgs.getSelectionModel();
+//         private ImageView imgPrev = new ImageView();
 
 
-    //selectedImage.selectedIndexProperty().addListener((obs, oldVal, newVal) -> imgDISP());
+//         @Override
+//         public void updateItem(Photo photo, boolean empty) {
+//             super.updateItem(photo, empty);
 
-    //if(subsetPhoto == null) selectedImage.selectFirst();
+//             if (empty || photo == null) {
+//                 setText(null);
+//                 setGraphic(null);
+
+//             } else {
+
+//                 try {
+//                     String photoPath = photo.getFilePath(); 
+//                     imgPrev.setImage(new Image(new FileInputStream(photoPath)));
+//                 } catch (Exception e) {
+//                     e.printStackTrace(); // Consider more robust error handling
+//                 }
+
+//                 imgPrev.setFitWidth(100);
+
+//                 //imgPrev.setPreserveRatio(true);
+
+//                 setText("caption: " + photo.getCaption());
+
+//                 setGraphic(imgPrev);
+
+//             }
+//         }
+//     });
+//     //selectedImage = imgs.getSelectionModel();
 
 
-    //else selectedImage.select(subsetPhoto);
+//     //selectedImage.selectedIndexProperty().addListener((obs, oldVal, newVal) -> imgDISP());
 
-}
+//     //if(subsetPhoto == null) selectedImage.selectFirst();
+
+
+//     //else selectedImage.select(subsetPhoto);
+
+// }
 
 private void imgDISP(String selectedPhotoName ) {
     //current photo
@@ -164,12 +158,17 @@ private void imgDISP(String selectedPhotoName ) {
         }
     }
 
+    //tagsList stuff
+    if (tagsList != null) {
+        tagObservableList = FXCollections.observableArrayList(selectedPhoto.getTagsAsList());
+        tagsList.setItems(tagObservableList);
+    }
     // return cleared disp if no photo is selected
     if (selectedPhoto == null) {
         dispImg.setImage(null); 
         captionText.setText("caption: ");
         dateText.setText("date: "); 
-        tags.setItems(null); //clear tags
+        tagsList.setItems(null); //clear tags
         return;
     }
 
@@ -189,10 +188,10 @@ private void imgDISP(String selectedPhotoName ) {
     dateText.setText("date: " + selectedPhoto.getDateTime()); 
 
     //populate the list of tags for the selected photo
-    tags.setItems(selectedPhoto.getTagsAsList());
+    tagsList.setItems(selectedPhoto.getTagsAsList());
 
     //set up tag selection 
-    selectedTag = tags.getSelectionModel();
+    selectedTag = tagsList.getSelectionModel();
     selectedTag.selectFirst(); //default to first tag
 }
 

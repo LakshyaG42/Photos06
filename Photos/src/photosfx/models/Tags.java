@@ -1,5 +1,6 @@
 package photosfx.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,7 +14,8 @@ import java.util.Set;
  * @author Lakshya Gour
  */
 
-public class Tags {
+public class Tags implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Map<String, Set<String>> tagMap; 
     public Tags() {
         this.tagMap = new HashMap<>();

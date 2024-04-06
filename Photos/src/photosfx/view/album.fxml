@@ -44,13 +44,13 @@
             <Font name="Segoe UI" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="269.0" layoutY="489.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="122.0" text="SLIDESHOW">
+      <Button layoutX="269.0" layoutY="489.0" mnemonicParsing="false" onAction="#loadSlideShow" prefHeight="29.0" prefWidth="122.0" text="SLIDESHOW">
          <font>
             <Font name="Segoe UI" size="16.0" />
          </font>
       </Button>
       <ImageView fx:id="dispImg" fitHeight="341.0" fitWidth="500.0" layoutX="229.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="71.0" />
-      <ListView fx:id="imgNamesListView" layoutX="527.0" layoutY="468.0" prefHeight="120.0" prefWidth="260.0" AnchorPane.bottomAnchor="12.0" />
+      <ListView fx:id="tagsList" layoutX="527.0" layoutY="468.0" prefHeight="120.0" prefWidth="260.0" />
       <Text fx:id="captionText" layoutX="229.0" layoutY="435.0" strokeType="OUTSIDE" strokeWidth="0.0" text="caption:" wrappingWidth="343.0" AnchorPane.rightAnchor="228.0" />
       <Text fx:id="dateText" layoutX="229.0" layoutY="452.0" strokeType="OUTSIDE" strokeWidth="0.0" text="date:" wrappingWidth="343.0" AnchorPane.rightAnchor="228.0" />
       <Button layoutX="400.0" layoutY="489.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="122.0" text="Add Tag">

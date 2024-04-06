@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import photosfx.models.Admin;
 import photosfx.models.Album;
+import photosfx.models.Tags;
 import photosfx.models.User;
 import photosfx.controllers.loginController;
 
@@ -35,18 +36,32 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-
         Admin.loadUsers("Photos/data/users.ser");
         if(Admin.getUsers().isEmpty()) {
-            Admin.createUser("stock");
+            boolean stockExists = false;
+            for(String username : Admin.getUsernameList()) {
+                if(username.equals("stock")) {
+                    stockExists = true;
+                }
+            }
+            if(!stockExists){
+                Admin.createUser("stock");
+            }
         }
         for(User user : Admin.getUsers()) {
             if(user.getUsername().equals("stock")) {
                 if(user.getAlbum("stock") == null) {
                     user.addAlbum(new photosfx.models.Album("stock"));
                     Album stockalbum = user.getAlbum("stock");
-                    stockalbum.addPhoto(new photosfx.models.Photo("Photos/data/stockPhotos/definitelyNewJersey.jpg", photosfx.models.Photo.getLastModifiedDateTime(new File("Photos/data/stockPhotos/definitelyNewJersey.jpg")), "New Jersey"));
-                    stockalbum.addPhoto(new photosfx.models.Photo("Photos/data/stockPhotos/happydog.jpg", photosfx.models.Photo.getLastModifiedDateTime(new File("Photos/data/stockPhotos/happydog.jpg")), "Happy Dog"));
+                    Tags nj = new Tags();
+                    nj.addTag("Location", "New Jersey");
+                    nj.addTag("Mood", "Calm");
+                    Tags happy = new Tags();
+                    happy.addTag("Location", "Software Methodology");
+                    happy.addTag("Mood", "Happy");
+                    happy.addTag("Person", "Doggo");
+                    stockalbum.addPhoto(new photosfx.models.Photo("Photos/data/stockPhotos/definitelyNewJersey.jpg", photosfx.models.Photo.getLastModifiedDateTime(new File("Photos/data/stockPhotos/definitelyNewJersey.jpg")), "New Jersey", nj));
+                    stockalbum.addPhoto(new photosfx.models.Photo("Photos/data/stockPhotos/happydog.jpg", photosfx.models.Photo.getLastModifiedDateTime(new File("Photos/data/stockPhotos/happydog.jpg")), "Happy Dog", happy));
                     stockalbum.addPhoto(new photosfx.models.Photo("Photos/data/stockPhotos/sadcat.jpg", photosfx.models.Photo.getLastModifiedDateTime(new File("Photos/data/stockPhotos/sadcat.jpg")), "Sad Cat"));
                     stockalbum.addPhoto(new photosfx.models.Photo("Photos/data/stockPhotos/standingcat.jpg", photosfx.models.Photo.getLastModifiedDateTime(new File("Photos/data/stockPhotos/standingcat.jpg")), "Standing Cat"));
                     stockalbum.addPhoto(new photosfx.models.Photo("Photos/data/stockPhotos/thisIsUs.png", photosfx.models.Photo.getLastModifiedDateTime(new File("Photos/data/stockPhotos/thisIsUs.png")), "This Is Us"));
