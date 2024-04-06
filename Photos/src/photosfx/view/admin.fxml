@@ -12,7 +12,7 @@
    <children>
       <AnchorPane prefHeight="424.0" prefWidth="279.0">
          <children>
-            <ListView layoutX="28.0" layoutY="79.0" prefHeight="305.0" prefWidth="214.0" />
+            <ListView fx:id="userListView" layoutX="28.0" layoutY="79.0" prefHeight="305.0" prefWidth="214.0" />
             <Text layoutX="2.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin Control" textAlignment="CENTER" wrappingWidth="265.13671875">
                <font>
                   <Font name="Segoe UI Semibold" size="32.0" />
@@ -24,7 +24,7 @@
                </font>
             </Text>
             <Button layoutX="147.0" layoutY="398.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Delete User" onAction="#" />
-            <Button layoutX="28.0" layoutY="398.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Create User"  onAction="#" />
+            <Button layoutX="28.0" layoutY="398.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Create User"  onAction="#showCreateUserDialog" />
          </children>
       </AnchorPane>
    </children>

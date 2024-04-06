@@ -1,9 +1,14 @@
 package photosfx.controllers;
 
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import javafx.scene.control.Alert.AlertType;
 
 public class loginController {
@@ -11,12 +16,20 @@ public class loginController {
     private TextField usernameField;
 
     @FXML
+    private Stage stage;
+
+    @FXML
     void login(ActionEvent event) {
         String username = usernameField.getText();
         if (isValidUsername(username)) {
-            showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome, " + username + "!");
             //AdminController Call
-            
+            if(username.equals("admin")) {
+                closeLoginWindow();
+                loadAdminView();
+            } else {
+                //User Controller Call
+                showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome, " + username + "!");
+            }
 
 
 
@@ -29,12 +42,33 @@ public class loginController {
     private boolean isValidUsername(String username) {
         return !username.trim().isEmpty();
     }
+
+    private void loadAdminView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/photosfx/view/admin.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.load()));
+            stage.setTitle("Admin Dashboard");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void closeLoginWindow() {
+        stage.close();
+    }
+    
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
 }
