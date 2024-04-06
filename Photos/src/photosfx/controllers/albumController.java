@@ -73,7 +73,7 @@ private void initialize() {
     loggedInUser = User.loadUser(username);
     photoNames = FXCollections.observableArrayList();
     album = loggedInUser.getAlbum(inputAlbumName);
-    albumText.setText(album.getName());
+   albumText.setText(album.getName());
     refreshPhotosList();
     imgNamesListView.setOnMouseClicked(event -> {
         String selectedPhotoName = imgNamesListView.getSelectionModel().getSelectedItem();
@@ -193,7 +193,7 @@ private void imgDISP(String selectedPhotoName ) {
 
     //set up tag selection 
     selectedTag = tags.getSelectionModel();
-    selectedTag.selectFirst(); //defualt to first tag
+    selectedTag.selectFirst(); //default to first tag
 }
 
 public void AddPhotos() { 
