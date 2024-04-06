@@ -82,9 +82,16 @@ public class Album implements Serializable {
     }
 
     public void copyPhoto(String filename, Album album) {
+        for (Photo photo : album.getPhotos()) {
+            if (photo.getFilePath().equals(filename)) {
+                Admin.showAlert(Alert.AlertType.ERROR, "Error", "Photo already exists in the destination album.");
+                return;
+            }
+        }
         for (Photo photo : photos) {
             if (photo.getFilePath().equals(filename)) {
                 album.addPhoto(photo);
+                return;
             }
         }
     }
@@ -101,6 +108,7 @@ public class Album implements Serializable {
             if (photo.getFilePath().equals(filename)) {
                 albumTo.addPhoto(photo);
                 photos.remove(photo);
+                return;
             }
         }
     }
