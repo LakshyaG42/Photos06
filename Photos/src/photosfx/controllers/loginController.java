@@ -34,6 +34,7 @@ public class loginController {
                 loadAdminView();
             } else {
                 //User Controller Call
+                loadUserView(username);
                 showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome, " + username + "!");
 
             }
@@ -58,6 +59,22 @@ public class loginController {
             e.printStackTrace();
         }
     }
+
+    private void loadUserView(String username) {
+        try {
+            userController.initData(username);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/photosfx/view/user.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.load()));
+            stage.setTitle("User Dashboard");
+            // Pass the username to the user controller
+            stage.show();
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load User Dashboard");
+            e.printStackTrace();
+        }
+    }
+
 
     private void closeLoginWindow() {
         stage.close();

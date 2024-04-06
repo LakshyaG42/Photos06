@@ -60,35 +60,32 @@ public class User implements Serializable{
         album.setName(newName);
     }
 
-    public void serializeAlbumNames() {
-        try {
-            FileOutputStream fileOut = new FileOutputStream("Photos/data/userPhotos/" + username + "_albums.ser");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            List<String> albumNames = new ArrayList<>();
-            for (Album album : albums) {
-                albumNames.add(album.getName());
-            }
-            out.writeObject(albumNames);
-            out.close();
-            fileOut.close();
-        } catch (IOException i) {
-            i.printStackTrace();
-        }
-    }
+    // public void serializeAlbumNames() {
+    //     try {
+    //         FileOutputStream fileOut = new FileOutputStream("Photos/data/userPhotos/" + username + "_albums.ser");
+    //         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+    //         List<String> albumNames = new ArrayList<>();
+    //         for (Album album : albums) {
+    //             albumNames.add(album.getName());
+    //         }
+    //         out.writeObject(albumNames);
+    //         out.close();
+    //         fileOut.close();
+    //     } catch (IOException i) {
+    //         i.printStackTrace();
+    //     }
+    // }
 
     public static User loadUser(String username) {
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("Photos/data/users.ser"))) {
-            User user;
-            while ((user = (User) inputStream.readObject()) != null) {
+        try {
+            Admin.loadUsers("Photos/data/users.ser");
+            for (User user : Admin.getUsers()) {
                 if (user.getUsername().equals(username)) {
                     return user;
                 }
             }
-        } catch (EOFException e) {
+        } catch (Exception e) {
             // End of file reached, user not found
-            Admin.showAlert(Alert.AlertType.ERROR, "Error loading users:", "User not found");
-            System.err.println("User not found");
-        } catch (IOException | ClassNotFoundException e) {
             Admin.showAlert(Alert.AlertType.ERROR, "Error loading users:", e.getMessage());
             System.err.println("Error loading users: " + e.getMessage());
         }
