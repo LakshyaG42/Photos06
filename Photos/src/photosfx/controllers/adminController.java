@@ -42,7 +42,7 @@ public class adminController {
         userList.clear();
         userList.addAll(Admin.getUsernameList());
         userListView.setItems(userList);
-        Admin.saveUsers("users.ser");
+        Admin.saveUsers("C:/Users/laksh/OneDrive/Documents/GitHub/Photos06/Photos/data/users.ser");
 
     }
 
@@ -54,7 +54,7 @@ public class adminController {
     public void deleteUser(String username) {
         Admin.deleteUser(username);
         //add functionality to delete the user's ser file here
-        
+
         updateList();
     }
 
@@ -70,9 +70,9 @@ public class adminController {
                 showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid username.");
                 System.out.println("Please enter a valid username.");
             } else {
-                showAlert(Alert.AlertType.INFORMATION, "User Created", "user: " + username + " created.");
-                System.out.println("user: " + username + " created.");
                 createUser(username);
+                System.out.println("user: " + username + " created.");
+                showAlert(Alert.AlertType.INFORMATION, "User Created", "user: " + username + " created.");
             }
             
         });

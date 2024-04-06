@@ -1,5 +1,6 @@
 package photosfx.models;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,7 +15,8 @@ public class Admin {
     private static List<User> users;
     static {
         users = new ArrayList<>();
-        loadUsers("users.ser");
+        String filePath = "C:/Users/laksh/OneDrive/Documents/GitHub/Photos06/Photos/data/users.ser";
+        loadUsers(filePath);
         User stockUser = new User("stock");
         if(users.isEmpty()) {
             users.add(stockUser);
@@ -47,14 +49,20 @@ public class Admin {
             }
         }
         User newUser = new User(username);
+        users.add(newUser);
         //create ser file for users' photos here
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(username + ".ser"))) {
-            outputStream.writeObject("");
+        File userFile = new File("C:\\Users\\laksh\\OneDrive\\Documents\\GitHub\\Photos06\\Photos\\data\\userPhotos\\" + username + ".ser");
+        try {
+            if(userFile.createNewFile()) {
+                System.out.println("File created: " + userFile.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Error creating user's data:", e.getMessage());
             System.err.println("Error creating user's data: " + e.getMessage());
         }
-        users.add(newUser);
+        
     }
 
     public static void deleteUser(String username) {
@@ -74,11 +82,11 @@ public class Admin {
             throw new IllegalArgumentException("User does not exist");
         }
         users.remove(userToDelete);
-        
+
         //delete username.ser file for users here
         try {
             if(!userToDelete.getUsername().equals("stock")) {
-                java.io.File file = new java.io.File(userToDelete.getUsername() + ".ser");
+                File file = new File("C:\\Users\\laksh\\OneDrive\\Documents\\GitHub\\Photos06\\Photos\\data\\userPhotos\\" + userToDelete.getUsername() + ".ser");
                 if(file.delete()) {
                     System.out.println(file.getName() + " is deleted!");
                 } else {
