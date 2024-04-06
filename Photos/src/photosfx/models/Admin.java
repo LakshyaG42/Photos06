@@ -75,7 +75,7 @@ public class Admin {
     }
 
     public static void deleteUser(String username) {
-        if(username == null || username.isEmpty() || username.equals("stock")) {
+        if(username == null || username.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Error", "Username cannot be null or empty or stock");
             throw new IllegalArgumentException("Username cannot be null or empty or stock");
         }

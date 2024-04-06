@@ -1,6 +1,7 @@
 package photosfx;
 
 import java.io.File;
+import java.util.Set;
 
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -22,7 +23,7 @@ import photosfx.controllers.loginController;
 
 
 public class Main extends Application {
-
+    
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/photosfx/view/login.fxml"));
@@ -33,7 +34,6 @@ public class Main extends Application {
         controller.setStage(primaryStage);
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         Admin.loadUsers("Photos/data/users.ser");
@@ -57,22 +57,31 @@ public class Main extends Application {
                     nj.addTag("Location", "New Jersey");
                     nj.addTag("Mood", "Calm");
                     Tags happy = new Tags();
-                    happy.addTag("Location", "Software Methodology");
+                    happy.addTag("Location", "Park");
                     happy.addTag("Mood", "Happy");
                     happy.addTag("Person", "Doggo");
                     Tags sad = new Tags();
                     sad.addTag("Location", "English Class");
                     sad.addTag("Mood", "Sad");
                     sad.addTag("Person", "Catto");
+                    Tags stand = new Tags();
+                    stand.addTag("Location", "UN Conference Hall");
+                    stand.addTag("Mood", "Confident");
+                    stand.addTag("Person", "Catto");
+                    Tags meth = new Tags();
+                    meth.addTag("Location", "Software Methodology Classroom");
+                    meth.addTag("Mood", "Estatic");
+                    meth.addTag("Person", Set.of("Hackerman", "Estatic"));
                     stockalbum.addPhoto(new photosfx.models.Photo("Photos/data/stockPhotos/definitelyNewJersey.jpg", photosfx.models.Photo.getLastModifiedDateTime(new File("Photos/data/stockPhotos/definitelyNewJersey.jpg")), "New Jersey", nj));
                     stockalbum.addPhoto(new photosfx.models.Photo("Photos/data/stockPhotos/happydog.jpg", photosfx.models.Photo.getLastModifiedDateTime(new File("Photos/data/stockPhotos/happydog.jpg")), "Happy Dog", happy));
                     stockalbum.addPhoto(new photosfx.models.Photo("Photos/data/stockPhotos/sadcat.jpg", photosfx.models.Photo.getLastModifiedDateTime(new File("Photos/data/stockPhotos/sadcat.jpg")), "Sad Cat", sad));
-                    stockalbum.addPhoto(new photosfx.models.Photo("Photos/data/stockPhotos/standingcat.jpg", photosfx.models.Photo.getLastModifiedDateTime(new File("Photos/data/stockPhotos/standingcat.jpg")), "Standing Cat"));
-                    stockalbum.addPhoto(new photosfx.models.Photo("Photos/data/stockPhotos/thisIsUs.png", photosfx.models.Photo.getLastModifiedDateTime(new File("Photos/data/stockPhotos/thisIsUs.png")), "This Is Us"));
+                    stockalbum.addPhoto(new photosfx.models.Photo("Photos/data/stockPhotos/standingcat.jpg", photosfx.models.Photo.getLastModifiedDateTime(new File("Photos/data/stockPhotos/standingcat.jpg")), "Standing Cat", stand));
+                    stockalbum.addPhoto(new photosfx.models.Photo("Photos/data/stockPhotos/thisIsUs.png", photosfx.models.Photo.getLastModifiedDateTime(new File("Photos/data/stockPhotos/thisIsUs.png")), "This Is Us", meth));
                     Admin.saveUsers("Photos/data/users.ser");
                 }
             }
         }
         launch(args);
     }
+    
 }

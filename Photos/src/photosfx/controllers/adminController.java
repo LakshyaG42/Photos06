@@ -7,10 +7,12 @@ import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import photosfx.Main;
 import photosfx.models.Admin;
 import photosfx.models.User;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -32,6 +34,8 @@ import javafx.stage.Stage;
 public class adminController {
     @FXML
     private Button createUserButton;
+    @FXML
+    private Button logoutButton;
     @FXML
     private ListView<String> userListView;
 
@@ -112,6 +116,34 @@ public class adminController {
         alert.showAndWait();
     }
 
+    @FXML
+    private void logout() {
+        // Display confirmation dialog
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to logout?");
+        alert.showAndWait().ifPresent(response -> {
+            if (response == javafx.scene.control.ButtonType.OK) {
+                // Close the current stage
+                Stage stage = (Stage) logoutButton.getScene().getWindow();
+                stage.close();
+                // Load and display the login screen
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/photosfx/view/login.fxml"));
+                    Parent root = loader.load();
+                    Stage loginStage = new Stage();
+                    loginStage.setTitle("Login");
+                    loginStage.setScene(new Scene(root, 400, 300));
+                    loginController controller = loader.getController();
+                    controller.setStage(loginStage);
+                    loginStage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
     /* 
     @FXML
     private void showCreateUserDialog() {

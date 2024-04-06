@@ -7,10 +7,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="437.0" prefWidth="266.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photosfx.controllers.adminController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="266.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photosfx.controllers.adminController">
    <children>
-      <AnchorPane prefHeight="424.0" prefWidth="279.0">
+      <AnchorPane prefHeight="457.0" prefWidth="257.0">
          <children>
             <ListView fx:id="userListView" layoutX="28.0" layoutY="79.0" prefHeight="305.0" prefWidth="214.0" />
             <Text layoutX="2.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin Control" textAlignment="CENTER" wrappingWidth="265.13671875">
@@ -23,8 +22,13 @@
                   <Font name="Segoe UI" size="21.0" />
                </font>
             </Text>
-            <Button layoutX="147.0" layoutY="398.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Delete User" onAction="#showDeleteUserDialog" />
-            <Button layoutX="28.0" layoutY="398.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Create User"  onAction="#showCreateUserDialog" />
+            <Button layoutX="28.0" layoutY="390.0" mnemonicParsing="false" onAction="#showDeleteUserDialog" prefHeight="25.0" prefWidth="95.0" text="Delete User" />
+            <Button layoutX="147.0" layoutY="390.0" mnemonicParsing="false" onAction="#showCreateUserDialog" prefHeight="25.0" prefWidth="95.0" text="Create User" />
+            <Button fx:id="logoutButton" layoutX="87.0" layoutY="422.0" mnemonicParsing="false" onAction="#logout" prefHeight="25.0" prefWidth="95.0" text="Logout">
+               <font>
+                  <Font name="Segoe UI" size="14.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </children>

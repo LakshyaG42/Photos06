@@ -92,7 +92,7 @@ public class Photo implements Serializable {
         tags.addTag(tagName, tagValue);
     }
     public void addTag(String tagName, Set<String> tagValue) {
-        tags.addMultipleValuesTag(tagName, tagValue);
+        tags.addTag(tagName, tagValue);
     }
 
     public void removeTag(String tagName, Set<String> tagValue) {
