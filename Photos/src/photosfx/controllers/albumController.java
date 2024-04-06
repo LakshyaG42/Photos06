@@ -136,8 +136,6 @@ private void refresh() {
 
 }
 
-
-
 private void imgDISP() {
     //current photo
     final Photo selectedPhoto =  imgs.getSelectionModel().getSelectedItem();
@@ -173,6 +171,47 @@ private void imgDISP() {
     selectedTag = tags.getSelectionModel();
     selectedTag.selectFirst(); //defualt to first tag
 }
+
+public void loadAddPhotos(final ActionEvent e) { 
+
+    FileChooser pickImgFile = new FileChooser(); 
+
+}
+
+
+public void delPhoto(final ActionEvent e) { 
+
+}
+
+public void addTagView(final ActionEvent e) { 
+
+}
+
+public void delTag(final ActionEvent e) { 
+
+}
+
+public void loadUserPage(final ActionEvent e) { 
+
+}
+
+public void renameCaptionView(final ActionEvent e) { 
+
+}
+
+public void copyPhotoView(final ActionEvent e) { 
+
+}
+
+public void movePhotoView(final ActionEvent e) { 
+
+}
+
+public void loadSlideShow(final ActionEvent e) { 
+
+}
+
+
 
     
 }
