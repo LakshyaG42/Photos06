@@ -15,7 +15,7 @@ public class Admin {
     private static List<User> users;
     static {
         users = new ArrayList<>();
-        String filePath = "C:/Users/laksh/OneDrive/Documents/GitHub/Photos06/Photos/data/users.ser";
+        String filePath = "Photos/data/users.ser";
         loadUsers(filePath);
         User stockUser = new User("stock");
         if(users.isEmpty()) {
@@ -51,7 +51,7 @@ public class Admin {
         User newUser = new User(username);
         users.add(newUser);
         //create ser file for users' photos here
-        File userFile = new File("C:\\Users\\laksh\\OneDrive\\Documents\\GitHub\\Photos06\\Photos\\data\\userPhotos\\" + username + ".ser");
+        File userFile = new File("Photos/data/userPhotos/" + username + ".ser");
         try {
             if(userFile.createNewFile()) {
                 System.out.println("File created: " + userFile.getName());
@@ -86,7 +86,7 @@ public class Admin {
         //delete username.ser file for users here
         try {
             if(!userToDelete.getUsername().equals("stock")) {
-                File file = new File("C:\\Users\\laksh\\OneDrive\\Documents\\GitHub\\Photos06\\Photos\\data\\userPhotos\\" + userToDelete.getUsername() + ".ser");
+                File file = new File("Photos/data/userPhotos/" + userToDelete.getUsername() + ".ser");
                 if(file.delete()) {
                     System.out.println(file.getName() + " is deleted!");
                 } else {
