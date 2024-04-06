@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import photosfx.models.Admin;
 import javafx.scene.control.Alert.AlertType;
 
 /**
@@ -27,18 +28,25 @@ public class loginController {
     @FXML
     void login(ActionEvent event) {
         String username = usernameField.getText();
+        boolean userfound = false;
         if (isValidUsername(username)) {
             //AdminController Call
-            if(username.equals("admin")) {
+            if (username.equals("admin")) {
+                userfound = true;
                 closeLoginWindow();
                 loadAdminView();
             } else {
-                //User Controller Call
-                closeLoginWindow();
-                loadUserView(username);
-                showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome, " + username + "!");
-
+                // User Controller Call
+                for (String user : Admin.getUsernameList()) {
+                    if (user.equals(username)) {
+                        userfound = true;
+                        closeLoginWindow();
+                        loadUserView(username);
+                        showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome, " + username + "!");
+                    }
+                }
             }
+            if(userfound == false) {showAlert(Alert.AlertType.ERROR, "Error", "User doesn't exist, please enter a valid username");}
         } else {
             showAlert(Alert.AlertType.ERROR, "Error", "Invalid Username, please enter a valid username");
         }
