@@ -59,6 +59,11 @@ private SelectionModel<Photo> selectedImage;
 private SelectionModel<List<String>> selectedTag; 
 
 
+public void albumContents(String username, String albumName, Photo p) {
 
+ user = User.loadUser(username); 
+
+
+}
     
 }
