@@ -38,6 +38,8 @@ public class adminController {
         userList.clear();
         userList.addAll(Admin.getUsernameList());
         userListView.setItems(userList);
+        Admin.saveUsers("users.ser");
+        
     }
 
     public void createUser(String username) {
@@ -56,12 +58,9 @@ public class adminController {
         dialog.setTitle("Create User");
         dialog.setHeaderText(null);
         dialog.setContentText("Enter Username:");
-
-        // Show the dialog box and wait for user input
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(username -> {
             if(username == null || username.isEmpty()) {
-                // Show error message or handle invalid input
                 System.out.println("Please enter a valid username.");
             } else {
                 System.out.println("user: " + username + " created.");
