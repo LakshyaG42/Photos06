@@ -261,11 +261,8 @@ public void delTag(final ActionEvent e) {
 
 }
 
-public void loadUserPage(final ActionEvent e) { 
 
-}
-
-public void renameCaptionView(final ActionEvent e) { 
+public void renameCaption() { 
 
 }
 
@@ -279,18 +276,19 @@ public void copyPhoto() {
                 albumNames.add(album.getName());
             }
         }
-        ChoiceDialog<String> dialog = new ChoiceDialog<>(albumNames.get(0), albumNames);
+
+
+        ChoiceDialog<String> dialog = new ChoiceDialog<>(albumNames.get(0), albumNames); // Drop down list of albums to copy the photo to
         dialog.setTitle("Copy Photo");
         dialog.setHeaderText("Select the album to copy the photo to:");
         dialog.setContentText("Album:");
 
-        // Get the selected album name from the dialog
+        
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(selectedAlbumName -> {
             Album selectedAlbum = loggedInUser.getAlbum(selectedAlbumName);
             if (selectedAlbum != null) {
-                // Call the copyPhoto method in Album class to copy the photo
-                album.copyPhoto(photoFilename, selectedAlbum);
+                album.copyPhoto(photoFilename, selectedAlbum); // Call the copyPhoto method in Album class to copy the photo
                 Admin.saveUsers("Photos/data/users.ser");
                 refreshPhotosList();
                 System.out.println("Photo copied to album: " + selectedAlbumName);
@@ -304,6 +302,43 @@ public void copyPhoto() {
         System.out.println("Please select a photo to copy.");
     }
 }
+public void movePhoto() { 
+    String photoFilename = imgNamesListView.getSelectionModel().getSelectedItem();
+    if (photoFilename != null) {
+        List<Album> userAlbums = loggedInUser.getAlbums();
+        List<String> albumNames = new ArrayList<>();
+        for (Album album : userAlbums) {
+            if (!album.getName().equals(inputAlbumName)) {
+                albumNames.add(album.getName());
+            }
+        }
+
+
+        ChoiceDialog<String> dialog = new ChoiceDialog<>(albumNames.get(0), albumNames); // Drop down list of albums to copy the photo to
+        dialog.setTitle("Move Photo");
+        dialog.setHeaderText("Select the album to move the photo to:");
+        dialog.setContentText("Album:");
+
+        
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(selectedAlbumName -> {
+            Album selectedAlbum = loggedInUser.getAlbum(selectedAlbumName);
+            if (selectedAlbum != null) {
+                album.movePhoto(photoFilename, selectedAlbum); // Call the copyPhoto method in Album class to copy the photo
+                Admin.saveUsers("Photos/data/users.ser");
+                refreshPhotosList();
+            } else {
+                Admin.showAlert(Alert.AlertType.ERROR, "Error", "Selected album not found.");
+                System.out.println("Selected album not found.");
+            }
+        });
+    } else {
+        Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please select a photo to copy.");
+        System.out.println("Please select a photo to copy.");
+    }
+}
+
+
 
 public void movePhotoView(final ActionEvent e) { 
 

@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.control.Alert;
+
 /**
  * Album Model
  * @author Dhruv Shidhaye
@@ -83,6 +85,22 @@ public class Album implements Serializable {
         for (Photo photo : photos) {
             if (photo.getFilePath().equals(filename)) {
                 album.addPhoto(photo);
+            }
+        }
+    }
+
+    public void movePhoto(String filename, Album albumTo) {
+        for (Photo photo : albumTo.getPhotos()) {
+            if (photo.getFilePath().equals(filename)) {
+                Admin.showAlert(Alert.AlertType.ERROR, "Error", "Photo already exists in the destination album.");
+                return;
+            }
+        }
+        for (Photo photo : photos) {
+            
+            if (photo.getFilePath().equals(filename)) {
+                albumTo.addPhoto(photo);
+                photos.remove(photo);
             }
         }
     }
