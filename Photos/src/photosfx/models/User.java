@@ -1,7 +1,16 @@
 package photosfx.models;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
+import photosfx.models.Admin;
+import photosfx.models.Album;
+import javafx.scene.control.Alert;
+
 import java.util.ArrayList;
 
 
@@ -50,4 +59,31 @@ public class User implements Serializable{
         album.setName(newName);
     }
 
+    public void serializeAlbumNames() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("Photos/data/userPhotos/" + username + "_albums.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            List<String> albumNames = new ArrayList<>();
+            for (Album album : albums) {
+                albumNames.add(album.getName());
+            }
+            out.writeObject(albumNames);
+            out.close();
+            fileOut.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
+
+
+    public static User loadUser(String username) {
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("Photos/data/userPhotos/" + username + ".ser"))) {
+            User user = (User) inputStream.readObject();
+            return user;
+        } catch (IOException | ClassNotFoundException e) {
+            Admin.showAlert(Alert.AlertType.ERROR, "Error loading users:", e.getMessage());
+            System.err.println("Error loading users: " + e.getMessage());
+            return null;
+        }
+    }
 }
