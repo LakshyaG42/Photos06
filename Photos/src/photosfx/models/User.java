@@ -114,7 +114,4 @@ public class User implements Serializable{
         //convert
         return FXCollections.observableArrayList(filteredAlbums);
     }
-
-    public boolean movePhoto(String sourceAlbumName, String destinationAlbumName, Photo photo) {
-
 }
