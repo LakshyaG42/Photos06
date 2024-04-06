@@ -34,7 +34,7 @@
             <Font name="Segoe UI" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="140.0" layoutY="488.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="122.0" text="COPY">
+      <Button layoutX="140.0" layoutY="488.0" mnemonicParsing="false" onAction="#copyPhoto" prefHeight="29.0" prefWidth="122.0" text="COPY">
          <font>
             <Font name="Segoe UI" size="16.0" />
          </font>

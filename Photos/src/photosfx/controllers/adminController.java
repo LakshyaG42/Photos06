@@ -90,7 +90,7 @@ public class adminController {
     @FXML
     private void showDeleteUserDialog() {
         ObservableList<String> newUserList = FXCollections.observableArrayList(Admin.getUsernameList());
-        newUserList.remove("stock");
+        //newUserList.remove("stock");
         ChoiceDialog<String> dialog = new ChoiceDialog<>(null, newUserList);
         dialog.setTitle("Delete User");
         dialog.setHeaderText(null);

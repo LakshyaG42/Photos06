@@ -37,16 +37,15 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         Admin.loadUsers("Photos/data/users.ser");
-        if(Admin.getUsers().isEmpty()) {
-            boolean stockExists = false;
-            for(String username : Admin.getUsernameList()) {
-                if(username.equals("stock")) {
-                    stockExists = true;
-                }
+       
+        boolean stockExists = false;
+        for(String username : Admin.getUsernameList()) {
+            if(username.equals("stock")) {
+                stockExists = true;
             }
-            if(!stockExists){
-                Admin.createUser("stock");
-            }
+        }
+        if(!stockExists){
+            Admin.createUser("stock");
         }
         for(User user : Admin.getUsers()) {
             if(user.getUsername().equals("stock")) {

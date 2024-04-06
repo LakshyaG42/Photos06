@@ -78,4 +78,12 @@ public class Album implements Serializable {
             latestDate = photo.getDateTime();
         }
     }
+
+    public void copyPhoto(String filename, Album album) {
+        for (Photo photo : photos) {
+            if (photo.getFilePath().equals(filename)) {
+                album.addPhoto(photo);
+            }
+        }
+    }
 }

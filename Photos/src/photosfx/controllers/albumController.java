@@ -6,6 +6,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ListCell;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -268,8 +269,40 @@ public void renameCaptionView(final ActionEvent e) {
 
 }
 
-public void copyPhotoView(final ActionEvent e) { 
+public void copyPhoto() { 
+    String photoFilename = imgNamesListView.getSelectionModel().getSelectedItem();
+    if (photoFilename != null) {
+        List<Album> userAlbums = loggedInUser.getAlbums();
+        List<String> albumNames = new ArrayList<>();
+        for (Album album : userAlbums) {
+            if (!album.getName().equals(inputAlbumName)) {
+                albumNames.add(album.getName());
+            }
+        }
+        ChoiceDialog<String> dialog = new ChoiceDialog<>(albumNames.get(0), albumNames);
+        dialog.setTitle("Copy Photo");
+        dialog.setHeaderText("Select the album to copy the photo to:");
+        dialog.setContentText("Album:");
 
+        // Get the selected album name from the dialog
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(selectedAlbumName -> {
+            Album selectedAlbum = loggedInUser.getAlbum(selectedAlbumName);
+            if (selectedAlbum != null) {
+                // Call the copyPhoto method in Album class to copy the photo
+                album.copyPhoto(photoFilename, selectedAlbum);
+                Admin.saveUsers("Photos/data/users.ser");
+                refreshPhotosList();
+                System.out.println("Photo copied to album: " + selectedAlbumName);
+            } else {
+                Admin.showAlert(Alert.AlertType.ERROR, "Error", "Selected album not found.");
+                System.out.println("Selected album not found.");
+            }
+        });
+    } else {
+        Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please select a photo to copy.");
+        System.out.println("Please select a photo to copy.");
+    }
 }
 
 public void movePhotoView(final ActionEvent e) { 
