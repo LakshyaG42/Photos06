@@ -60,7 +60,7 @@ private ObservableList<String> photoNames;
 
 private SelectionModel<Photo> selectedImage; 
 
-@FXML Text caption, date, albumName; 
+@FXML Text captionText, dateText, albumText; 
 
 @FXML ImageView dispImg; 
 
@@ -73,7 +73,12 @@ private void initialize() {
     loggedInUser = User.loadUser(username);
     photoNames = FXCollections.observableArrayList();
     album = loggedInUser.getAlbum(inputAlbumName);
+    albumText.setText(album.getName());
     refreshPhotosList();
+    imgNamesListView.setOnMouseClicked(event -> {
+        String selectedPhotoName = imgNamesListView.getSelectionModel().getSelectedItem();
+        imgDISP(selectedPhotoName);
+    });
 }
 
 private void refreshPhotosList(){
@@ -94,7 +99,7 @@ public static void initData(Album album, String name) {
 
 public void setAlbum(Album album) {
     this.album = album;
-    albumName.setText(album.getName());
+    albumText.setText(album.getName());
     refresh();
 }
 
@@ -137,10 +142,10 @@ private void refresh() {
             }
         }
     });
-    selectedImage = imgs.getSelectionModel();
+    //selectedImage = imgs.getSelectionModel();
 
 
-    selectedImage.selectedIndexProperty().addListener((obs, oldVal, newVal) -> imgDISP());
+    //selectedImage.selectedIndexProperty().addListener((obs, oldVal, newVal) -> imgDISP());
 
     //if(subsetPhoto == null) selectedImage.selectFirst();
 
@@ -149,15 +154,21 @@ private void refresh() {
 
 }
 
-private void imgDISP() {
+private void imgDISP(String selectedPhotoName ) {
     //current photo
-    final Photo selectedPhoto =  imgs.getSelectionModel().getSelectedItem();
+    Photo selectedPhoto = null;
+    for (Photo photo : album.getPhotos()) {
+        if (photo.getFilePath().equals(selectedPhotoName)) {
+            selectedPhoto = photo;
+            break;
+        }
+    }
 
     // return cleared disp if no photo is selected
     if (selectedPhoto == null) {
         dispImg.setImage(null); 
-        caption.setText("caption: ");
-        date.setText("date: "); 
+        captionText.setText("caption: ");
+        dateText.setText("date: "); 
         tags.setItems(null); //clear tags
         return;
     }
@@ -174,8 +185,8 @@ private void imgDISP() {
     dispImg.setPreserveRatio(true);
 
     //display cap and date
-    caption.setText("caption: " + selectedPhoto.getCaption());
-    date.setText("date: " + selectedPhoto.getDateTime()); 
+    captionText.setText("caption: " + selectedPhoto.getCaption());
+    dateText.setText("date: " + selectedPhoto.getDateTime()); 
 
     //populate the list of tags for the selected photo
     tags.setItems(selectedPhoto.getTagsAsList());

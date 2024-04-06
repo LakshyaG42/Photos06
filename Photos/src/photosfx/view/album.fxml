@@ -59,7 +59,7 @@
             <Font size="20.0" />
          </font>
       </Button>
-      <ImageView fx:id="displayImage" fitHeight="258.0" fitWidth="360.0" layoutX="228.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="212.0" />
+      <ImageView fx:id="dispImg" fitHeight="258.0" fitWidth="360.0" layoutX="228.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="212.0" />
       <ListView fx:id="imgNamesListView" layoutX="595.0" layoutY="171.0" prefHeight="429.0" prefWidth="191.0" AnchorPane.bottomAnchor="108.0" />
       <Text fx:id="captionText" layoutX="229.0" layoutY="435.0" strokeType="OUTSIDE" strokeWidth="0.0" text="caption:" wrappingWidth="343.0" AnchorPane.rightAnchor="228.0" />
       <Text fx:id="dateText" layoutX="229.0" layoutY="452.0" strokeType="OUTSIDE" strokeWidth="0.0" text="date:" wrappingWidth="343.0" AnchorPane.rightAnchor="228.0" />
