@@ -63,12 +63,11 @@ public class loginController {
 
     private void loadUserView(String username) {
         try {
-            userController.initData(username);
+            userController.initData(username); // Pass the username to the user controller
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/photosfx/view/user.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
             stage.setTitle("User Dashboard");
-            // Pass the username to the user controller
             stage.show();
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to load User Dashboard");

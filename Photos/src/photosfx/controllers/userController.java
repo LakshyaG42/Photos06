@@ -3,15 +3,19 @@ package photosfx.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.stage.Stage;
 import photosfx.models.Admin;
 import photosfx.models.Album;
 import photosfx.models.User;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -102,6 +106,21 @@ public class userController {
             }
         } else {
             showAlert(Alert.AlertType.ERROR, "Error", "Please select an album to rename.");
+        }
+    }
+
+    private void loadAlbumView(Album album) {
+        try {
+            albumController.initData(album, username);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/photosfx/view/album.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.load()));
+            stage.setTitle("User Dashboard");
+            // Pass the username to the user controller
+            stage.show();
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load User Dashboard");
+            e.printStackTrace();
         }
     }
 

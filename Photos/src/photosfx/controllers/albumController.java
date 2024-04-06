@@ -30,12 +30,11 @@ import photosfx.models.Photo;
 
 public class albumController {
 
-
-//user
-private User user; 
-
-//album
-private Album album; 
+//data from userController:
+private static String inputAlbumName;
+private static String username;
+private User loggedInUser;
+private Album album;
 
 //photo for selection
 private Photo subsetPhoto; 
@@ -59,17 +58,22 @@ private SelectionModel<Photo> selectedImage;
 // tag selection
 private SelectionModel<String> selectedTag; 
 
+@FXML
+private void initialize() {
+    loggedInUser = User.loadUser(username);
+    album = loggedInUser.getAlbum(inputAlbumName);
+    //refreshPhotosList();
+}
 
-public void albumContents(String username, String albumInp, Photo p) {
+public static void initData(Album album, String name) {
+    inputAlbumName = album.getName();
+    username = name;
+}
 
- user = User.loadUser(username); 
- album = user.getAlbum(albumInp); 
- subsetPhoto = p; 
-
-albumName.setText("album: " + albumName); 
-
-refresh(); 
-
+public void setAlbum(Album album) {
+    this.album = album;
+    albumName.setText(album.getName());
+    refresh();
 }
 
 
