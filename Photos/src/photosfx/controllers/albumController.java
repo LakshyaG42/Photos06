@@ -125,7 +125,7 @@ private void refresh() {
 
 
 
-private void imageDetail() {
+private void imgDISP() {
     //current photo
     final Photo selectedPhoto = selectedImage.getSelectedItem();
 
@@ -149,18 +149,16 @@ private void imageDetail() {
     dispImg.setFitWidth(350);
     dispImg.setPreserveRatio(true);
 
-    // Display photo's caption and date
+    //display cap and date
     caption.setText("caption: " + selectedPhoto.getCaption());
-    // Ensure you format the date appropriately if Photo class contains a Date object or similar for the date
-    date.setText("date: " + selectedPhoto.getDateTime()); // Assuming your Photo class has a getDate() method returning a String or Date object
+    date.setText("date: " + selectedPhoto.getDateTime()); 
 
-    // Populate the list of tags for the selected photo
-    // Assuming getTags() returns an ObservableList<String> or can be converted to one
+    //populate the list of tags for the selected photo
     tags.setItems(selectedPhoto.getTagsAsList());
 
-    // Set up tag selection handling, assuming modelTag is similar to selectedImage but for the tag ListView
+    //set up tag selection 
     selectedTag = tags.getSelectionModel();
-    selectedTag.selectFirst(); // Auto-select the first tag if desired
+    selectedTag.selectFirst(); //defualt to first tag
 }
 
     
