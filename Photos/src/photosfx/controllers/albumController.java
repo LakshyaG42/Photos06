@@ -11,9 +11,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -80,6 +82,12 @@ private void initialize() {
     imgNamesListView.setOnMouseClicked(event -> {
         String selectedPhotoName = imgNamesListView.getSelectionModel().getSelectedItem();
         imgDISP(selectedPhotoName);
+    });
+    imgNamesListView.setOnKeyPressed(event -> {
+        String selectedPhotoName = imgNamesListView.getSelectionModel().getSelectedItem();
+        if (selectedPhotoName != null) {
+            imgDISP(selectedPhotoName);
+        }
     });
 }
 
@@ -288,6 +296,8 @@ public void loadSlideShow(final ActionEvent e) throws IOException {
     Stage stage = new Stage();
     slideshowControl.setStage(stage);
     stage.setScene(new Scene(root));
+    stage.initModality(Modality.WINDOW_MODAL);
+    stage.initOwner(((Node)e.getSource()).getScene().getWindow());
     stage.show();
 }
 
