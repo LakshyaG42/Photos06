@@ -709,7 +709,28 @@ public ObservableList<Photo> searchByTag(String input) {
     return filteredPhotos;
 }
 
+public void createAlbumFromDisplayedPhotos() {
+    TextInputDialog dialog = new TextInputDialog();
+    dialog.setTitle("Create Album from Displayed Photos");
+    dialog.setHeaderText(null);
+    dialog.setContentText("Enter Album Name:");
 
+    Optional<String> result = dialog.showAndWait();
+    if(result.isPresent()) {
+        String albumName = result.get().trim();
+        if (!albumName.isEmpty()) {
+            Album newAlbum = new Album(albumName);
+            for (Photo photo : photoListView.getItems()) {
+                newAlbum.addPhoto(photo);
+            }
+            loggedInUser.addAlbum(newAlbum);
+            Admin.saveUsers("Photos/data/users.ser");
+            Admin.showAlert(Alert.AlertType.INFORMATION, "Success", "Album created successfully.");
+        } else {
+            Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid album name.");
+        }
+    }
+}
 
 
 

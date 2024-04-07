@@ -100,7 +100,7 @@
             <Font name="Segoe UI Semibold" size="20.0" />
          </font>
       </Text>
-      <Button layoutX="630.0" layoutY="58.0" mnemonicParsing="false" text="Make Album out of search" />
+      <Button onAction="#createAlbumFromDisplayedPhotos" layoutX="630.0" layoutY="58.0" mnemonicParsing="false" text="Make Album out of Displayed" />
       <Button onAction="#clearSearch" layoutX="734.0" layoutY="28.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="Reset" />
    </children>
 </AnchorPane>
