@@ -353,7 +353,7 @@ public void renameCaption() {
                 refreshPhotosList();
                 //refresh the display for the caption
                 
-                //imgDISP(selectedPhoto.getFilePath());
+                imgDISP(selectedPhoto.getFilePath());
                 System.out.println(selectedPhoto.getFilePath() + " caption renamed to " + rename);
                 
             }
