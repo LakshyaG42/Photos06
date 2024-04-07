@@ -29,15 +29,32 @@ public class Admin {
         // }
     }
     
+    /**
+ * Returns a list of all users.
+ * 
+ * @return a list containing all registered users
+ */
     public static List<User> getUsers() {
         return users;
     }
+
+    /**
+ * Prints and returns the list of usernames.
+ * 
+ * @return a list containing the usernames of all registered users
+ */
     public static List<User> listUsers() {
         for(User user : users) {
             System.out.println(user.getUsername());
         }
         return users;
     }
+
+    /**
+ * Retrieves a list of all usernames.
+ * 
+ * @return an ArrayList containing the usernames of all registered users
+ */
     public static ArrayList<String> getUsernameList() {
         ArrayList<String> usernames = new ArrayList<>();
         for(User user : users) {
@@ -46,6 +63,12 @@ public class Admin {
         return usernames;
     }
 
+    /**
+ * Creates a new user with the specified username.
+ * 
+ * @param username the username for the new user
+ * @throws IllegalArgumentException if the username is null, empty, or already exists
+ */
     public static void createUser(String username) {
         if(username == null || username.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid username.");
@@ -73,6 +96,13 @@ public class Admin {
         // }
         
     }
+
+    /**
+ * Deletes the user with the specified username.
+ * 
+ * @param username the username of the user to delete
+ * @throws IllegalArgumentException if the username is null, empty, or the user does not exist
+ */
 
     public static void deleteUser(String username) {
         if(username == null || username.isEmpty()) {
@@ -109,6 +139,12 @@ public class Admin {
     }
 
 
+    /**
+ * Saves the list of users to the specified file.
+ * 
+ * @param fileName the file path where users data will be saved
+ */
+
     public static void saveUsers(String fileName) {
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(fileName))) {
             outputStream.writeObject(users);
@@ -118,6 +154,12 @@ public class Admin {
             System.err.println("Error saving users: " + e.getMessage());
         }
     }
+
+    /**
+ * Loads the list of users from the specified file.
+ * 
+ * @param fileName the file path from where users data will be loaded
+ */
     public static void loadUsers(String fileName) {
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(fileName))) {
             users = (List<User>) inputStream.readObject();
@@ -128,6 +170,13 @@ public class Admin {
         }
     }
 
+    /**
+ * Displays an alert dialog with the specified type, title, and message.
+ * 
+ * @param alertType the type of the alert dialog
+ * @param title the title of the alert dialog
+ * @param message the message to display in the alert dialog
+ */
     public static void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
