@@ -11,12 +11,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photosfx.controllers.albumController">
    <children>
-      <Text fx:id="albumText" layoutX="111.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Album Viewer" wrappingWidth="213.11474609375" AnchorPane.leftAnchor="111.0" AnchorPane.rightAnchor="475.88525390625" AnchorPane.topAnchor="15.0">
+      <Text layoutX="9.0" layoutY="29.53125" strokeType="OUTSIDE" strokeWidth="0.0" text="Album Viewer" wrappingWidth="213.11474609375" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="577.88525390625" AnchorPane.topAnchor="-5.0">
          <font>
             <Font name="Segoe UI Semibold" size="32.0" />
          </font>
       </Text>
-      <Text layoutX="14.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Images" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="31.41796875">
+      <Text layoutX="14.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Images Album:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="31.41796875">
          <font>
             <Font name="Segoe UI Semibold" size="20.0" />
          </font>
@@ -31,7 +31,7 @@
             <Font name="Segoe UI" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="269.0" layoutY="531.0" mnemonicParsing="false" onAction= "#renameCaption" prefHeight="29.0" prefWidth="122.0" text="Edit Caption">
+      <Button layoutX="269.0" layoutY="531.0" mnemonicParsing="false" onAction="#renameCaption" prefHeight="29.0" prefWidth="122.0" text="Edit Caption">
          <font>
             <Font name="Segoe UI" size="16.0" />
          </font>
@@ -51,7 +51,7 @@
             <Font name="Segoe UI" size="16.0" />
          </font>
       </Button>
-      <ImageView fx:id="dispImg" fitHeight="352.0" fitWidth="507.0" layoutX="229.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="64.0" />
+      <ImageView fx:id="dispImg" fitHeight="335.0" fitWidth="560.0" layoutX="229.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="11.0" />
       <ListView fx:id="tagsList" layoutX="527.0" layoutY="468.0" prefHeight="120.0" prefWidth="260.0" />
       <Text fx:id="captionText" layoutX="229.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Caption:" wrappingWidth="343.0" AnchorPane.rightAnchor="228.0">
          <font>
@@ -61,11 +61,7 @@
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font></Text>
-      <Button layoutX="400.0" layoutY="489.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="122.0" text="Add Tag">
-         <font>
-            <Font name="Segoe UI" size="16.0" />
-         </font></Button>
-      <Button layoutX="400.0" layoutY="531.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="122.0" text="Delete Tag">
+      <Button layoutX="400.0" layoutY="489.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="122.0" text="Modify Tags">
          <font>
             <Font name="Segoe UI" size="16.0" />
          </font></Button>
@@ -75,24 +71,34 @@
             <Font name="Segoe UI Semibold" size="17.0" />
          </font>
       </Text>
-      <DatePicker layoutX="452.0" layoutY="35.0" prefHeight="25.0" prefWidth="113.0" />
-      <DatePicker layoutX="335.0" layoutY="35.0" prefHeight="25.0" prefWidth="113.0" />
-      <Text layoutX="341.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="After:">
+      <DatePicker layoutX="451.0" layoutY="26.0" prefHeight="25.0" prefWidth="113.0" />
+      <DatePicker layoutX="334.0" layoutY="26.0" prefHeight="25.0" prefWidth="113.0" />
+      <Text layoutX="340.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="After:">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <Text layoutX="452.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Before:">
+      <Text layoutX="451.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Before:">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <TextField layoutX="571.0" layoutY="35.0" prefHeight="25.0" prefWidth="141.0" />
-      <Text layoutX="571.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Query" wrappingWidth="141.0">
+      <TextField layoutX="570.0" layoutY="26.0" prefHeight="25.0" prefWidth="141.0" />
+      <Text layoutX="570.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Query" wrappingWidth="141.0">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <Button layoutX="721.0" layoutY="35.0" mnemonicParsing="false" text="Search" />
+      <Button layoutX="720.0" layoutY="26.0" mnemonicParsing="false" text="Search" />
+      <Button layoutX="400.0" layoutY="531.0" mnemonicParsing="false" onAction="#quit" prefHeight="29.0" prefWidth="122.0" text="Quit">
+         <font>
+            <Font name="Segoe UI" size="16.0" />
+         </font>
+      </Button>
+      <Text fx:id="albumText" layoutX="155.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AlbumName" wrappingWidth="122.0">
+         <font>
+            <Font name="Segoe UI Semibold" size="20.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

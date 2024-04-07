@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import photosfx.models.Admin;
@@ -17,6 +18,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 
 /**
@@ -30,7 +32,7 @@ public class User implements Serializable{
 
     private String username;
     private List<Album> albums;
-
+    private Set<String> tagKeys;
     public User(String username) {
         this.username = username;
         this.albums = new ArrayList<>();
@@ -105,13 +107,18 @@ public class User implements Serializable{
         return null; 
     }    
 
-    public ObservableList<Album> getAlbumsExcept(Album excludedAlbum) {
-        //filter excluded album
-        List<Album> filteredAlbums = albums.stream()
-                                           .filter(album -> !album.equals(excludedAlbum))
-                                           .collect(Collectors.toList());
-        
-        //convert
-        return FXCollections.observableArrayList(filteredAlbums);
+    public Set<String> getAllTagKeys() {
+        for(Album album : albums) {
+            for(Photo photo : album.getPhotos()) {
+                tagKeys.addAll(photo.getTags().keySet());
+            }
+        }
+        return tagKeys;
     }
+
+    public void addTagkey(String tagKey) {
+        tagKeys.add(tagKey);
+    }
+
+    
 }

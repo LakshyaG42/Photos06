@@ -78,6 +78,8 @@ private ObservableList<String> tagObservableList;
 
 @FXML ImageView dispImg; 
 
+private static Stage stage;
+
 // tag selection
 private SelectionModel<String> selectedTag; 
 
@@ -453,7 +455,12 @@ public void loadSlideShow(final ActionEvent e) throws IOException {
     stage.show();
 }
 
-
+    public static void setStage(Stage s) {
+        stage = s;
+    }
+	public void quit(final ActionEvent e) throws IOException {
+		stage.close();
+	}
 
     
 }

@@ -144,6 +144,7 @@ public class userController {
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
             stage.setTitle("User Dashboard");
+            albumController.setStage(stage);
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(albumListView.getScene().getWindow());
             stage.show();
