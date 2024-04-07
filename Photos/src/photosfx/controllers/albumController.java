@@ -353,7 +353,7 @@ public void renameCaption() {
                 refreshPhotosList();
                 //refresh the display for the caption
                 
-                //imgDISP(selectedPhoto.getFilePath());
+                imgDISP(selectedPhoto.getFilePath());
                 System.out.println(selectedPhoto.getFilePath() + " caption renamed to " + rename);
                 
             }
@@ -483,6 +483,9 @@ public void loadModifyTags() {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(tagsList.getScene().getWindow());
             stage.show();
+
+            stage.setOnHidden(e -> refreshAlbumView());
+
         } catch (IOException e) {
             Admin.showAlert(Alert.AlertType.ERROR, "Error", "Failed to load Modify Tags view");
             e.printStackTrace();
@@ -491,6 +494,22 @@ public void loadModifyTags() {
         Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please select a photo to modify tags.");
     }
 }
+
+private void refreshAlbumView() {
+    //reload user
+    loggedInUser = User.loadUser(username);
+    album = loggedInUser.getAlbum(inputAlbumName);
+    
+    //refresh obs list from list view
+    refreshPhotosList();
+    
+    //refresh disp
+    Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
+    if (selectedPhoto != null) {
+        imgDISP(selectedPhoto.getFilePath());
+    }
+}
+
 
 public static void setStage(Stage s) {
     stage = s;
