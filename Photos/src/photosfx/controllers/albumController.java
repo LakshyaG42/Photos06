@@ -543,7 +543,9 @@ public void loadSlideShow(final ActionEvent e) throws IOException {
     Stage stage = new Stage();
     slideshowControl.setStage(stage);
     stage.setScene(new Scene(root));
+    stage.getIcons().add(new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));
     stage.setResizable(false);
+    stage.setTitle("Slideshow");
     stage.initModality(Modality.WINDOW_MODAL);
     stage.initOwner(((Node)e.getSource()).getScene().getWindow());
     stage.show();
@@ -566,6 +568,7 @@ public void loadModifyTags() {
             Stage stage = new Stage();
             controller.setStage(stage);
             stage.setScene(new Scene(root));
+            stage.getIcons().add(new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));
             stage.setTitle("Modify Tags");
             stage.setResizable(false);
             stage.initModality(Modality.WINDOW_MODAL);

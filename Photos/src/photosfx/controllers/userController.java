@@ -12,12 +12,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import photosfx.models.Admin;
 import photosfx.models.Album;
 import photosfx.models.User;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -168,14 +170,15 @@ public class userController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/photosfx/view/album.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
-            stage.setTitle("User Dashboard");
+            stage.setTitle("Album Dashboard");
             albumController.setStage(stage);
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(albumListView.getScene().getWindow());
+            stage.getIcons().add(new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));
             stage.show();
             stage.setOnHidden(e -> refreshAlbumView());
         } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load User Dashboard");
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load Album Dashboard");
             e.printStackTrace();
         }
     }
@@ -211,6 +214,7 @@ public class userController {
                     Stage loginStage = new Stage();
                     loginStage.setTitle("Login");
                     loginStage.setScene(new Scene(root, 324.0, 158.0));
+                    loginStage.getIcons().add(new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));
                     loginStage.setResizable(false);
                     loginController controller = loader.getController();
                     controller.setStage(loginStage);

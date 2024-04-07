@@ -1,5 +1,6 @@
 package photosfx.controllers;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Optional;
@@ -21,6 +22,7 @@ import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -171,6 +173,8 @@ public class adminController {
                     Stage loginStage = new Stage();
                     loginStage.setTitle("Login");
                     loginStage.setScene(new Scene(root, 324.0, 158.0));
+                    loginStage.setResizable(false);
+                    loginStage.getIcons().add(new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));
                     loginController controller = loader.getController();
                     controller.setStage(loginStage);
                     controller.loadImage();

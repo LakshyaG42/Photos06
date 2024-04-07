@@ -115,6 +115,7 @@ public class loginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/photosfx/view/admin.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
+            stage.getIcons().add(new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));
             stage.setResizable(false);;
             stage.setTitle("Admin Dashboard");
             stage.show();
@@ -135,6 +136,7 @@ public class loginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/photosfx/view/user.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
+            stage.getIcons().add(new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));
             stage.setTitle("User Dashboard");
             stage.show();
         } catch (IOException e) {
