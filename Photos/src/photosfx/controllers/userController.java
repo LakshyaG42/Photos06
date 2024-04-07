@@ -148,11 +148,18 @@ public class userController {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(albumListView.getScene().getWindow());
             stage.show();
+            stage.setOnHidden(e -> refreshAlbumView());
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to load User Dashboard");
             e.printStackTrace();
         }
     }
+
+    public void refreshAlbumView() {
+        loggedInUser = User.loadUser(username);
+        refreshAlbumList();
+    }
+
     @FXML
     private void logout() {
         // Display confirmation dialog

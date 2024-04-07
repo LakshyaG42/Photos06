@@ -61,7 +61,7 @@
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font></Text>
-      <Button layoutX="400.0" layoutY="489.0" mnemonicParsing="false" onAction = "#loadModifyTags" prefHeight="29.0" prefWidth="122.0" text="Modify Tags">
+      <Button layoutX="400.0" layoutY="489.0" mnemonicParsing="false" onAction="#loadModifyTags" prefHeight="29.0" prefWidth="122.0" text="Modify Tags">
          <font>
             <Font name="Segoe UI" size="16.0" />
          </font></Button>
@@ -71,25 +71,25 @@
             <Font name="Segoe UI Semibold" size="17.0" />
          </font>
       </Text>
-      <DatePicker layoutX="451.0" layoutY="26.0" prefHeight="25.0" prefWidth="113.0" />
-      <DatePicker layoutX="334.0" layoutY="26.0" prefHeight="25.0" prefWidth="113.0" />
-      <Text layoutX="340.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="After:">
+      <DatePicker fx:id="endDatePicker" layoutX="410.0" layoutY="28.0" prefHeight="25.0" prefWidth="113.0" promptText="Before:" />
+      <DatePicker fx:id="startDatePicker" layoutX="293.0" layoutY="28.0" prefHeight="25.0" prefWidth="113.0" promptText="After:" />
+      <Text layoutX="299.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="After:">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <Text layoutX="451.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Before:">
+      <Text layoutX="410.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Before:">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <TextField layoutX="570.0" layoutY="26.0" prefHeight="25.0" prefWidth="141.0" />
-      <Text layoutX="570.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Query" wrappingWidth="141.0">
+      <TextField fx:id="searchQueryField" layoutX="527.0" layoutY="28.0" prefHeight="25.0" prefWidth="141.0" promptText="Tag1:Value! AND/OR Tag2:Value" />
+      <Text layoutX="529.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Query" wrappingWidth="141.0">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <Button layoutX="720.0" layoutY="26.0" mnemonicParsing="false" text="Search" />
+      <Button fx:id="searchButton" layoutX="676.0" layoutY="28.0" mnemonicParsing="false" onAction="#search" text="Search" />
       <Button layoutX="400.0" layoutY="531.0" mnemonicParsing="false" onAction="#quit" prefHeight="29.0" prefWidth="122.0" text="Quit">
          <font>
             <Font name="Segoe UI" size="16.0" />
@@ -100,5 +100,7 @@
             <Font name="Segoe UI Semibold" size="20.0" />
          </font>
       </Text>
+      <Button layoutX="630.0" layoutY="58.0" mnemonicParsing="false" text="Make Album out of search" />
+      <Button onAction="#clearSearch" layoutX="734.0" layoutY="28.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="Reset" />
    </children>
 </AnchorPane>

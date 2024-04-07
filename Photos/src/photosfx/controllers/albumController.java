@@ -4,10 +4,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionModel;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListCell;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -27,13 +31,18 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 import photosfx.models.User;
 import photosfx.models.Admin;
@@ -87,6 +96,12 @@ private SelectionModel<String> selectedTag;
 //private static String lastSelectedPhotoName;
 
 
+//Search functionality
+@FXML private TextField searchQueryField;
+@FXML private DatePicker startDatePicker;
+@FXML private DatePicker endDatePicker;
+@FXML private Button searchButton;
+
 
 @FXML
 private void initialize() {
@@ -97,6 +112,11 @@ private void initialize() {
     albumText.setText(album.getName());
     photoObservableList = FXCollections.observableArrayList();
     refreshPhotosList();
+
+    startDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> updateSearchButtonState());
+    endDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> updateSearchButtonState());
+    searchQueryField.textProperty().addListener((observable, oldValue, newValue) -> updateSearchButtonState());
+    searchButton.setDisable(true);
     photoListView.setCellFactory(param -> new ListCell<Photo>() {
          private final ImageView imageView = new ImageView();
          private final Text captionText = new Text();
@@ -132,6 +152,8 @@ private void initialize() {
              }
          }
      });
+
+
     photoListView.setOnMouseClicked(event -> {
         Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
         //lastSelectedPhotoName = selectedPhoto.getFilePath();
@@ -519,4 +541,177 @@ public void quit(final ActionEvent e) throws IOException {
 }
 
     
+//Below is the code for the search functionality
+
+private void updateSearchButtonState() {
+    LocalDateTime startDate = startDatePicker.getValue() != null ? startDatePicker.getValue().atStartOfDay() : null;
+    LocalDateTime endDate = endDatePicker.getValue() != null ? endDatePicker.getValue().atStartOfDay() : null;
+    String searchQuery = searchQueryField.getText().trim();
+
+    // Enable search button if either date pickers have values or search query is not empty
+    boolean enableSearch = (startDate != null || endDate != null) || !searchQuery.isEmpty();
+    searchButton.setDisable(!enableSearch);
+}
+public void search() {
+    LocalDateTime startDate = startDatePicker.getValue() != null ? startDatePicker.getValue().atStartOfDay() : null;
+    LocalDateTime endDate = endDatePicker.getValue() != null ? endDatePicker.getValue().atStartOfDay() : null;
+    String searchQuery = searchQueryField.getText().trim();
+    ObservableList<Photo> filteredPhotos = FXCollections.observableArrayList();
+
+    if (startDate != null && endDate != null && searchQuery.isEmpty()) {
+        if (startDate.isAfter(endDate)) {
+            Admin.showAlert(Alert.AlertType.ERROR, "Error", "Start date cannot be after end date.");
+            return;
+        } else {
+            filteredPhotos.addAll(searchByDateRange(startDate, endDate));
+        }
+    } 
+    else if (startDate != null && endDate == null && searchQuery.isEmpty()) {
+        filteredPhotos.addAll(searchByAfterStartDate(startDate));
+    } 
+    else if (startDate == null && endDate != null && searchQuery.isEmpty()) {
+        filteredPhotos.addAll(searchByBeforeEndDate(endDate));
+    } 
+    else if (startDate == null && endDate == null && !searchQuery.isEmpty()) {
+        filteredPhotos.addAll(searchByTag(searchQuery));
+    } 
+    else if (startDate != null && endDate != null && !searchQuery.isEmpty()) {
+        if (startDate.isAfter(endDate)) {
+            Admin.showAlert(Alert.AlertType.ERROR, "Error", "Start date cannot be after end date.");
+            return;
+        } else {
+            filteredPhotos.addAll(searchByDateRange(startDate, endDate));
+            filteredPhotos.retainAll(searchByTag(searchQuery));
+        }
+    } 
+    else if (startDate != null && endDate == null && !searchQuery.isEmpty()) {
+        filteredPhotos.addAll(searchByAfterStartDate(startDate));
+        filteredPhotos.retainAll(searchByTag(searchQuery));
+    } 
+    else if (startDate == null && endDate != null && !searchQuery.isEmpty()) {
+        filteredPhotos.addAll(searchByBeforeEndDate(endDate));
+        filteredPhotos.retainAll(searchByTag(searchQuery));
+    } 
+    else if (startDate == null && endDate == null && !searchQuery.isEmpty()) {
+        filteredPhotos.addAll(searchByTag(searchQuery));
+    } 
+    else {
+        Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid search query.");
+        return;
+    }
+    // Remove duplicate values by using and iterator:
+    Set<String> filenames = new HashSet<>();
+    List<Photo> photosToKeep = new ArrayList<>();
+    for (Photo photo : filteredPhotos) {
+        if (filenames.add(photo.getFilePath())) {
+            photosToKeep.add(photo);
+        }
+    }
+    filteredPhotos.clear();
+    filteredPhotos.addAll(photosToKeep);
+    photoObservableList.clear();
+    photoObservableList.addAll(filteredPhotos);
+    photoListView.setItems(photoObservableList);
+}
+
+public void clearSearch() {
+    startDatePicker.setValue(null);
+    endDatePicker.setValue(null);
+    searchQueryField.clear();
+    refreshPhotosList();
+}
+
+public ObservableList<Photo> searchByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+    ObservableList<Photo> filteredPhotos = FXCollections.observableArrayList();
+    for (Photo photo : album.getPhotos()) {
+        LocalDateTime photoDateTime = photo.getDateTime();
+        if (photoDateTime.isAfter(startDate) && photoDateTime.isBefore(endDate)) {
+            filteredPhotos.add(photo);
+        }
+    }
+    return filteredPhotos;
+}
+
+public ObservableList<Photo> searchByAfterStartDate(LocalDateTime startDate) {
+    ObservableList<Photo> filteredPhotos = FXCollections.observableArrayList();
+    for (Photo photo : album.getPhotos()) {
+        LocalDateTime photoDateTime = photo.getDateTime();
+        if (photoDateTime.isAfter(startDate)) {
+            filteredPhotos.add(photo);
+        }
+    }
+    return filteredPhotos;
+}
+
+public ObservableList<Photo> searchByBeforeEndDate(LocalDateTime endDate) {
+    ObservableList<Photo> filteredPhotos = FXCollections.observableArrayList();
+    for (Photo photo : album.getPhotos()) {
+        LocalDateTime photoDateTime = photo.getDateTime();
+        if (photoDateTime.isBefore(endDate)) {
+            filteredPhotos.add(photo);
+        }
+    }
+    return filteredPhotos;
+}
+
+
+public ObservableList<Photo> searchByTag(String input) {
+    ObservableList<Photo> filteredPhotos = FXCollections.observableArrayList();
+    if (input.contains("AND")) {
+        // Handle conjunction (AND) case
+        String[] tagParts = input.split("\\s+AND\\s+");
+        if (tagParts.length == 2) {
+            String[] firstTag = tagParts[0].split(":");
+            String[] secondTag = tagParts[1].split(":");
+            if (firstTag.length == 2 && secondTag.length == 2) {
+                String key1 = firstTag[0].trim();
+                String value1 = firstTag[1].trim();
+                String key2 = secondTag[0].trim();
+                String value2 = secondTag[1].trim();
+
+                for (Photo photo : album.getPhotos()) {
+                    if (photo.getTags().containsKey(key1) && photo.getTags().containsKey(key2)) {
+                        if (photo.getTags().get(key1).contains(value1) && photo.getTags().get(key2).contains(value2)) {
+                            filteredPhotos.add(photo);
+                        }
+                    }
+                }
+            }
+        }
+    } else if (input.contains("OR")) {
+        // Handle disjunction (OR) case
+        String[] tagParts = input.split("\\s+OR\\s+");
+        for (String tagPart : tagParts) {
+            String[] tag = tagPart.split(":");
+            if (tag.length == 2) {
+                String key = tag[0].trim();
+                String value = tag[1].trim();
+                for (Photo photo : album.getPhotos()) {
+                    if (photo.getTags().containsKey(key) && photo.getTags().get(key).contains(value)) {
+                        filteredPhotos.add(photo);
+                    }
+                }
+            }
+        }
+    } else {
+        // Handle single tag-value pair case
+        String[] tag = input.split(":");
+        if (tag.length == 2) {
+            String key = tag[0].trim();
+            String value = tag[1].trim();
+            for (Photo photo : album.getPhotos()) {
+                if (photo.getTags().containsKey(key) && photo.getTags().get(key).contains(value)) {
+                    filteredPhotos.add(photo);
+                }
+            }
+        }
+    }
+    return filteredPhotos;
+}
+
+
+
+
+
+
 }
