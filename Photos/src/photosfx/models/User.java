@@ -19,6 +19,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 
@@ -131,11 +132,17 @@ public class User implements Serializable{
             this.tagKeys = new HashSet<>();
             Set<String> nullset = this.getAllTagKeys();
         }
+        if (this.allowMultipleValuesMap == null) {
+            this.allowMultipleValuesMap = new HashMap<>();
+        }
         tagKeys.add(tagKey);
         allowMultipleValuesMap.put(tagKey, allowMultipleValues);
     }
 
     public boolean isallowMultipleValues(String tagKey) {
-        return allowMultipleValuesMap.get(tagKey);
+        if (allowMultipleValuesMap.containsKey(tagKey)) {
+            return allowMultipleValuesMap.get(tagKey);
+        }
+        return false;
     }
 }

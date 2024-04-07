@@ -84,7 +84,7 @@ private static Stage stage;
 private SelectionModel<String> selectedTag; 
 
 //private lastSelectedImage;
-private static String lastSelectedPhotoName;
+//private static String lastSelectedPhotoName;
 
 
 
@@ -134,14 +134,14 @@ private void initialize() {
      });
     photoListView.setOnMouseClicked(event -> {
         Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
-        lastSelectedPhotoName = selectedPhoto.getFilePath();
-        imgDISP(lastSelectedPhotoName);
+        //lastSelectedPhotoName = selectedPhoto.getFilePath();
+        imgDISP(selectedPhoto.getFilePath());
     });
     photoListView.setOnKeyPressed(event -> {
         Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
-        lastSelectedPhotoName = selectedPhoto.getFilePath();
-        if (lastSelectedPhotoName != null) {
-            imgDISP(lastSelectedPhotoName);
+        //lastSelectedPhotoName = selectedPhoto.getFilePath();
+        if (selectedPhoto.getFilePath() != null) {
+            imgDISP(selectedPhoto.getFilePath());
         }
     });
     // imgNamesListView.setOnMouseClicked(event -> {
@@ -230,7 +230,7 @@ public static void initData(Album album, String name) {
 
 // }
 
-private void imgDISP(String selectedPhotoName ) {
+private void imgDISP(String selectedPhotoName) {
     //current photo
     Photo selectedPhoto = null;
     for (Photo photo : album.getPhotos()) {
@@ -313,9 +313,9 @@ public void delPhoto() {
     if (selectedPhoto == null) {
         Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please select a photo to delete.");
     } else {
-        lastSelectedPhotoName = selectedPhoto.getFilePath();
+        //lastSelectedPhotoName = selectedPhoto.getFilePath();
         album.removePhoto(selectedPhoto);
-        Admin.saveUsers("Photos/data/users.ser");
+        //Admin.saveUsers("Photos/data/users.ser");
         refreshPhotosList();
         imgDISP(null); //resets display
         System.out.println("Photo deleted from album: " + selectedPhoto.getFilePath());
@@ -337,7 +337,7 @@ public void renameCaption() {
     if(selectedPhoto == null) {
         Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please select a photo to rename the caption.");
     } else {
-        lastSelectedPhotoName = selectedPhoto.getFilePath();
+        //lastSelectedPhotoName = selectedPhoto.getFilePath();
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Rename Caption");
         dialog.setHeaderText(null);
@@ -353,9 +353,11 @@ public void renameCaption() {
                 refreshPhotosList();
                 //refresh the display for the caption
                 
-                imgDISP(lastSelectedPhotoName);
+                //imgDISP(selectedPhoto.getFilePath());
                 System.out.println(selectedPhoto.getFilePath() + " caption renamed to " + rename);
+                
             }
+            
         });
     }    
 }
@@ -365,13 +367,18 @@ public void copyPhoto() {
     if (selectedPhoto == null) {
         Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please select a photo to copy.");
     } else {
-        lastSelectedPhotoName = selectedPhoto.getFilePath();
+        //lastSelectedPhotoName = selectedPhoto.getFilePath();
         List<Album> userAlbums = loggedInUser.getAlbums();
         List<String> albumNames = new ArrayList<>();
         for (Album album : userAlbums) {
             if (!album.getName().equals(inputAlbumName)) {
                 albumNames.add(album.getName());
             }
+        }
+        if (albumNames.isEmpty()) {
+            Admin.showAlert(Alert.AlertType.ERROR, "Error", "No albums to copy the photo to.");
+            System.out.println("No albums to copy the photo to.");
+            return;
         }
         ChoiceDialog<String> dialog = new ChoiceDialog<>(albumNames.get(0), albumNames); // Drop down list of albums to copy the photo to
         dialog.setTitle("Copy Photo");
@@ -401,13 +408,18 @@ public void movePhoto() {
     if (selectedPhoto == null) {
         Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please select a photo to move.");
     } else {
-        lastSelectedPhotoName = selectedPhoto.getFilePath();
+        //lastSelectedPhotoName = selectedPhoto.getFilePath();
         List<Album> userAlbums = loggedInUser.getAlbums();
         List<String> albumNames = new ArrayList<>();
         for (Album album : userAlbums) {
             if (!album.getName().equals(inputAlbumName)) {
                 albumNames.add(album.getName());
             }
+        }
+        if (albumNames.isEmpty()) {
+            Admin.showAlert(Alert.AlertType.ERROR, "Error", "No albums to copy the photo to.");
+            System.out.println("No albums to copy the photo to.");
+            return;
         }
         ChoiceDialog<String> dialog = new ChoiceDialog<>(albumNames.get(0), albumNames); // Drop down list of albums to copy the photo to
         dialog.setTitle("Move Photo");
@@ -455,6 +467,7 @@ public void loadSlideShow(final ActionEvent e) throws IOException {
     stage.show();
 }
 
+@FXML
 public void loadModifyTags() {
     Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
     if (selectedPhoto != null) {
@@ -469,9 +482,6 @@ public void loadModifyTags() {
             stage.setTitle("Modify Tags");
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(tagsList.getScene().getWindow());
-            stage.setOnCloseRequest(event -> {
-                imgDISP(selectedPhoto.getFilePath());
-            });
             stage.show();
         } catch (IOException e) {
             Admin.showAlert(Alert.AlertType.ERROR, "Error", "Failed to load Modify Tags view");

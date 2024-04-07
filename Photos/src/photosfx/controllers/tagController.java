@@ -23,7 +23,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class tagController {
-    private static Stage stage;
+    private static Stage stage3;
 
     @FXML
     private CheckBox allowMultipleValuesCheckBox;
@@ -149,11 +149,11 @@ public class tagController {
 
 
     public void closeTagWindow() {
-        stage.close();
+        stage3.close();
     }
 
     public void setStage(Stage s) {
-        stage = s;
+        stage3 = s;
     }
 
     public void addTagKey() {

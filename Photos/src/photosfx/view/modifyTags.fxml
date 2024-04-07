@@ -28,7 +28,7 @@
                         <Button layoutX="177.0" layoutY="103.0" mnemonicParsing="false" onAction="#closeTagWindow" prefHeight="25.0" prefWidth="134.0" text="Return to Album" />
                         <Button fx:id="deleteTagButton" layoutX="19.0" layoutY="103.0" mnemonicParsing="false" onAction="#deleteTag" prefHeight="25.0" prefWidth="134.0" text="Delete Selected" />
                         <TextField fx:id="tagValueField" layoutX="111.0" layoutY="21.0" prefHeight="25.0" prefWidth="106.0" promptText="TagValues" />
-                        <CheckBox fx:id="allowMultipleValuesCheckbox" layoutX="153.0" layoutY="57.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="67.0" text="Allow Multiple" wrapText="true" />
+                        <CheckBox fx:id="allowMultipleValuesCheckBox" layoutX="153.0" layoutY="57.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="67.0" text="Allow Multiple" wrapText="true" />
                      </children>
                   </AnchorPane>
                </children>
