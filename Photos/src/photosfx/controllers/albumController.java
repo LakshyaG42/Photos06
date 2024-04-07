@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -122,13 +123,14 @@ private void initialize() {
          private final Text captionText = new Text();
     
          {
-            // Configure image view properties
+            //images
              imageView.setFitWidth(100);
              imageView.setFitHeight(100);
     
-             // Configure caption text properties
+             //caption
              captionText.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-             captionText.setWrappingWidth(100); // Adjust as needed
+             captionText.setWrappingWidth(100); 
+             captionText.setFill(Color.WHITE);
          }
     
          @Override

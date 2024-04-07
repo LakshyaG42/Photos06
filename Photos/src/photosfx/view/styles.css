@@ -6,7 +6,11 @@
     -fx-font-family: "Segoe UI Semibold";
     -fx-fill: #5982FC  ; 
 }
+.text-normal {
+    -fx-font-family: "Segoe UI";
+    -fx-fill: #5982FC; 
 
+}
 .text-header {
     -fx-font-family: "Segoe UI";
     -fx-font-size: 20px;
@@ -27,3 +31,27 @@
 .button:hover {
     -fx-translate-y: -2px;
 }
+
+.list-view {
+    -fx-background-color: #353535; 
+    -fx-text-fill: #FFFFFF; 
+}
+
+.list-view .list-cell:odd {
+    -fx-background-color: #242424; 
+    -fx-text-fill: #FFFFFF; 
+}
+.list-view .list-cell:even {
+    -fx-background-color: #272525; 
+    -fx-text-fill: #FFFFFF; 
+}
+.list-view .list-cell:selected {
+    -fx-background-color: #2E4583; 
+    -fx-text-fill: #FFFFFF; 
+}
+/*
+.list-view .list-cell:hover {
+    -fx-background-color: #3E60C1; 
+    -fx-text-fill: #FFFFFF; 
+}
+*/

@@ -61,6 +61,7 @@ public class loginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/photosfx/view/admin.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
+            stage.setResizable(false);;
             stage.setTitle("Admin Dashboard");
             stage.show();
         } catch (IOException e) {
