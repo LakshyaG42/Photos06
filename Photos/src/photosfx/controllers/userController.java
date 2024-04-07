@@ -214,6 +214,7 @@ public class userController {
                     loginStage.setResizable(false);
                     loginController controller = loader.getController();
                     controller.setStage(loginStage);
+                    controller.loadImage();
                     loginStage.show();
                 } catch (IOException e) {
                     e.printStackTrace();

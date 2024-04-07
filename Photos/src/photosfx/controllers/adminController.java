@@ -173,6 +173,7 @@ public class adminController {
                     loginStage.setScene(new Scene(root, 324.0, 158.0));
                     loginController controller = loader.getController();
                     controller.setStage(loginStage);
+                    controller.loadImage();
                     loginStage.show();
                 } catch (IOException e) {
                     e.printStackTrace();

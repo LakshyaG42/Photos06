@@ -12,8 +12,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import photosfx.models.Admin;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
 /**
  * Login Controls
@@ -28,8 +30,32 @@ public class loginController {
     @FXML
     private Stage stage;
 
+
+    //Logo Image
     @FXML
     private ImageView Logo;
+
+
+    // //Top Bar
+    // @FXML
+    // private Button minimizeButton;
+    // @FXML
+    // private Button closeButton;
+    // @FXML
+    // private Pane topPane;
+
+
+    // @FXML
+    // protected void handleCloseButtonAction(ActionEvent event) {
+    //     Stage stage = (Stage) closeButton.getScene().getWindow();
+    //     stage.close();
+    // }
+
+    // @FXML
+    // protected void handleMinimizeButtonAction(ActionEvent event) {
+    //     Stage stage = (Stage) minimizeButton.getScene().getWindow();
+    //     stage.setIconified(true);
+    // }
 
     public void loadImage() {
         Image image = new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/"));

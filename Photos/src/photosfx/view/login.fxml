@@ -8,11 +8,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="158.0" prefWidth="318.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photosfx.controllers.loginController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="154.0" prefWidth="307.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photosfx.controllers.loginController">
    <children>
-      <AnchorPane prefHeight="158.0" prefWidth="324.0">
+      <!-- Attempt at top bar, works but don't feel like implementing moving it around
+      <Pane fx:id="topPane" prefHeight="28.0" prefWidth="318.0" styleClass="pane" stylesheets="@topBar.css">
          <children>
-            <Text layoutX="44.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-title" text="Login" textAlignment="CENTER" wrappingWidth="204.13671875">
+            <Button fx:id="minimizeButton" onAction = "#handleMinimizeButtonAction" layoutX="267.0" layoutY="-2.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="24.0" text="_" />
+            <Button fx:id="closeButton" onAction = "#handleCloseButtonAction" layoutX="291.0" layoutY="-4.0" mnemonicParsing="false" style=": ;" stylesheets="@topBar.css" text="X"/>
+         </children>
+      </Pane>
+      -->
+      <AnchorPane prefHeight="154.0" prefWidth="283.0" styleClass="anchor-pane" stylesheets="@styles.css">
+         <children>
+            <Text layoutX="51.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-title" text="Login" textAlignment="CENTER" wrappingWidth="204.13671875">
                <font>
                   <Font name="Segoe UI Semibold" size="32.0" />
                </font>
@@ -28,7 +36,7 @@
                </font>
             </TextField>
             <Button layoutX="167.0" layoutY="109.0" mnemonicParsing="false" onAction="#login" prefHeight="30.0" prefWidth="82.0" text="Login" />
-            <ImageView fx:id="Logo" fitHeight="95.0" fitWidth="237.0" layoutX="10.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="Logo" fitHeight="101.0" fitWidth="102.0" layoutX="10.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
    </children>

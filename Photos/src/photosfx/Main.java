@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import photosfx.models.Admin;
 import photosfx.models.Album;
 import photosfx.models.Tags;
@@ -37,8 +38,9 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/photosfx/view/login.fxml"));
         Parent root = loader.load();
         primaryStage.setTitle("Login");
-        primaryStage.setScene(new Scene(root, 324.0, 158.0));
+        primaryStage.setScene(new Scene(root, 307.0, 154.0));
         primaryStage.setResizable(false);
+        
         loginController controller = loader.getController();
         controller.setStage(primaryStage);
         controller.loadImage();

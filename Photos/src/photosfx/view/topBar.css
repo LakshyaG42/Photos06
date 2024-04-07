@@ -1,0 +1,14 @@
+
+.pane{
+    -fx-background-color: #293556;
+}
+.button {
+    -fx-background-color: #3e60c1;
+    -fx-text-fill: #FFFFFF; 
+    -fx-font-size: 14px; 
+    -fx-font-family: "Segoe UI Semibold";
+}
+
+.button:hover {
+    -fx-background-color: #E81123; 
+}

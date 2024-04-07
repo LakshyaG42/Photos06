@@ -2,6 +2,9 @@
     -fx-background-color: #212226; 
 }
 
+.anchor-pane {
+    -fx-background-color: #212226; 
+}
 .text-title {
     -fx-font-family: "Segoe UI Semibold";
     -fx-fill: #5982FC  ; 
@@ -72,3 +75,4 @@
     -fx-text-fill: #FFFFFF; 
     -fx-border-color: #2E4583; 
 }
+
