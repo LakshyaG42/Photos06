@@ -1,5 +1,6 @@
 package photosfx.controllers;
 
+import java.io.File;
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
@@ -11,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import photosfx.models.Admin;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * Login Controls
@@ -25,6 +28,13 @@ public class loginController {
     @FXML
     private Stage stage;
 
+    @FXML
+    private ImageView Logo;
+
+    public void loadImage() {
+        Image image = new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/"));
+        Logo.setImage(image);
+    }
 
     /**
      * Attempts to log the user in when the login button is pressed.

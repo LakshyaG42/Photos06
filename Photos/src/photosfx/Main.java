@@ -41,6 +41,7 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         loginController controller = loader.getController();
         controller.setStage(primaryStage);
+        controller.loadImage();
         primaryStage.show();
     }
 
