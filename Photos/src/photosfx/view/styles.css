@@ -1,0 +1,29 @@
+.root {
+    -fx-background-color: #212226; 
+}
+
+.text-title {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-fill: #5982FC  ; 
+}
+
+.text-header {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 20px;
+    -fx-fill: #5982FC  ;
+}
+.text-field {
+    -fx-background-color: #353535; 
+    -fx-text-fill: #FFFFFF; 
+    -fx-font-size: 12px; 
+}
+
+.button {
+    -fx-background-color: #5982FC; 
+    -fx-text-fill: #FFFFFF; 
+    -fx-font-size: 14px; 
+}
+
+.button:hover {
+    -fx-translate-y: -2px;
+}

@@ -37,7 +37,8 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/photosfx/view/login.fxml"));
         Parent root = loader.load();
         primaryStage.setTitle("Login");
-        primaryStage.setScene(new Scene(root, 400, 300));
+        primaryStage.setScene(new Scene(root, 324.0, 158.0));
+        primaryStage.setResizable(false);
         loginController controller = loader.getController();
         controller.setStage(primaryStage);
         primaryStage.show();
