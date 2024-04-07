@@ -7,13 +7,17 @@ import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ListCell;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -26,6 +30,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -60,6 +65,11 @@ ListView<String> imgNamesListView;
 private ObservableList<String> photoNames;
 //list of tags for EACH img
 
+@FXML ListView<Photo> photoListView = new ListView<>();
+
+private ObservableList<Photo> photoObservableList;
+
+
 @FXML ListView<String> tagsList;
 
 private ObservableList<String> tagObservableList;
@@ -83,29 +93,81 @@ private void initialize() {
     tagObservableList = FXCollections.observableArrayList();
     album = loggedInUser.getAlbum(inputAlbumName);
     albumText.setText(album.getName());
+    photoObservableList = FXCollections.observableArrayList();
     refreshPhotosList();
-    imgNamesListView.setOnMouseClicked(event -> {
-        String selectedPhotoName = imgNamesListView.getSelectionModel().getSelectedItem();
-        lastSelectedPhotoName = selectedPhotoName;
-        imgDISP(selectedPhotoName);
+    photoListView.setCellFactory(param -> new ListCell<Photo>() {
+         private final ImageView imageView = new ImageView();
+         private final Text captionText = new Text();
+    
+         {
+            // Configure image view properties
+             imageView.setFitWidth(100);
+             imageView.setFitHeight(100);
+    
+             // Configure caption text properties
+             captionText.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+             captionText.setWrappingWidth(100); // Adjust as needed
+         }
+    
+         @Override
+         protected void updateItem(Photo photo, boolean empty) {
+             super.updateItem(photo, empty);
+    
+             if (empty || photo == null) {
+                 setText(null);
+                 setGraphic(null);
+             } else {
+                 // Set thumbnail image and caption
+                 if(username.equals("stock")) {
+                    imageView.setImage(new Image("file:///" + new File(photo.getFilePath()).getAbsolutePath().replace("\\", "/")));
+                 } else {
+                     imageView.setImage(new Image("file:///" + photo.getFilePath()));
+                 }
+                 captionText.setText(photo.getCaption());
+    
+                 // Set graphic for the cell
+                 setGraphic(new VBox(imageView, captionText));
+             }
+         }
+     });
+    photoListView.setOnMouseClicked(event -> {
+        Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
+        lastSelectedPhotoName = selectedPhoto.getFilePath();
+        imgDISP(lastSelectedPhotoName);
     });
-    imgNamesListView.setOnKeyPressed(event -> {
-        String selectedPhotoName = imgNamesListView.getSelectionModel().getSelectedItem();
-        lastSelectedPhotoName = selectedPhotoName;
-        if (selectedPhotoName != null) {
-            imgDISP(selectedPhotoName);
+    photoListView.setOnKeyPressed(event -> {
+        Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
+        lastSelectedPhotoName = selectedPhoto.getFilePath();
+        if (lastSelectedPhotoName != null) {
+            imgDISP(lastSelectedPhotoName);
         }
     });
+    // imgNamesListView.setOnMouseClicked(event -> {
+    //     String selectedPhotoName = imgNamesListView.getSelectionModel().getSelectedItem();
+    //      lastSelectedPhotoName = selectedPhotoName;
+    //      imgDISP(selectedPhotoName);
+    //  });
+    //  imgNamesListView.setOnKeyPressed(event -> {
+    //      String selectedPhotoName = imgNamesListView.getSelectionModel().getSelectedItem();
+    //      lastSelectedPhotoName = selectedPhotoName;
+    //      if (selectedPhotoName != null) {
+    //          imgDISP(selectedPhotoName);
+    //     }
+    //  });
 }
 
 private void refreshPhotosList(){
-    ArrayList<String> photoArraylist = new ArrayList<>();
-    for (Photo photo : album.getPhotos()) {
-        photoArraylist.add(photo.getFilePath());
-    }
-    photoNames.clear();
-    photoNames.addAll(photoArraylist);
-    imgNamesListView.setItems(photoNames);
+    // ArrayList<String> photoArraylist = new ArrayList<>();
+    // for (Photo photo : album.getPhotos()) {
+    //    photoArraylist.add(photo.getFilePath());
+    // }
+    // photoNames.clear();
+    // photoNames.addAll(photoArraylist);
+    // imgNamesListView.setItems(photoNames);
+    photoObservableList.clear();
+    photoObservableList.addAll(album.getPhotos());
+    photoListView.setItems(photoObservableList);
+
     Admin.saveUsers("Photos/data/users.ser");
 }
 
@@ -230,10 +292,12 @@ public void AddPhotos() {
             // Create a Photo object and add it to the album
             Photo photo = new Photo(selectedFile.getPath(), Photo.getLastModifiedDateTime(selectedFile), captionstr);
             album.addPhoto(photo);
-            Admin.saveUsers("Photos/data/users.ser");
+            //Admin.saveUsers("Photos/data/users.ser");
             refreshPhotosList();
             imgDISP(photo.getFilePath());
             System.out.println("Photo added to album: " + selectedFile.getName());
+        } else {
+            System.out.println("No file selected.");
         }
         
        
@@ -242,22 +306,17 @@ public void AddPhotos() {
 
 
 public void delPhoto() { 
-    String photoFilename = imgNamesListView.getSelectionModel().getSelectedItem();
-    lastSelectedPhotoName = photoFilename;
-    if (photoFilename != null) {
-        for (Photo photo : album.getPhotos()) {
-            if (photo.getFilePath().equals(photoFilename)) {
-                album.removePhoto(photo);
-            Admin.saveUsers("Photos/data/users.ser");
-            refreshPhotosList();
-            imgDISP(null); //resets display
-            System.out.println("Photo deleted from album: " + photoFilename);
-            break;
-            }
-        }
-    } else {
+    //String photoFilename = imgNamesListView.getSelectionModel().getSelectedItem();
+    Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
+    if (selectedPhoto == null) {
         Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please select a photo to delete.");
-        System.out.println("Please select a photo to delete.");
+    } else {
+        lastSelectedPhotoName = selectedPhoto.getFilePath();
+        album.removePhoto(selectedPhoto);
+        Admin.saveUsers("Photos/data/users.ser");
+        refreshPhotosList();
+        imgDISP(null); //resets display
+        System.out.println("Photo deleted from album: " + selectedPhoto.getFilePath());
     }
 }
 
@@ -271,9 +330,12 @@ public void delTag(final ActionEvent e) {
 
 
 public void renameCaption() { 
-    String photoFilename = imgNamesListView.getSelectionModel().getSelectedItem();
-    lastSelectedPhotoName = photoFilename;
-    if (photoFilename != null) {
+    ///String photoFilename = imgNamesListView.getSelectionModel().getSelectedItem();
+    Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
+    if(selectedPhoto == null) {
+        Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please select a photo to rename the caption.");
+    } else {
+        lastSelectedPhotoName = selectedPhoto.getFilePath();
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Rename Caption");
         dialog.setHeaderText(null);
@@ -284,31 +346,24 @@ public void renameCaption() {
                 Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid username.");
                 System.out.println("Please enter a valid username.");
             } else {
-                for (Photo photo : album.getPhotos()) {
-                    if (photo.getFilePath().equals(photoFilename)) {
-                        photo.setCaption(rename);
-                        break;
-                    }
-                }
+                selectedPhoto.setCaption(rename);
                 Admin.saveUsers("Photos/data/users.ser");
                 refreshPhotosList();
                 //refresh the display for the caption
                 
                 imgDISP(lastSelectedPhotoName);
-                System.out.println(photoFilename + " caption renamed to " + rename);
+                System.out.println(selectedPhoto.getFilePath() + " caption renamed to " + rename);
             }
         });
-    } else {
-        Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please select a photo to edit the caption of.");
-        System.out.println("Please select a photo to edit the caption of.");
-    }
-    
+    }    
 }
 
 public void copyPhoto() { 
-    String photoFilename = imgNamesListView.getSelectionModel().getSelectedItem();
-    lastSelectedPhotoName = photoFilename;
-    if (photoFilename != null) {
+    Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
+    if (selectedPhoto == null) {
+        Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please select a photo to copy.");
+    } else {
+        lastSelectedPhotoName = selectedPhoto.getFilePath();
         List<Album> userAlbums = loggedInUser.getAlbums();
         List<String> albumNames = new ArrayList<>();
         for (Album album : userAlbums) {
@@ -316,8 +371,6 @@ public void copyPhoto() {
                 albumNames.add(album.getName());
             }
         }
-
-
         ChoiceDialog<String> dialog = new ChoiceDialog<>(albumNames.get(0), albumNames); // Drop down list of albums to copy the photo to
         dialog.setTitle("Copy Photo");
         dialog.setHeaderText("Select the album to copy the photo to:");
@@ -328,7 +381,7 @@ public void copyPhoto() {
         result.ifPresent(selectedAlbumName -> {
             Album selectedAlbum = loggedInUser.getAlbum(selectedAlbumName);
             if (selectedAlbum != null) {
-                album.copyPhoto(photoFilename, selectedAlbum); // Call the copyPhoto method in Album class to copy the photo
+                album.copyPhoto(selectedPhoto.getFilePath(), selectedAlbum); // Call the copyPhoto method in Album class to copy the photo
                 Admin.saveUsers("Photos/data/users.ser");
                 refreshPhotosList();
                 System.out.println("Photo copied to album: " + selectedAlbumName);
@@ -337,17 +390,16 @@ public void copyPhoto() {
                 System.out.println("Selected album not found.");
             }
         });
-    } else {
-        Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please select a photo to copy.");
-        System.out.println("Please select a photo to copy.");
-    }
+    }   
 }
 
 
 public void movePhoto() { 
-    String photoFilename = imgNamesListView.getSelectionModel().getSelectedItem();
-    lastSelectedPhotoName = photoFilename;
-    if (photoFilename != null) {
+    Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
+    if (selectedPhoto == null) {
+        Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please select a photo to move.");
+    } else {
+        lastSelectedPhotoName = selectedPhoto.getFilePath();
         List<Album> userAlbums = loggedInUser.getAlbums();
         List<String> albumNames = new ArrayList<>();
         for (Album album : userAlbums) {
@@ -355,8 +407,6 @@ public void movePhoto() {
                 albumNames.add(album.getName());
             }
         }
-
-
         ChoiceDialog<String> dialog = new ChoiceDialog<>(albumNames.get(0), albumNames); // Drop down list of albums to copy the photo to
         dialog.setTitle("Move Photo");
         dialog.setHeaderText("Select the album to move the photo to:");
@@ -367,7 +417,7 @@ public void movePhoto() {
         result.ifPresent(selectedAlbumName -> {
             Album selectedAlbum = loggedInUser.getAlbum(selectedAlbumName);
             if (selectedAlbum != null) {
-                album.movePhoto(photoFilename, selectedAlbum); // Call the copyPhoto method in Album class to copy the photo
+                album.movePhoto(selectedPhoto.getFilePath(), selectedAlbum); // Call the copyPhoto method in Album class to copy the photo
                 Admin.saveUsers("Photos/data/users.ser");
                 refreshPhotosList();
             } else {
@@ -375,9 +425,6 @@ public void movePhoto() {
                 System.out.println("Selected album not found.");
             }
         });
-    } else {
-        Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please select a photo to copy.");
-        System.out.println("Please select a photo to copy.");
     }
 }
 
