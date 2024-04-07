@@ -7,33 +7,34 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="329.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photosfx.controllers.tagController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="421.0" prefWidth="329.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photosfx.controllers.tagController">
    <children>
-      <AnchorPane prefHeight="407.0" prefWidth="329.0">
+      <AnchorPane prefHeight="408.0" prefWidth="245.0">
          <children>
             <ListView fx:id="tagsListView" layoutX="13.0" layoutY="33.0" prefHeight="243.0" prefWidth="302.0" />
             <VBox layoutY="273.0" prefHeight="153.0" prefWidth="329.0">
                <children>
                   <AnchorPane prefHeight="129.0" prefWidth="329.0">
                      <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="41.0" layoutX="8.0" layoutY="13.0" stroke="BLACK" strokeType="INSIDE" width="313.0" />
                         <ChoiceBox fx:id="tagKeysChoiceBox" layoutX="14.0" layoutY="21.0" prefHeight="25.0" prefWidth="91.0" />
-                        <Button fx:id="addTagButton" layoutX="224.0" layoutY="21.0" mnemonicParsing="false" onAction="#addTag" prefHeight="25.0" prefWidth="91.0" text="Add Tag" />
+                        <Button fx:id="addTagButton" layoutX="225.0" layoutY="19.0" mnemonicParsing="false" onAction="#addTag" prefHeight="25.0" prefWidth="91.0" text="Add Tag" />
                         <TextField fx:id="tagKeyField" layoutX="8.0" layoutY="65.0" prefHeight="25.0" prefWidth="140.0" promptText="Enter tag type name" />
-                        <Button fx:id="addTagTypeButton" layoutX="230.0" layoutY="65.0" mnemonicParsing="false" onAction="#addTagKey" prefHeight="25.0" prefWidth="91.0" text="Add Tag Type" />
+                        <Button fx:id="addTagTypeButton" layoutX="225.0" layoutY="63.0" mnemonicParsing="false" onAction="#addTagKey" prefHeight="25.0" prefWidth="91.0" text="Add Tag Type" />
                         <Button layoutX="177.0" layoutY="103.0" mnemonicParsing="false" onAction="#closeTagWindow" prefHeight="25.0" prefWidth="134.0" text="Return to Album" />
                         <Button fx:id="deleteTagButton" layoutX="19.0" layoutY="103.0" mnemonicParsing="false" onAction="#deleteTag" prefHeight="25.0" prefWidth="134.0" text="Delete Selected" />
                         <TextField fx:id="tagValueField" layoutX="111.0" layoutY="21.0" prefHeight="25.0" prefWidth="106.0" promptText="TagValues" />
-                        <CheckBox fx:id="allowMultipleValuesCheckBox" layoutX="153.0" layoutY="57.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="67.0" text="Allow Multiple" wrapText="true" />
+                        <CheckBox fx:id="allowMultipleValuesCheckBox" layoutX="153.0" layoutY="65.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" styleClass="checkbox" text="Multi" textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font name="Segoe UI" size="12.0" />
+                           </font></CheckBox>
                      </children>
                   </AnchorPane>
                </children>
             </VBox>
-            <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Tags">
+            <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-title" text="Current Tags">
                <font>
                   <Font name="Segoe UI" size="20.0" />
                </font>

@@ -543,6 +543,7 @@ public void loadSlideShow(final ActionEvent e) throws IOException {
     Stage stage = new Stage();
     slideshowControl.setStage(stage);
     stage.setScene(new Scene(root));
+    stage.setResizable(false);
     stage.initModality(Modality.WINDOW_MODAL);
     stage.initOwner(((Node)e.getSource()).getScene().getWindow());
     stage.show();
@@ -566,6 +567,7 @@ public void loadModifyTags() {
             controller.setStage(stage);
             stage.setScene(new Scene(root));
             stage.setTitle("Modify Tags");
+            stage.setResizable(false);
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(tagsList.getScene().getWindow());
             stage.show();

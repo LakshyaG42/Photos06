@@ -49,9 +49,26 @@
     -fx-background-color: #2E4583; 
     -fx-text-fill: #FFFFFF; 
 }
-/*
-.list-view .list-cell:hover {
+
+.checkbox {
+    -fx-background-color: #293556;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #2E4583;
+}
+
+.checkbox:selected {
     -fx-background-color: #3E60C1; 
     -fx-text-fill: #FFFFFF; 
+    -fx-border-color: #5982FC; 
 }
-*/
+
+.choice-box:selected {
+    -fx-background-color: #3E60C1; 
+    -fx-text-fill: #FFFFFF; 
+    -fx-border-color: #5982FC; 
+}
+.choice-box {
+    -fx-background-color: #293556; 
+    -fx-text-fill: #FFFFFF; 
+    -fx-border-color: #2E4583; 
+}

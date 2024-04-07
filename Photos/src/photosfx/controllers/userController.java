@@ -211,6 +211,7 @@ public class userController {
                     Stage loginStage = new Stage();
                     loginStage.setTitle("Login");
                     loginStage.setScene(new Scene(root, 324.0, 158.0));
+                    loginStage.setResizable(false);
                     loginController controller = loader.getController();
                     controller.setStage(loginStage);
                     loginStage.show();
