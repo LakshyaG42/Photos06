@@ -38,12 +38,21 @@ public class userController {
     public static void initData(String u) {
         username = u;
     }
+
+
+    /**
+ * Initializes the controller class.
+ */
     @FXML
     private void initialize() {
         loggedInUser = User.loadUser(username);
         refreshAlbumList();
     }
     
+
+    /**
+ * Refreshes the list of albums in the albumListView.
+ */
     private void refreshAlbumList() {
         ArrayList<String> albumNames = new ArrayList<>();
         for (Album album : loggedInUser.getAlbums()) {
@@ -53,6 +62,9 @@ public class userController {
         albumListView.getItems().addAll(albumNames);
     }
 
+    /**
+ * Creates a new album with a name provided by the user through a dialog.
+ */
     @FXML
     private void createAlbum() {
         TextInputDialog dialog = new TextInputDialog();
@@ -73,6 +85,9 @@ public class userController {
         }
     }
 
+    /**
+ * Deletes the selected album after confirmation from the user.
+ */
     @FXML
     private void deleteAlbum() {
         String selectedAlbum = albumListView.getSelectionModel().getSelectedItem();
@@ -90,6 +105,9 @@ public class userController {
         }
     }
 
+    /**
+ * Renames the selected album after receiving a new name from the user through a dialog.
+ */
     @FXML
     private void renameAlbum() {
         String selectedAlbum = albumListView.getSelectionModel().getSelectedItem();
@@ -120,6 +138,9 @@ public class userController {
         }
     }
 
+    /**
+ * Opens the selected album by loading the album view.
+ */
     @FXML
     private void openAlbum() {
         String selectedAlbum = albumListView.getSelectionModel().getSelectedItem();
@@ -136,7 +157,11 @@ public class userController {
     }
 
 
-
+/**
+ * Helper method to load the album view and set up the stage.
+ *
+ * @param album the album to be loaded in the view
+ */
     private void loadAlbumView(Album album) {
         try {
             albumController.initData(album, username); // Pass the data to the album controller
@@ -155,11 +180,18 @@ public class userController {
         }
     }
 
+
+/**
+ * Refreshes the album view by reloading the user's albums from the data source.
+ */
     public void refreshAlbumView() {
         loggedInUser = User.loadUser(username);
         refreshAlbumList();
     }
 
+    /**
+ * Handles the logout process by closing the current stage and loading the login screen.
+ */
     @FXML
     private void logout() {
         // Display confirmation dialog
@@ -188,6 +220,14 @@ public class userController {
             }
         });
     }
+
+    /**
+ * Displays an alert dialog to the user.
+ *
+ * @param alertType the type of alert to display
+ * @param title     the title of the alert dialog
+ * @param message   the message to be shown in the alert dialog
+ */
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
