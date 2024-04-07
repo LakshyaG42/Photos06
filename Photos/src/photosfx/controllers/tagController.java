@@ -58,6 +58,9 @@ public class tagController {
     private Photo selectedPhoto;
     private Album currentAlbum;
 
+    /**
+     * Initializes the controller class.
+     */
     @FXML
     private void initialize() {
         loggedInUser = User.loadUser(username);
@@ -89,12 +92,24 @@ public class tagController {
             tagKeyField.textProperty().isEmpty()
         );
     }
+
+     /**
+     * Sets the necessary data for the tag controller to operate upon.
+     *
+     * @param photo The file path of the photo to be managed.
+     * @param u The username of the logged-in user.
+     * @param albumName The name of the album containing the photo.
+     */
     public static void setData(String photo, String u, String albumName) {
         selectedPhotofilename = photo;
         username = u;
         inputAlbumName = albumName;
 
     }
+
+    /**
+     * Refreshes the list of tags displayed in the UI.
+     */
     private void refreshTagsList() {
         tagsObservableList.clear();
         tagsObservableList.addAll(selectedPhoto.getTagsAsList());
@@ -102,6 +117,9 @@ public class tagController {
         Admin.saveUsers("Photos/data/users.ser");
     }
 
+    /**
+     * Refreshes the choice box containing the available tag keys.
+     */
     private void refreshTagKeysChoiceBox() {
         tagKeysObservableList.clear();
         Set<String> allTagKeys = loggedInUser.getAllTagKeys();
@@ -110,6 +128,9 @@ public class tagController {
         Admin.saveUsers("Photos/data/users.ser");
         }
 
+    /**
+     * Handles adding a new tag to the selected photo based on the user input.
+     */
     public void addTag() {
         String tagKey = tagKeysChoiceBox.getValue();
         String tagValueText = tagValueField.getText().trim();
@@ -133,6 +154,10 @@ public class tagController {
         }
      }
 
+
+     /**
+     * Handles the deletion of a selected tag from the selected photo.
+     */
     public void deleteTag() {
         String selectedTag = tagsListView.getSelectionModel().getSelectedItem();
         if (selectedTag != null) {
@@ -147,15 +172,25 @@ public class tagController {
         }
     }
 
-
+    /**
+     * Closes the tag management window.
+     */
     public void closeTagWindow() {
         stage3.close();
     }
 
+    /**
+     * Sets the stage of this controller to the given stage.
+     * 
+     * @param s The stage for this controller.
+     */
     public void setStage(Stage s) {
         stage3 = s;
     }
 
+    /**
+     * Handles adding a new tag key to the system.
+     */
     public void addTagKey() {
         boolean allowMultipleValues = allowMultipleValuesCheckBox.isSelected();
         String tagKey = tagKeyField.getText().trim();

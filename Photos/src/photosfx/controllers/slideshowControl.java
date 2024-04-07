@@ -32,6 +32,9 @@ public class slideshowControl {
 
     private User user;
 
+    /**
+     * Updates the enabled/disabled state of navigation buttons based on the current photo index.
+     */
     private void onSelect(){
 
 		prevButton.setDisable(index == 0);
@@ -39,6 +42,13 @@ public class slideshowControl {
 
 	}
 
+    /**
+     * Sets the album to be displayed in the slideshow based on the user's selection.
+     * Loads photos into an observable list and displays the first photo if available.
+     * 
+     * @param username The username of the currently logged-in user.
+     * @param albumname The name of the album selected for the slideshow.
+     */
     public void setLoadState(String username, String albumname) {
     try {
         this.user = User.loadUser(username);
@@ -60,6 +70,11 @@ public class slideshowControl {
     onSelect();
 }
 
+/**
+     * Displays the photo at the specified index within the album.
+     * 
+     * @param index The index of the photo to display.
+     */
 private void displayPhoto(int index) {
     try {
         Image img = new Image(new FileInputStream(album.get(index).getFilePath()));
@@ -69,6 +84,11 @@ private void displayPhoto(int index) {
     }
 }
 
+/**
+     * Navigates to the previous photo in the album, if available.
+     * 
+     * @param e The action event triggering the navigation.
+     */
 public void previousImage(final ActionEvent e) {
     if (index > 0) {
         index--; 
@@ -77,6 +97,11 @@ public void previousImage(final ActionEvent e) {
     }
 }
 
+/**
+     * Navigates to the next photo in the album, if available.
+     * 
+     * @param e The action event triggering the navigation.
+     */
 public void nextImage(final ActionEvent e) {
     if (index < album.size() - 1) {
         index++; 
@@ -134,9 +159,21 @@ public void nextImage(final ActionEvent e) {
 */
     //finish below
 
+    /**
+     * Sets the stage for this controller. This is typically used to interact with the JavaFX window.
+     * 
+     * @param stage The stage associated with this controller.
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
+
+    /**
+     * Closes the slideshow view and returns to the album view.
+     * 
+     * @param e The action event triggering the return.
+     * @throws IOException If an input or output exception occurs.
+     */
 	public void back2album(final ActionEvent e) throws IOException {
 		stage.close();
 	}

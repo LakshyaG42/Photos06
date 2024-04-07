@@ -41,12 +41,18 @@ public class adminController {
 
     private ObservableList<String> userList;
 
+    /**
+ * Initializes the admin controller, populating the user list view with usernames.
+ */
     public void initialize() {
         userList = FXCollections.observableArrayList(Admin.getUsernameList());
         userListView.setItems(userList);
         updateList();
     }
 
+    /**
+ * Updates the list view of users by fetching the latest usernames from the Admin model.
+ */
     public void updateList() {
         userList.clear();
         userList.addAll(Admin.getUsernameList());
@@ -55,11 +61,21 @@ public class adminController {
 
     }
 
+/**
+ * Creates a new user with the given username and updates the user list view.
+ *
+ * @param username The username of user. 
+ */
     public void createUser(String username) {
         Admin.createUser(username);
         updateList();
     }
 
+    /**
+ * Deletes a user with the given username and updates the user list view.
+ *
+ * @param username The username of the user to delete.
+ */
     public void deleteUser(String username) {
         Admin.deleteUser(username);
         //add functionality to delete the user's ser file here
@@ -67,6 +83,10 @@ public class adminController {
         updateList();
     }
 
+
+    /**
+ * Displays a dialog box to input the username for a new user, then creates the user.
+ */
     @FXML
     private void showCreateUserDialog() {
         TextInputDialog dialog = new TextInputDialog();
@@ -87,6 +107,10 @@ public class adminController {
         });
     }
 
+
+    /**
+ * Displays a dialog box to select a user to delete, then deletes the selected user.
+ */
     @FXML
     private void showDeleteUserDialog() {
         ObservableList<String> newUserList = FXCollections.observableArrayList(Admin.getUsernameList());
@@ -108,6 +132,14 @@ public class adminController {
         });
     }
 
+
+    /**
+ * Shows an alert dialog box with a specified message.
+ *
+ * @param alertType The type of the alert.
+ * @param title     The title of the alert dialog.
+ * @param message   The message to display in the alert dialog.
+ */
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -116,6 +148,10 @@ public class adminController {
         alert.showAndWait();
     }
 
+
+    /**
+ * Logs out the current user and returns to the login screen.
+ */
     @FXML
     private void logout() {
         // Display confirmation dialog
@@ -144,6 +180,7 @@ public class adminController {
             }
         });
     }
+    
     /* 
     @FXML
     private void showCreateUserDialog() {
