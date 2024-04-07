@@ -178,7 +178,7 @@ public class userController {
                     Parent root = loader.load();
                     Stage loginStage = new Stage();
                     loginStage.setTitle("Login");
-                    loginStage.setScene(new Scene(root, 400, 300));
+                    loginStage.setScene(new Scene(root, 324.0, 158.0));
                     loginController controller = loader.getController();
                     controller.setStage(loginStage);
                     loginStage.show();
