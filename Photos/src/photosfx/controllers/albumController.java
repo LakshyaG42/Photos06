@@ -103,6 +103,12 @@ private SelectionModel<String> selectedTag;
 @FXML private Button searchButton;
 
 
+/**
+     * Initializes the controller class. This method is automatically called
+     * after the FXML file has been loaded. It sets up the album view, loading
+     * photos and setting up listeners for UI components.
+     */
+
 @FXML
 private void initialize() {
     loggedInUser = User.loadUser(username);
@@ -180,6 +186,11 @@ private void initialize() {
     //  });
 }
 
+/**
+     * Refreshes the list of photos displayed in the album. This is typically called
+     * after photos have been added or removed, or tags have been changed.
+     */
+
 private void refreshPhotosList(){
     // ArrayList<String> photoArraylist = new ArrayList<>();
     // for (Photo photo : album.getPhotos()) {
@@ -194,6 +205,13 @@ private void refreshPhotosList(){
 
     Admin.saveUsers("Photos/data/users.ser");
 }
+
+
+/**
+     * Initializes the controller with data from another scene, typically the user controller.
+     * @param album The album object to be managed by this controller.
+     * @param name The username of the logged-in user.
+     */
 
 public static void initData(Album album, String name) {
     inputAlbumName = album.getName();
@@ -252,6 +270,18 @@ public static void initData(Album album, String name) {
 
 // }
 
+
+/**
+ * Displays the selected photo in the album view. This method updates the photo display area,
+ * including the image itself, the caption, and the date the photo was taken. It also updates
+ * the list of tags associated with the photo.
+ * 
+ * If the selected photo is null (indicating no photo is currently selected), this method
+ * clears the photo display area.
+ *
+ * @param selectedPhotoName The file path of the photo to display. If null or not found,
+ *                          the display area is cleared.
+ */
 private void imgDISP(String selectedPhotoName) {
     //current photo
     Photo selectedPhoto = null;
@@ -298,6 +328,10 @@ private void imgDISP(String selectedPhotoName) {
     selectedTag.selectFirst(); //default to first tag
 }
 
+/**
+     * Adds a new photo to the album. Opens a FileChooser dialog for the user to select a photo,
+     * then adds the selected photo to the album and refreshes the photo list.
+     */
 public void AddPhotos() { 
     FileChooser pickIMG = new FileChooser();
     pickIMG.setTitle("Choose Photo");
@@ -328,7 +362,10 @@ public void AddPhotos() {
 
 }
 
-
+/**
+     * Deletes the currently selected photo from the album. Prompts the user for confirmation
+     * before deletion.
+     */
 public void delPhoto() { 
     //String photoFilename = imgNamesListView.getSelectionModel().getSelectedItem();
     Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
@@ -344,15 +381,20 @@ public void delPhoto() {
     }
 }
 
-public void addTagView(final ActionEvent e) { 
+//public void addTagView(final ActionEvent e) { 
 
-}
+//}
 
-public void delTag(final ActionEvent e) { 
+//public void delTag(final ActionEvent e) { 
 
-}
+//}
 
 
+/**
+ * Prompts the user to enter a new caption for the selected photo. If the user provides a new caption, 
+ * the photo's caption is updated. This method also saves the updated users' data to the file and refreshes 
+ * the photo list to reflect the changes.
+ */
 public void renameCaption() { 
     ///String photoFilename = imgNamesListView.getSelectionModel().getSelectedItem();
     Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
@@ -384,6 +426,11 @@ public void renameCaption() {
     }    
 }
 
+/**
+ * Allows the user to copy the selected photo to another album. Presents a choice dialog to select the destination album.
+ * If the selected album already contains the photo, an error alert is displayed. Otherwise, the photo is copied, users'
+ * data is saved, and the photo list is refreshed.
+ */
 public void copyPhoto() { 
     Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
     if (selectedPhoto == null) {
@@ -424,7 +471,11 @@ public void copyPhoto() {
     }   
 }
 
-
+/**
+ * Moves the selected photo to another album chosen by the user. Similar to copyPhoto, but the photo is removed from the 
+ * current album after being added to the destination album. Updates the albums accordingly, saves the changes, and refreshes
+ * the photo list.
+ */
 public void movePhoto() { 
     Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
     if (selectedPhoto == null) {
@@ -464,7 +515,13 @@ public void movePhoto() {
     }
 }
 
-
+/**
+ * Launches a slideshow of the current album's photos. Checks if the album contains any photos and, if so, loads and displays 
+ * them in a slideshow. Utilizes the slideshowControl to manage the slideshow's functionality.
+ *
+ * @param e The ActionEvent triggering this method.
+ * @throws IOException if there's an issue loading the slideshow view.
+ */
 public void loadSlideShow(final ActionEvent e) throws IOException {
     // Make sure we have photos in the album to show
     if (album.getPhotos().isEmpty()) {
@@ -489,6 +546,11 @@ public void loadSlideShow(final ActionEvent e) throws IOException {
     stage.show();
 }
 
+/**
+ * Opens the "Modify Tags" view for the selected photo. If a photo is selected, this method loads the modify tags view,
+ * allowing the user to add, remove, or change tags associated with the photo. After the tags view is closed, it refreshes
+ * the album view to reflect any changes made to the tags.
+ */
 @FXML
 public void loadModifyTags() {
     Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
@@ -517,6 +579,10 @@ public void loadModifyTags() {
     }
 }
 
+/**
+ * Refreshes the current view of the album. This is typically called after modifications to the album's photos
+ * or their properties (such as tags) to ensure the user interface reflects the latest data.
+ */
 private void refreshAlbumView() {
     //reload user
     loggedInUser = User.loadUser(username);
@@ -532,10 +598,23 @@ private void refreshAlbumView() {
     }
 }
 
-
+/**
+ * Sets the stage for the controller. This is used to store a reference to the stage (window) 
+ * in which this controller's scene is displayed.
+ *
+ * @param s The stage (window) in which this controller's scene is displayed.
+ */
 public static void setStage(Stage s) {
     stage = s;
 }
+
+/**
+ * Handles the action to close the current stage (window). This is typically bound to a "Quit" or "Close" button
+ * and is used to exit the current view.
+ *
+ * @param e The event that triggered this action.
+ * @throws IOException if an I/O error occurs.
+ */
 public void quit(final ActionEvent e) throws IOException {
 	stage.close();
 }
@@ -543,6 +622,10 @@ public void quit(final ActionEvent e) throws IOException {
     
 //Below is the code for the search functionality
 
+/**
+ * Updates the state (enabled or disabled) of the search button based on the current input in the search fields.
+ * The search button is enabled if there is any input in the search query field or any date selected in the date pickers.
+ */
 private void updateSearchButtonState() {
     LocalDateTime startDate = startDatePicker.getValue() != null ? startDatePicker.getValue().atStartOfDay() : null;
     LocalDateTime endDate = endDatePicker.getValue() != null ? endDatePicker.getValue().atStartOfDay() : null;
@@ -552,6 +635,12 @@ private void updateSearchButtonState() {
     boolean enableSearch = (startDate != null || endDate != null) || !searchQuery.isEmpty();
     searchButton.setDisable(!enableSearch);
 }
+
+/**
+ * Executes the search based on the criteria entered by the user. This can include a search query and/or date range.
+ * The method filters photos in the current album according to these criteria and updates the photo list view
+ * to only display photos that match the search.
+ */
 public void search() {
     LocalDateTime startDate = startDatePicker.getValue() != null ? startDatePicker.getValue().atStartOfDay() : null;
     LocalDateTime endDate = endDatePicker.getValue() != null ? endDatePicker.getValue().atStartOfDay() : null;
@@ -614,6 +703,9 @@ public void search() {
     photoListView.setItems(photoObservableList);
 }
 
+/**
+ * Clears all search criteria fields and resets the photo list view to show all photos in the album.
+ */
 public void clearSearch() {
     startDatePicker.setValue(null);
     endDatePicker.setValue(null);
@@ -621,6 +713,13 @@ public void clearSearch() {
     refreshPhotosList();
 }
 
+/**
+ * Filters and returns photos within a specified date range.
+ *
+ * @param startDate The start date of the range, inclusive.
+ * @param endDate The end date of the range, inclusive.
+ * @return An ObservableList of Photo objects that fall within the specified date range.
+ */
 public ObservableList<Photo> searchByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
     ObservableList<Photo> filteredPhotos = FXCollections.observableArrayList();
     for (Photo photo : album.getPhotos()) {
@@ -632,6 +731,12 @@ public ObservableList<Photo> searchByDateRange(LocalDateTime startDate, LocalDat
     return filteredPhotos;
 }
 
+/**
+ * Filters and returns photos taken after a specified start date.
+ *
+ * @param startDate The start date from which to filter photos.
+ * @return An ObservableList of Photo objects taken after the specified start date.
+ */
 public ObservableList<Photo> searchByAfterStartDate(LocalDateTime startDate) {
     ObservableList<Photo> filteredPhotos = FXCollections.observableArrayList();
     for (Photo photo : album.getPhotos()) {
@@ -643,6 +748,12 @@ public ObservableList<Photo> searchByAfterStartDate(LocalDateTime startDate) {
     return filteredPhotos;
 }
 
+/**
+ * Filters and returns photos taken before a specified end date.
+ *
+ * @param endDate The end date to which to filter photos.
+ * @return An ObservableList of Photo objects taken before the specified end date.
+ */
 public ObservableList<Photo> searchByBeforeEndDate(LocalDateTime endDate) {
     ObservableList<Photo> filteredPhotos = FXCollections.observableArrayList();
     for (Photo photo : album.getPhotos()) {
@@ -654,7 +765,13 @@ public ObservableList<Photo> searchByBeforeEndDate(LocalDateTime endDate) {
     return filteredPhotos;
 }
 
-
+/**
+ * Filters and returns photos based on tag criteria. Supports searching by single tags, conjunctions (AND),
+ * or disjunctions (OR) of tag key-value pairs.
+ *
+ * @param input The search input string containing tag key-value pairs, and optionally "AND"/"OR" for complex queries.
+ * @return An ObservableList of Photo objects that match the tag criteria.
+ */
 public ObservableList<Photo> searchByTag(String input) {
     ObservableList<Photo> filteredPhotos = FXCollections.observableArrayList();
     if (input.contains("AND")) {
@@ -709,6 +826,11 @@ public ObservableList<Photo> searchByTag(String input) {
     return filteredPhotos;
 }
 
+/**
+ * Prompts the user for an album name and creates a new album with the photos currently displayed in the view.
+ * If the user provides a valid album name, a new album is created with the displayed photos, and the user is notified of success.
+ * If the user cancels the dialog or enters an invalid name, they are alerted to the error.
+ */
 public void createAlbumFromDisplayedPhotos() {
     TextInputDialog dialog = new TextInputDialog();
     dialog.setTitle("Create Album from Displayed Photos");
