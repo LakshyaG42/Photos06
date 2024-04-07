@@ -29,6 +29,8 @@ import java.util.HashSet;
  * @author Lakshya Gour
  */
 
+ 
+
 public class User implements Serializable{
     private static final long serialVersionUID = 1L;
 
@@ -36,6 +38,13 @@ public class User implements Serializable{
     private List<Album> albums;
     private Set<String> tagKeys;
     private Map<String, Boolean> allowMultipleValuesMap;
+
+/**
+ * Constructs a new User with the specified username.
+ * Initializes the albums list and the default tag keys.
+ * 
+ * @param username the username for the new user
+ */
     public User(String username) {
         this.username = username;
         this.albums = new ArrayList<>();
@@ -46,30 +55,67 @@ public class User implements Serializable{
         
     }
 
+/**
+ * Gets the username of the user.
+ * 
+ * @return the username of the user
+ */
     public String getUsername() {
         return username;
     }
 
+/**
+ * Sets the username of the user.
+ * 
+ * @param username the new username to be set
+ */
     public void setUsername(String username) {
         this.username = username;
     }
 
+
+/**
+ * Gets the list of albums owned by the user.
+ * 
+ * @return the list of albums
+ */
     public List<Album> getAlbums() {
         return albums;
     }
 
+/**
+ * Sets the list of albums for the user.
+ * 
+ * @param albums the new list of albums to be set
+ */
     public void setAlbums(List<Album> albums) {
         this.albums = albums;
     }
 
+/**
+ * Adds an album to the user's list of albums.
+ * 
+ * @param album the album to add
+ */
     public void addAlbum(Album album) {
         this.albums.add(album);
     }
 
+/**
+ * Removes an album from the user's list of albums.
+ * 
+ * @param album the album to remove
+ */
     public void removeAlbum(Album album) {
         this.albums.remove(album);
     }
 
+/**
+ * Renames a given album.
+ * 
+ * @param album the album to rename
+ * @param newName the new name for the album
+ */
     public void renameAlbum(Album album, String newName) {
         album.setName(newName);
     }
@@ -90,6 +136,13 @@ public class User implements Serializable{
     //     }
     // }
 
+
+/**
+ * Loads a user from serialized data based on the username provided.
+ * 
+ * @param username the username of the user to load
+ * @return the user if found, null otherwise
+ */
     public static User loadUser(String username) {
         try {
             Admin.loadUsers("Photos/data/users.ser");
@@ -106,6 +159,12 @@ public class User implements Serializable{
         return null;
     }
 
+/**
+ * Retrieves a specific album by its name.
+ * 
+ * @param albumName the name of the album to retrieve
+ * @return the album if found, null otherwise
+ */
     public Album getAlbum(String albumName) {
         for (Album album : albums) {
             if (album.getName().equals(albumName)) {
@@ -115,6 +174,11 @@ public class User implements Serializable{
         return null; 
     }    
 
+/**
+ * Retrieves all unique tag keys used across all photos in all albums.
+ * 
+ * @return a set of all tag keys
+ */
     public Set<String> getAllTagKeys() {
         if(this.tagKeys == null){
             this.tagKeys = new HashSet<>();
@@ -127,6 +191,12 @@ public class User implements Serializable{
         return tagKeys;
     }
 
+/**
+ * Adds a tag key to the user's set of tags, specifying whether multiple values are allowed for this tag.
+ * 
+ * @param tagKey the tag key to add
+ * @param allowMultipleValues true if multiple values are allowed for this tag key, false otherwise
+ */
     public void addTagkey(String tagKey, Boolean allowMultipleValues) {
         if(this.tagKeys == null){
             this.tagKeys = new HashSet<>();
@@ -139,6 +209,12 @@ public class User implements Serializable{
         allowMultipleValuesMap.put(tagKey, allowMultipleValues);
     }
 
+/**
+ * Determines if multiple values are allowed for a given tag key.
+ * 
+ * @param tagKey the tag key to check
+ * @return true if multiple values are allowed for the tag key, false otherwise
+ */
     public boolean isallowMultipleValues(String tagKey) {
         if (allowMultipleValuesMap.containsKey(tagKey)) {
             return allowMultipleValuesMap.get(tagKey);
