@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,6 +34,7 @@ public class User implements Serializable{
     private String username;
     private List<Album> albums;
     private Set<String> tagKeys;
+    private Map<String, Boolean> allowMultipleValuesMap;
     public User(String username) {
         this.username = username;
         this.albums = new ArrayList<>();
@@ -124,13 +126,16 @@ public class User implements Serializable{
         return tagKeys;
     }
 
-    public void addTagkey(String tagKey) {
+    public void addTagkey(String tagKey, Boolean allowMultipleValues) {
         if(this.tagKeys == null){
             this.tagKeys = new HashSet<>();
             Set<String> nullset = this.getAllTagKeys();
         }
         tagKeys.add(tagKey);
+        allowMultipleValuesMap.put(tagKey, allowMultipleValues);
     }
 
-    
+    public boolean isallowMultipleValues(String tagKey) {
+        return allowMultipleValuesMap.get(tagKey);
+    }
 }

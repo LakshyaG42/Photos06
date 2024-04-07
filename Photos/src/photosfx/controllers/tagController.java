@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -12,6 +13,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import photosfx.models.Admin;
+import photosfx.models.Album;
 import photosfx.models.Photo;
 import photosfx.models.Tags;
 import photosfx.models.User;
@@ -22,6 +24,9 @@ import java.util.Set;
 
 public class tagController {
     private static Stage stage;
+
+    @FXML
+    private CheckBox allowMultipleValuesCheckBox;
 
     @FXML 
     private ListView<String> tagsListView;
@@ -46,19 +51,32 @@ public class tagController {
 
     private ObservableList<String> tagsObservableList;
     private ObservableList<String> tagKeysObservableList;
-    private static User loggedInUser;
-    private static Photo selectedPhoto;
+    private static String username;
+    private static String selectedPhotofilename;
+    private static String inputAlbumName;
+    private User loggedInUser;
+    private Photo selectedPhoto;
+    private Album currentAlbum;
 
     @FXML
     private void initialize() {
+        loggedInUser = User.loadUser(username);
+        currentAlbum = loggedInUser.getAlbum(inputAlbumName);
+        for (Photo photo : currentAlbum.getPhotos()) {
+            if (photo.getFilePath().equals(selectedPhotofilename)) {
+                selectedPhoto = photo;
+                break;
+            }
+        }
         tagsObservableList = FXCollections.observableArrayList();
         tagKeysObservableList = FXCollections.observableArrayList();
         refreshTagsList();
         refreshTagKeysChoiceBox();
         // Default Tags Keys
-        loggedInUser.addTagkey("Location");
-        loggedInUser.addTagkey("Person");
-        loggedInUser.addTagkey("Vibe");
+        
+        loggedInUser.addTagkey("Location", false);
+        loggedInUser.addTagkey("Person", true);
+        loggedInUser.addTagkey("Vibe", true);
         tagsListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             deleteTagButton.setDisable(newValue == null); 
         });
@@ -71,9 +89,11 @@ public class tagController {
             tagKeyField.textProperty().isEmpty()
         );
     }
-    public static void setData(Photo photo, String username) {
-        selectedPhoto = photo;
-        loggedInUser = User.loadUser(username);
+    public static void setData(String photo, String u, String albumName) {
+        selectedPhotofilename = photo;
+        username = u;
+        inputAlbumName = albumName;
+
     }
     private void refreshTagsList() {
         tagsObservableList.clear();
@@ -93,15 +113,15 @@ public class tagController {
     public void addTag() {
         String tagKey = tagKeysChoiceBox.getValue();
         String tagValueText = tagValueField.getText().trim();
+        Boolean allowMulti = loggedInUser.isallowMultipleValues(tagKey);
         if (tagKey != null && !tagValueText.isEmpty()) {
             String[] tagValuesArray = tagValueText.split(",");
             for (String tagValue : tagValuesArray) {
-                boolean allowMultipleValues = selectedPhoto.getTag().allowMultipleValues(tagKey);
-                if (!allowMultipleValues && selectedPhoto.getTags().containsKey(tagKey)) {
+                if (!allowMulti && selectedPhoto.getTags().containsKey(tagKey)) {
                     Admin.showAlert(AlertType.ERROR, "Error", "Multiple values not allowed for this tag key.");
                     return;
                 }
-                selectedPhoto.addTag(tagKey, tagValue.strip(), allowMultipleValues);
+                selectedPhoto.addTag(tagKey, tagValue.strip(), allowMulti);
             }
             Admin.saveUsers("Photos/data/users.ser");
             tagValueField.clear();
@@ -137,9 +157,10 @@ public class tagController {
     }
 
     public void addTagKey() {
+        boolean allowMultipleValues = allowMultipleValuesCheckBox.isSelected();
         String tagKey = tagKeyField.getText().trim();
         if(!tagKey.isEmpty() && !tagKeysObservableList.contains(tagKey)) {
-            loggedInUser.addTagkey(tagKey);
+            loggedInUser.addTagkey(tagKey, allowMultipleValues);
             Admin.saveUsers("Photos/data/users.ser");
             refreshTagKeysChoiceBox();
             tagKeyField.clear();

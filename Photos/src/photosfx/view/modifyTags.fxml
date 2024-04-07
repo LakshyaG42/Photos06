@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
@@ -21,12 +22,13 @@
                      <children>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="41.0" layoutX="8.0" layoutY="13.0" stroke="BLACK" strokeType="INSIDE" width="313.0" />
                         <ChoiceBox fx:id="tagKeysChoiceBox" layoutX="14.0" layoutY="21.0" prefHeight="25.0" prefWidth="91.0" />
-                        <Button fx:id="addTagButton" layoutX="224.0" layoutY="21.0" onAction = "#addTag" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Add Tag" />
-                        <TextField fx:id="tagKeyField" layoutX="11.0" layoutY="59.0" promptText="Enter tag type name" />
-                        <Button fx:id="addTagTypeButton" layoutX="173.0" layoutY="59.0" onAction="#addTagKey" mnemonicParsing="false" prefHeight="25.0" prefWidth="142.0" text="Add Tag Type" />
-                        <Button onAction="#closeTagWindow" layoutX="177.0" layoutY="97.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="134.0" text="Return to Album" />
-                        <Button fx:id="deleteTagButton" onAction="#deleteTag" layoutX="19.0" layoutY="97.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="134.0" text="Delete Selected" />
+                        <Button fx:id="addTagButton" layoutX="224.0" layoutY="21.0" mnemonicParsing="false" onAction="#addTag" prefHeight="25.0" prefWidth="91.0" text="Add Tag" />
+                        <TextField fx:id="tagKeyField" layoutX="8.0" layoutY="65.0" prefHeight="25.0" prefWidth="140.0" promptText="Enter tag type name" />
+                        <Button fx:id="addTagTypeButton" layoutX="230.0" layoutY="65.0" mnemonicParsing="false" onAction="#addTagKey" prefHeight="25.0" prefWidth="91.0" text="Add Tag Type" />
+                        <Button layoutX="177.0" layoutY="103.0" mnemonicParsing="false" onAction="#closeTagWindow" prefHeight="25.0" prefWidth="134.0" text="Return to Album" />
+                        <Button fx:id="deleteTagButton" layoutX="19.0" layoutY="103.0" mnemonicParsing="false" onAction="#deleteTag" prefHeight="25.0" prefWidth="134.0" text="Delete Selected" />
                         <TextField fx:id="tagValueField" layoutX="111.0" layoutY="21.0" prefHeight="25.0" prefWidth="106.0" promptText="TagValues" />
+                        <CheckBox fx:id="allowMultipleValuesCheckbox" layoutX="153.0" layoutY="57.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="67.0" text="Allow Multiple" wrapText="true" />
                      </children>
                   </AnchorPane>
                </children>

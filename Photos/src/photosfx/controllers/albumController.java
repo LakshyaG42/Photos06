@@ -459,7 +459,7 @@ public void loadModifyTags() {
     Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
     if (selectedPhoto != null) {
         try {
-            tagController.setData(selectedPhoto, username);
+            tagController.setData(selectedPhoto.getFilePath(), username, album.getName());
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/photosfx/view/modifyTags.fxml"));
             Parent root = loader.load();
             tagController controller = loader.getController();
@@ -469,6 +469,9 @@ public void loadModifyTags() {
             stage.setTitle("Modify Tags");
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(tagsList.getScene().getWindow());
+            stage.setOnCloseRequest(event -> {
+                imgDISP(selectedPhoto.getFilePath());
+            });
             stage.show();
         } catch (IOException e) {
             Admin.showAlert(Alert.AlertType.ERROR, "Error", "Failed to load Modify Tags view");
