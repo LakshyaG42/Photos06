@@ -17,20 +17,38 @@ import java.util.Set;
 public class Tags implements Serializable {
     private static final long serialVersionUID = 1L;
     private Map<String, Set<String>> tagMap; 
+    private Map<String, Boolean> allowMultipleValuesMap;
+
     public Tags() {
         this.tagMap = new HashMap<>();
+        setAllowMultipleValues("Location", false);
+        setAllowMultipleValues("Person", true);
+        setAllowMultipleValues("Vibes", true);
+    }
+    public void addTag(String tagName, String tagValue, boolean allowMultipleValues) {
+        tagMap.computeIfAbsent(tagName, k -> new HashSet<>()).add(tagValue);
+        allowMultipleValuesMap.put(tagName, allowMultipleValues);
     }
     public void addTag(String tagName, String tagValue) {
-        tagMap.computeIfAbsent(tagName, k -> new HashSet<>()).add(tagValue);
+        if(allowMultipleValues(tagName) || !hasTag(tagName)) {
+            tagMap.computeIfAbsent(tagName, k -> new HashSet<>()).add(tagValue);
+        } 
     }
-
-    public void addTag(String tagName, Set<String> tagValues) {
-        tagMap.put(tagName, new HashSet<>(tagValues));
+    public void addTag(String tagName, Set<String> tagValue) {
+        if(allowMultipleValues(tagName) || !hasTag(tagName)) {
+            tagMap.computeIfAbsent(tagName, k -> new HashSet<>()).addAll(tagValue);
+        } else {
+            System.out.println("Tag " + tagName + " does not allow multiple values");
+        }
     }
-    public void removeTag(String tagName, Set<String> tagValues) {
+    public void addTag(String tagName, Set<String> tagValues, boolean allowMultipleValues) {
+        tagMap.computeIfAbsent(tagName, k -> new HashSet<>()).addAll(tagValues);
+        allowMultipleValuesMap.put(tagName, allowMultipleValues);
+    }
+    public void removeTag(String tagName, String tagValue) {
         if(tagMap.containsKey(tagName)) {
             Set<String> values = tagMap.get(tagName);
-            values.removeAll(tagValues);
+            values.remove(tagValue);
             if(values.isEmpty()) {
                 tagMap.remove(tagName);
             }
@@ -55,5 +73,19 @@ public class Tags implements Serializable {
     public void clearTags() {
         tagMap.clear();
     }
-    
+    public boolean allowMultipleValues(String tagkey) {
+        if(allowMultipleValuesMap == null) allowMultipleValuesMap = new HashMap<>();
+        setAllowMultipleValues("Location", false);
+        setAllowMultipleValues("Person", true);
+        setAllowMultipleValues("Vibe", true);
+        if(allowMultipleValuesMap.get(tagkey) == null) {
+            allowMultipleValuesMap.put(tagkey, false);
+        }
+        return allowMultipleValuesMap.get(tagkey);
+    }
+    public void setAllowMultipleValues(String tagkey, boolean allowMultipleValues) {
+        if(allowMultipleValuesMap == null) allowMultipleValuesMap = new HashMap<>();
+        allowMultipleValuesMap.put(tagkey, allowMultipleValues);
+    }
+
 }

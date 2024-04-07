@@ -36,6 +36,11 @@ public class User implements Serializable{
     public User(String username) {
         this.username = username;
         this.albums = new ArrayList<>();
+        tagKeys = new HashSet<>();
+        tagKeys.add("Location");
+        tagKeys.add("Person");
+        tagKeys.add("Vibe");
+        
     }
 
     public String getUsername() {
@@ -108,15 +113,22 @@ public class User implements Serializable{
     }    
 
     public Set<String> getAllTagKeys() {
+        if(this.tagKeys == null){
+            this.tagKeys = new HashSet<>();
+        }
         for(Album album : albums) {
             for(Photo photo : album.getPhotos()) {
-                tagKeys.addAll(photo.getTags().keySet());
+                this.tagKeys.addAll(photo.getTags().keySet());
             }
         }
         return tagKeys;
     }
 
     public void addTagkey(String tagKey) {
+        if(this.tagKeys == null){
+            this.tagKeys = new HashSet<>();
+            Set<String> nullset = this.getAllTagKeys();
+        }
         tagKeys.add(tagKey);
     }
 

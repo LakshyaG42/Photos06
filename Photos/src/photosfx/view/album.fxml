@@ -61,7 +61,7 @@
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font></Text>
-      <Button layoutX="400.0" layoutY="489.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="122.0" text="Modify Tags">
+      <Button layoutX="400.0" layoutY="489.0" mnemonicParsing="false" onAction = "#loadModifyTags" prefHeight="29.0" prefWidth="122.0" text="Modify Tags">
          <font>
             <Font name="Segoe UI" size="16.0" />
          </font></Button>

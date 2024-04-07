@@ -455,12 +455,36 @@ public void loadSlideShow(final ActionEvent e) throws IOException {
     stage.show();
 }
 
-    public static void setStage(Stage s) {
-        stage = s;
+public void loadModifyTags() {
+    Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
+    if (selectedPhoto != null) {
+        try {
+            tagController.setData(selectedPhoto, username);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/photosfx/view/modifyTags.fxml"));
+            Parent root = loader.load();
+            tagController controller = loader.getController();
+            Stage stage = new Stage();
+            controller.setStage(stage);
+            stage.setScene(new Scene(root));
+            stage.setTitle("Modify Tags");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(tagsList.getScene().getWindow());
+            stage.show();
+        } catch (IOException e) {
+            Admin.showAlert(Alert.AlertType.ERROR, "Error", "Failed to load Modify Tags view");
+            e.printStackTrace();
+        }
+    } else {
+        Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please select a photo to modify tags.");
     }
-	public void quit(final ActionEvent e) throws IOException {
-		stage.close();
-	}
+}
+
+public static void setStage(Stage s) {
+    stage = s;
+}
+public void quit(final ActionEvent e) throws IOException {
+	stage.close();
+}
 
     
 }

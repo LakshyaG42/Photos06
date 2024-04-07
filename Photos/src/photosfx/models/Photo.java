@@ -69,33 +69,32 @@ public class Photo implements Serializable {
       return tags.getTagMap();
     }
 
+    public Tags getTag() {
+        return tags;
+    }
+
 
     public ObservableList<String> getTagsAsList() {
         ObservableList<String> tagsList = FXCollections.observableArrayList();
         for (Map.Entry<String, Set<String>> entry : getTags().entrySet()) {
             String tagName = entry.getKey();
             Set<String> tagValues = entry.getValue();
-            StringBuilder tagString = new StringBuilder(tagName + ": ");
-            if (tagValues != null && !tagValues.isEmpty()) {
-                for (String tagValue : tagValues) {
-                    tagString.append(tagValue).append(", ");
-                }
-                tagString.setLength(tagString.length() - 2); // Remove the last comma and space
+            for (String tagValue : tagValues) {
+                tagsList.add(tagName + ": " + tagValue);
             }
-            tagsList.add(tagString.toString());
         }
         return tagsList;
     }
     
 
-    public void addTag(String tagName, String tagValue) {
-        tags.addTag(tagName, tagValue);
+    public void addTag(String tagName, String tagValue, boolean allowMultipleValues) {
+        tags.addTag(tagName, tagValue, allowMultipleValues);
     }
-    public void addTag(String tagName, Set<String> tagValue) {
-        tags.addTag(tagName, tagValue);
+    public void addTag(String tagName, Set<String> tagValue, boolean allowMultipleValues) {
+        tags.addTag(tagName, tagValue, allowMultipleValues);
     }
 
-    public void removeTag(String tagName, Set<String> tagValue) {
+    public void removeTag(String tagName, String tagValue) {
         tags.removeTag(tagName, tagValue);
     }
 

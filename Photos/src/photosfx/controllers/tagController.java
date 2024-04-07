@@ -46,7 +46,7 @@ public class tagController {
 
     private ObservableList<String> tagsObservableList;
     private ObservableList<String> tagKeysObservableList;
-    private User loggedInUser;
+    private static User loggedInUser;
     private static Photo selectedPhoto;
 
     @FXML
@@ -55,7 +55,10 @@ public class tagController {
         tagKeysObservableList = FXCollections.observableArrayList();
         refreshTagsList();
         refreshTagKeysChoiceBox();
-
+        // Default Tags Keys
+        loggedInUser.addTagkey("Location");
+        loggedInUser.addTagkey("Person");
+        loggedInUser.addTagkey("Vibe");
         tagsListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             deleteTagButton.setDisable(newValue == null); 
         });
@@ -68,15 +71,15 @@ public class tagController {
             tagKeyField.textProperty().isEmpty()
         );
     }
-    public void setSelectedPhoto(Photo photo, String username) {
+    public static void setData(Photo photo, String username) {
         selectedPhoto = photo;
         loggedInUser = User.loadUser(username);
-
     }
     private void refreshTagsList() {
         tagsObservableList.clear();
         tagsObservableList.addAll(selectedPhoto.getTagsAsList());
         tagsListView.setItems(tagsObservableList);
+        Admin.saveUsers("Photos/data/users.ser");
     }
 
     private void refreshTagKeysChoiceBox() {
@@ -84,43 +87,46 @@ public class tagController {
         Set<String> allTagKeys = loggedInUser.getAllTagKeys();
         tagKeysObservableList.addAll(allTagKeys);
         tagKeysChoiceBox.setItems(tagKeysObservableList);
-    }
+        Admin.saveUsers("Photos/data/users.ser");
+        }
 
     public void addTag() {
         String tagKey = tagKeysChoiceBox.getValue();
-        String tagValuesText = tagValueField.getText().trim();
-        String[] tagValuesList = tagValuesText.split(",");
-        Set<String> tagValuesSet = new HashSet<>();
-        for (String tagValue : tagValuesList) {
-            tagValuesSet.add(tagValue);
-        }
-        if (tagKey != null && !tagValuesSet.isEmpty()) {
-            selectedPhoto.addTag(tagKey, tagValuesSet);
+        String tagValueText = tagValueField.getText().trim();
+        if (tagKey != null && !tagValueText.isEmpty()) {
+            String[] tagValuesArray = tagValueText.split(",");
+            for (String tagValue : tagValuesArray) {
+                boolean allowMultipleValues = selectedPhoto.getTag().allowMultipleValues(tagKey);
+                if (!allowMultipleValues && selectedPhoto.getTags().containsKey(tagKey)) {
+                    Admin.showAlert(AlertType.ERROR, "Error", "Multiple values not allowed for this tag key.");
+                    return;
+                }
+                selectedPhoto.addTag(tagKey, tagValue.strip(), allowMultipleValues);
+            }
+            Admin.saveUsers("Photos/data/users.ser");
+            tagValueField.clear();
             refreshTagsList();
             refreshTagKeysChoiceBox();
+            
         } else {
             Admin.showAlert(AlertType.ERROR, "Error", "Please select a tag key and enter a tag value");
         }
-    }
+     }
 
     public void deleteTag() {
         String selectedTag = tagsListView.getSelectionModel().getSelectedItem();
         if (selectedTag != null) {
             String[] parts = selectedTag.split(": ");
-            if(parts.length != 2) {
-                Admin.showAlert(AlertType.ERROR, "Error", "Invalid tag format");
-                return;
-            } else {
-                String tagName = parts[0];
-                String[] tagValuesArray = parts[1].split(", ");
-                Set<String> tagValues = new HashSet<>(Arrays.asList(tagValuesArray));
-                selectedPhoto.removeTag(tagName, tagValues);
-                refreshTagsList();
+            if (parts.length == 2) {
+            selectedPhoto.removeTag(parts[0], parts[1]);
+            refreshTagsList();
+            refreshTagKeysChoiceBox();
             }
         } else {
             Admin.showAlert(AlertType.ERROR, "Error", "Please select a tag to delete");
         }
     }
+
 
     public void closeTagWindow() {
         stage.close();
@@ -134,6 +140,7 @@ public class tagController {
         String tagKey = tagKeyField.getText().trim();
         if(!tagKey.isEmpty() && !tagKeysObservableList.contains(tagKey)) {
             loggedInUser.addTagkey(tagKey);
+            Admin.saveUsers("Photos/data/users.ser");
             refreshTagKeysChoiceBox();
             tagKeyField.clear();
         } else {
