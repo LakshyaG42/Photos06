@@ -24,6 +24,14 @@ import photosfx.controllers.loginController;
 
 public class Main extends Application {
     
+
+     /**
+     * Starts the primary stage for this application, onto which the application scene can be set.
+     * 
+     * @param primaryStage the primary stage for this application, onto which 
+     *                     the application scene can be set.
+     * @throws Exception if an error occurs during loading the FXML file.
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/photosfx/view/login.fxml"));
@@ -35,6 +43,13 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    /**
+     * The main entry point for all JavaFX applications.
+     * It is called after the init method has returned, and after the system is ready for the application to begin running.
+     * 
+     * @param args the command line arguments passed to the application.
+     *             An application may get these parameters using the getParameters() method.
+     */
     public static void main(String[] args) {
         Admin.loadUsers("Photos/data/users.ser");
        
