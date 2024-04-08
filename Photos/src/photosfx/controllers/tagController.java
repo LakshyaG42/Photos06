@@ -8,18 +8,13 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import photosfx.models.Admin;
 import photosfx.models.Album;
 import photosfx.models.Photo;
-import photosfx.models.Tags;
 import photosfx.models.User;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 
 public class tagController {

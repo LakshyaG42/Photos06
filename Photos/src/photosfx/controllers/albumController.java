@@ -9,15 +9,12 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListCell;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
@@ -32,24 +29,19 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.swing.text.html.HTMLDocument.Iterator;
-
 import photosfx.models.User;
 import photosfx.models.Admin;
 import photosfx.models.Album;
 import photosfx.models.Photo;
-import photosfx.models.Tags;
 
 /**
  * Album Controls

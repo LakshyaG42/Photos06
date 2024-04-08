@@ -1,8 +1,5 @@
 package photosfx.controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,7 +19,6 @@ import photosfx.models.User;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class userController {

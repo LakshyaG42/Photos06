@@ -1,30 +1,23 @@
 package photosfx.controllers;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import photosfx.Main;
 import photosfx.models.Admin;
-import photosfx.models.User;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
