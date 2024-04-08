@@ -19,9 +19,9 @@
                <children>
                   <AnchorPane prefHeight="129.0" prefWidth="329.0">
                      <children>
-                        <ChoiceBox fx:id="tagKeysChoiceBox" layoutX="14.0" layoutY="21.0" prefHeight="25.0" prefWidth="91.0" />
+                        <ChoiceBox fx:id="tagKeysChoiceBox" layoutX="14.0" layoutY="21.0" prefHeight="14.0" prefWidth="91.0" />
                         <Button fx:id="addTagButton" layoutX="225.0" layoutY="19.0" mnemonicParsing="false" onAction="#addTag" prefHeight="25.0" prefWidth="91.0" text="Add Tag" />
-                        <TextField fx:id="tagKeyField" layoutX="8.0" layoutY="65.0" prefHeight="25.0" prefWidth="140.0" promptText="Enter tag type name" />
+                        <TextField fx:id="tagKeyField" layoutX="14.0" layoutY="65.0" prefHeight="25.0" prefWidth="134.0" promptText="Enter tag type name" />
                         <Button fx:id="addTagTypeButton" layoutX="225.0" layoutY="63.0" mnemonicParsing="false" onAction="#addTagKey" prefHeight="25.0" prefWidth="91.0" text="Add Tag Type" />
                         <Button layoutX="177.0" layoutY="103.0" mnemonicParsing="false" onAction="#closeTagWindow" prefHeight="25.0" prefWidth="134.0" text="Return to Album" />
                         <Button fx:id="deleteTagButton" layoutX="19.0" layoutY="103.0" mnemonicParsing="false" onAction="#deleteTag" prefHeight="25.0" prefWidth="134.0" text="Delete Selected" />

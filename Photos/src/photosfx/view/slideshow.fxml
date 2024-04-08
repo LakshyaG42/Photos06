@@ -11,7 +11,7 @@
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="600.0">
          <children>
-            <Text layoutX="115.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-title" text="ShowShow Image Viewer" wrappingWidth="371.21484375">
+            <Text layoutX="115.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-title" text="SlideShow Image Viewer" wrappingWidth="371.21484375">
                <font>
                   <Font name="Segoe UI" size="32.0" />
                </font>

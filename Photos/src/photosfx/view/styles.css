@@ -1,5 +1,5 @@
 .root {
-    -fx-background-color: #212226; 
+    -fx-background-color: #212226
 }
 
 .anchor-pane {
@@ -53,26 +53,45 @@
     -fx-text-fill: #FFFFFF; 
 }
 
-.checkbox {
-    -fx-background-color: #293556;
-    -fx-text-fill: #FFFFFF;
-    -fx-border-color: #2E4583;
+.choice-box{
+    -fx-background-color: 
+      #000000,
+      linear-gradient(#426ab7, #263e75),
+      linear-gradient(#395cab, #223768);
+    -fx-text-fill: white, white, white, white;
+    -fx-font-size: 12px;
 }
-
-.checkbox:selected {
-    -fx-background-color: #3E60C1; 
-    -fx-text-fill: #FFFFFF; 
-    -fx-border-color: #5982FC; 
+.choice-box .label {
+    -fx-text-fill: white; 
 }
+.choice-box .context-menu {
+    -fx-background-color: #242424;
+ }
+ .choice-box .context-menu .menu-item {
+    -fx-background-color: #242424; 
+    -fx-text-fill: white;
+ }
 
 .choice-box:selected {
-    -fx-background-color: #3E60C1; 
-    -fx-text-fill: #FFFFFF; 
+    -fx-background-color: #242424; 
+    -fx-text-fill: white;
     -fx-border-color: #5982FC; 
 }
-.choice-box {
-    -fx-background-color: #293556; 
-    -fx-text-fill: #FFFFFF; 
-    -fx-border-color: #2E4583; 
+.check-box .box {
+
+-fx-background-color: #242424;
+-fx-border-color:grey;
+-fx-border-radius:3px; 
+
 }
 
+.check-box:selected .mark {
+
+-fx-background-color: white;
+
+}
+
+.check-box:selected .box {
+
+-fx-background-color: #5982FC;
+}
