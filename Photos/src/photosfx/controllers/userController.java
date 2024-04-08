@@ -78,11 +78,17 @@ public class userController {
         if (result.isPresent()) {
             String albumName = result.get().trim();
             if (!albumName.isEmpty()) {
-            loggedInUser.addAlbum(new Album(albumName));
-            Admin.saveUsers("Photos/data/users.ser");
-            refreshAlbumList();
+                for (Album album : loggedInUser.getAlbums()) {
+                    if (album.getName().equals(albumName)) {
+                        Admin.showAlert(Alert.AlertType.ERROR, "Error", "An album with that name already exists.");
+                        return;
+                    }
+                }
+                loggedInUser.addAlbum(new Album(albumName));
+                Admin.saveUsers("Photos/data/users.ser");
+                refreshAlbumList();
             } else {
-            showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid album name.");
+                showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid album name.");
             }
         }
     }

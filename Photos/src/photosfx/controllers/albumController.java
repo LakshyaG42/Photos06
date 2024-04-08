@@ -165,7 +165,9 @@ private void initialize() {
     photoListView.setOnMouseClicked(event -> {
         Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
         //lastSelectedPhotoName = selectedPhoto.getFilePath();
-        imgDISP(selectedPhoto.getFilePath());
+        if(selectedPhoto != null) {
+            imgDISP(selectedPhoto.getFilePath());
+        }
     });
     photoListView.setOnKeyPressed(event -> {
         Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
@@ -851,6 +853,12 @@ public void createAlbumFromDisplayedPhotos() {
             Album newAlbum = new Album(albumName);
             for (Photo photo : photoListView.getItems()) {
                 newAlbum.addPhoto(photo);
+            }
+            for (Album album : loggedInUser.getAlbums()) {
+                if (album.getName().equals(albumName)) {
+                    Admin.showAlert(Alert.AlertType.ERROR, "Error", "An album with that name already exists.");
+                    return;
+                }
             }
             loggedInUser.addAlbum(newAlbum);
             Admin.saveUsers("Photos/data/users.ser");

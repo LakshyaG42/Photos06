@@ -97,7 +97,7 @@ public class User implements Serializable{
  * 
  * @param album the album to add
  */
-    public void addAlbum(Album album) {
+    public void addAlbum(Album album) {   
         this.albums.add(album);
     }
 
