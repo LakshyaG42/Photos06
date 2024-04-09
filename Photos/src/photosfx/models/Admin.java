@@ -8,8 +8,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -179,14 +181,14 @@ public class Admin {
  * @param title the title of the alert dialog
  * @param message the message to display in the alert dialog
  */
-    public static void showAlert(Alert.AlertType alertType, String title, String message) {
+    public static Optional<ButtonType> showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         ((Stage)alert.getDialogPane().getScene().getWindow()).getIcons().add(
             new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));
-        alert.showAndWait();
+        return alert.showAndWait();
     }
 
     @Override

@@ -9,6 +9,7 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListCell;
@@ -702,17 +703,32 @@ public void search() {
             Admin.showAlert(Alert.AlertType.ERROR, "Error", "Start date cannot be after end date.");
             return;
         } else {
-            filteredPhotos.addAll(searchByDateRange(startDate, endDate));
-            filteredPhotos.retainAll(searchByTag(searchQuery));
+            Optional<ButtonType> result = Admin.showAlert(Alert.AlertType.CONFIRMATION, "Joint Search Requested", "Searching by date range and tag! Please reset and only input one if a disjoint search is desired.");
+            if(result.get() == ButtonType.OK) {
+                filteredPhotos.addAll(searchByDateRange(startDate, endDate));
+                filteredPhotos.retainAll(searchByTag(searchQuery));
+            } else {
+                return;
+            }
         }
     } 
     else if (startDate != null && endDate == null && !searchQuery.isEmpty()) {
-        filteredPhotos.addAll(searchByAfterStartDate(startDate));
-        filteredPhotos.retainAll(searchByTag(searchQuery));
+        Optional<ButtonType> result = Admin.showAlert(Alert.AlertType.CONFIRMATION, "Joint Search Requested", "Searching by date range and tag! Please reset and only input one if a disjoint search is desired.");
+            if(result.get() == ButtonType.OK) {
+                filteredPhotos.addAll(searchByAfterStartDate(startDate));
+                filteredPhotos.retainAll(searchByTag(searchQuery));
+            } else {
+                return;
+            }
     } 
     else if (startDate == null && endDate != null && !searchQuery.isEmpty()) {
-        filteredPhotos.addAll(searchByBeforeEndDate(endDate));
-        filteredPhotos.retainAll(searchByTag(searchQuery));
+        Optional<ButtonType> result = Admin.showAlert(Alert.AlertType.CONFIRMATION, "Joint Search Requested", "Searching by date range and tag! Please reset and only input one if a disjoint search is desired.");
+            if(result.get() == ButtonType.OK) {
+                filteredPhotos.addAll(searchByBeforeEndDate(endDate));
+                filteredPhotos.retainAll(searchByTag(searchQuery));
+            } else {
+                return;
+            }
     } 
     else if (startDate == null && endDate == null && !searchQuery.isEmpty()) {
         filteredPhotos.addAll(searchByTag(searchQuery));
@@ -872,7 +888,7 @@ public void createAlbumFromDisplayedPhotos() {
     Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
         dialogStage.getIcons().add(
             new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));
-            
+
     Optional<String> result = dialog.showAndWait();
     if(result.isPresent()) {
         String albumName = result.get().trim();
