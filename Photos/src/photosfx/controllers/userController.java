@@ -181,6 +181,7 @@ public class userController {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(albumListView.getScene().getWindow());
             stage.getIcons().add(new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));
+            stage.setResizable(false);
             stage.show();
             stage.setOnHidden(e -> refreshAlbumView());
         } catch (IOException e) {

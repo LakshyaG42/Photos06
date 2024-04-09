@@ -135,6 +135,7 @@ public class loginController {
             stage.setScene(new Scene(loader.load()));
             stage.getIcons().add(new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));
             stage.setTitle("User Dashboard");
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to load User Dashboard");
