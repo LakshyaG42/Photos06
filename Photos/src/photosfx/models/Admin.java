@@ -48,9 +48,6 @@ public class Admin {
  * @return a list containing the usernames of all registered users
  */
     public static List<User> listUsers() {
-        for(User user : users) {
-            System.out.println(user.getUsername());
-        }
         return users;
     }
 
@@ -90,13 +87,13 @@ public class Admin {
         // File userFile = new File("Photos/data/userPhotos/" + username + ".ser");
         // try {
         //     if(userFile.createNewFile()) {
-        //         System.out.println("File created: " + userFile.getName());
+        //         
         //     } else {
-        //         System.out.println("File already exists.");
+        //         
         //     }
         // } catch (IOException e) {
         //     showAlert(Alert.AlertType.ERROR, "Error creating user's data:", e.getMessage());
-        //     System.err.println("Error creating user's data: " + e.getMessage());
+        //     
         // }
         
     }
@@ -131,9 +128,9 @@ public class Admin {
         //     if(!userToDelete.getUsername().equals("stock")) {
         //         File file = new File("Photos/data/userPhotos/" + userToDelete.getUsername() + ".ser");
         //         if(file.delete()) {
-        //             System.out.println(file.getName() + " is deleted!");
+        //             
         //         } else {
-        //             System.out.println("Delete operation is failed.");
+        //             
         //         }
         //     }
         // } catch (Exception e) {
@@ -152,10 +149,8 @@ public class Admin {
     public static void saveUsers(String fileName) {
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(fileName))) {
             outputStream.writeObject(users);
-            System.out.println("Users saved successfully.");
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Error saving users:", e.getMessage());
-            System.err.println("Error saving users: " + e.getMessage());
         }
     }
 
@@ -167,10 +162,10 @@ public class Admin {
     public static void loadUsers(String fileName) {
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(fileName))) {
             users = (List<User>) inputStream.readObject();
-            System.out.println("Users loaded successfully.");
+            
         } catch (IOException | ClassNotFoundException e) {
-            //showAlert(Alert.AlertType.ERROR, "Error loading users:", e.getMessage());
-            System.err.println("Error loading users: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Error loading users:", e.getMessage());
+            
         }
     }
 

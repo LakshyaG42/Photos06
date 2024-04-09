@@ -2,6 +2,7 @@ package photosfx.models;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 import java.io.File;
 import java.io.Serializable;
@@ -190,9 +191,8 @@ public class Photo implements Serializable {
             Instant lastModifiedInstant = attributes.lastModifiedTime().toInstant();
             return LocalDateTime.ofInstant(lastModifiedInstant, ZoneId.systemDefault());
         } catch (Exception e) {
-            e.printStackTrace(); 
+            Admin.showAlert(Alert.AlertType.ERROR, "Error", "Error getting last modified date time for file: " + file.getAbsolutePath());
         }
-        System.out.println("Error getting last modified date time for file: " + file.getAbsolutePath());
         return null;
     }
 

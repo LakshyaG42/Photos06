@@ -60,8 +60,6 @@ public class Tags implements Serializable {
     public void addTag(String tagName, Set<String> tagValue) {
         if(allowMultipleValues(tagName) || !hasTag(tagName)) {
             tagMap.computeIfAbsent(tagName, k -> new HashSet<>()).addAll(tagValue);
-        } else {
-            System.out.println("Tag " + tagName + " does not allow multiple values");
         }
     }
 

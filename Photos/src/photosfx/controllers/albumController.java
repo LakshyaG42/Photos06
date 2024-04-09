@@ -373,11 +373,7 @@ public void AddPhotos() {
                 refreshPhotosList();
                 imgDISP(photo.getFilePath());
             }
-            
-            System.out.println("Photo added to album: " + selectedFile.getName());
-        } else {
-            System.out.println("No file selected.");
-        }
+        } 
         
        
 
@@ -398,7 +394,7 @@ public void delPhoto() {
         //Admin.saveUsers("Photos/data/users.ser");
         refreshPhotosList();
         imgDISP(null); //resets display
-        System.out.println("Photo deleted from album: " + selectedPhoto.getFilePath());
+        
     }
 }
 
@@ -435,7 +431,7 @@ public void renameCaption() {
         result.ifPresent(rename -> {
             if(rename == null || rename.isEmpty()) {
                 Admin.showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid username.");
-                System.out.println("Please enter a valid username.");
+                
             } else {
                 selectedPhoto.setCaption(rename);
                 Admin.saveUsers("Photos/data/users.ser");
@@ -443,7 +439,7 @@ public void renameCaption() {
                 //refresh the display for the caption
                 
                 imgDISP(selectedPhoto.getFilePath());
-                System.out.println(selectedPhoto.getFilePath() + " caption renamed to " + rename);
+                
                 
             }
             
@@ -471,7 +467,7 @@ public void copyPhoto() {
         }
         if (albumNames.isEmpty()) {
             Admin.showAlert(Alert.AlertType.ERROR, "Error", "No albums to copy the photo to.");
-            System.out.println("No albums to copy the photo to.");
+            
             return;
         }
         ChoiceDialog<String> dialog = new ChoiceDialog<>(albumNames.get(0), albumNames); // Drop down list of albums to copy the photo to
@@ -489,10 +485,10 @@ public void copyPhoto() {
                 album.copyPhoto(selectedPhoto.getFilePath(), selectedAlbum); // Call the copyPhoto method in Album class to copy the photo
                 Admin.saveUsers("Photos/data/users.ser");
                 refreshPhotosList();
-                System.out.println("Photo copied to album: " + selectedAlbumName);
+                
             } else {
                 Admin.showAlert(Alert.AlertType.ERROR, "Error", "Selected album not found.");
-                System.out.println("Selected album not found.");
+                
             }
         });
     }   
@@ -518,7 +514,7 @@ public void movePhoto() {
         }
         if (albumNames.isEmpty()) {
             Admin.showAlert(Alert.AlertType.ERROR, "Error", "No albums to copy the photo to.");
-            System.out.println("No albums to copy the photo to.");
+            
             return;
         }
         ChoiceDialog<String> dialog = new ChoiceDialog<>(albumNames.get(0), albumNames); // Drop down list of albums to copy the photo to
@@ -538,7 +534,7 @@ public void movePhoto() {
                 refreshPhotosList();
             } else {
                 Admin.showAlert(Alert.AlertType.ERROR, "Error", "Selected album not found.");
-                System.out.println("Selected album not found.");
+                
             }
         });
     }

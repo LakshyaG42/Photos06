@@ -95,10 +95,8 @@ public class adminController {
         result.ifPresent(username -> {
             if(username == null || username.isEmpty()) {
                 showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid username.");
-                System.out.println("Please enter a valid username.");
             } else {
                 createUser(username);
-                System.out.println("user: " + username + " created.");
                 showAlert(Alert.AlertType.INFORMATION, "User Created", "user: " + username + " created.");
             }
             
@@ -124,10 +122,10 @@ public class adminController {
         result.ifPresent(username -> {
             if(username == null || username.isEmpty()) {
                 showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid username.");
-                System.out.println("Please enter a valid username.");
+                
             } else {
                 showAlert(Alert.AlertType.INFORMATION, "User Created", "user: " + username + " deleted");
-                System.out.println("user: " + username + " deleted.");
+                
                 deleteUser(username);
             }
         });
@@ -202,12 +200,12 @@ public class adminController {
             createUserButtonInDialog.setOnAction(event -> {
                 String username = usernameFieldInDialog.getText();
                 if (username != null && !username.isEmpty()) {
-                    System.out.println("Creating user: " + username);
+                    
                     createUser(username);
                     dialogStage.close();
                 } else {
                     // Show error message or handle invalid input
-                    System.out.println("Please enter a valid username.");
+                    
                 }
             });
 
