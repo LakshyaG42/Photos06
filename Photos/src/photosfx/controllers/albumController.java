@@ -625,6 +625,8 @@ private void refreshAlbumView() {
     Photo selectedPhoto = photoListView.getSelectionModel().getSelectedItem();
     if (selectedPhoto != null) {
         imgDISP(selectedPhoto.getFilePath());
+    } else {
+        imgDISP(null);
     }
 }
 
