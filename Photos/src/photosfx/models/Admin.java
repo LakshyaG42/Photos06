@@ -1,5 +1,6 @@
 package photosfx.models;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 /**
  * Admin Model
@@ -181,6 +184,8 @@ public class Admin {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
+        ((Stage)alert.getDialogPane().getScene().getWindow()).getIcons().add(
+            new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));
         alert.showAndWait();
     }
 

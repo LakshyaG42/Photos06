@@ -69,7 +69,9 @@ public class userController {
         dialog.setTitle("Create Album");
         dialog.setHeaderText(null);
         dialog.setContentText("Enter Album:");
-
+        Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        dialogStage.getIcons().add(
+            new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
             String albumName = result.get().trim();
@@ -120,7 +122,9 @@ public class userController {
             dialog.setTitle("Renaming Album: " + selectedAlbum);
             dialog.setHeaderText(null);
             dialog.setContentText("Enter the new name for the album:");
-    
+            Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
+            dialogStage.getIcons().add(
+                new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));
             // Show the text input dialog and wait for user input
             dialog.showAndWait().ifPresent(newAlbumName -> {
                 newAlbumName = newAlbumName.trim();

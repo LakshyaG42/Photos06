@@ -88,6 +88,9 @@ public class adminController {
         dialog.setTitle("Create User");
         dialog.setHeaderText(null);
         dialog.setContentText("Enter Username:");
+        Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        dialogStage.getIcons().add(
+            new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(username -> {
             if(username == null || username.isEmpty()) {
@@ -114,6 +117,9 @@ public class adminController {
         dialog.setTitle("Delete User");
         dialog.setHeaderText(null);
         dialog.setContentText("Enter Username:");
+        Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        dialogStage.getIcons().add(
+            new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(username -> {
             if(username == null || username.isEmpty()) {

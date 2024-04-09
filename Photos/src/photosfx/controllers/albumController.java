@@ -6,6 +6,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
@@ -334,21 +335,44 @@ public void AddPhotos() {
         File selectedFile = pickIMG.showOpenDialog(new Stage());
         if (selectedFile != null) {
             String captionstr = "Default Caption";
-            // ask for caption
-            TextInputDialog dialog = new TextInputDialog();
-            dialog.setTitle("Caption Image");
-            dialog.setHeaderText(null);
-            dialog.setContentText("Enter Caption:");
-            Optional<String> result = dialog.showAndWait();
-            if (result.isPresent()) {
-                captionstr = result.get();
-            }
             // Create a Photo object and add it to the album
-            Photo photo = new Photo(selectedFile.getPath(), Photo.getLastModifiedDateTime(selectedFile), captionstr);
-            album.addPhoto(photo);
-            //Admin.saveUsers("Photos/data/users.ser");
-            refreshPhotosList();
-            imgDISP(photo.getFilePath());
+            Photo existingPhoto = null;
+            Album existingAlbum = null;
+            for(Album album : loggedInUser.getAlbums()){
+                for (Photo photo : album.getPhotos()) {
+                    if (photo.getFilePath().equals(selectedFile.getPath())) {
+                        existingAlbum = album;
+                        existingPhoto = photo;
+                        break;
+                    }
+                }
+            }
+            if (existingPhoto != null) {
+                album.addPhoto(existingPhoto);
+                Admin.showAlert(AlertType.INFORMATION, "Photo Already Exists In Another Album (Copying)", "The selected photo already exists in: " + existingAlbum.getName());
+
+                refreshPhotosList();
+                imgDISP(existingPhoto.getFilePath());
+            } else {
+                // ask for caption
+                TextInputDialog dialog = new TextInputDialog();
+                dialog.setTitle("Caption Image");
+                dialog.setHeaderText(null);
+                dialog.setContentText("Enter Caption:");
+                Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
+                dialogStage.getIcons().add(
+                    new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));   
+                Optional<String> result = dialog.showAndWait();
+                if (result.isPresent()) {
+                    captionstr = result.get();
+                }
+                Photo photo = new Photo(selectedFile.getPath(), Photo.getLastModifiedDateTime(selectedFile), captionstr);
+                album.addPhoto(photo);
+                //Admin.saveUsers("Photos/data/users.ser");
+                refreshPhotosList();
+                imgDISP(photo.getFilePath());
+            }
+            
             System.out.println("Photo added to album: " + selectedFile.getName());
         } else {
             System.out.println("No file selected.");
@@ -402,6 +426,10 @@ public void renameCaption() {
         dialog.setTitle("Rename Caption");
         dialog.setHeaderText(null);
         dialog.setContentText("Enter new caption");
+        Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        dialogStage.getIcons().add(
+            new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));
+
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(rename -> {
             if(rename == null || rename.isEmpty()) {
@@ -449,7 +477,9 @@ public void copyPhoto() {
         dialog.setTitle("Copy Photo");
         dialog.setHeaderText("Select the album to copy the photo to:");
         dialog.setContentText("Album:");
-
+        Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        dialogStage.getIcons().add(
+            new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));
         
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(selectedAlbumName -> {
@@ -494,7 +524,9 @@ public void movePhoto() {
         dialog.setTitle("Move Photo");
         dialog.setHeaderText("Select the album to move the photo to:");
         dialog.setContentText("Album:");
-
+        Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        dialogStage.getIcons().add(
+            new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));
         
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(selectedAlbumName -> {
@@ -837,7 +869,10 @@ public void createAlbumFromDisplayedPhotos() {
     dialog.setTitle("Create Album from Displayed Photos");
     dialog.setHeaderText(null);
     dialog.setContentText("Enter Album Name:");
-
+    Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        dialogStage.getIcons().add(
+            new Image("file:///" + new File("Photos/data/userPhotos/LogoMain.png").getAbsolutePath().replace("\\", "/")));
+            
     Optional<String> result = dialog.showAndWait();
     if(result.isPresent()) {
         String albumName = result.get().trim();
